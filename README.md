@@ -25,7 +25,7 @@ Si incorporamos alguna herramienta, pondremos el enlace aquí.
 
 ### 🔹 Entidades
 
-- *Entidad principal: Receta*  
+- Entidad principal: Receta 
   Atributos:  
   - id (identificador único, numérico)  
   - nombre (string)  
@@ -34,7 +34,7 @@ Si incorporamos alguna herramienta, pondremos el enlace aquí.
   - tiempo_preparacion (entero, en minutos)  
   - dificultad (string: fácil, media, difícil)  
 
-- *Entidad secundaria: Paso*  
+- Entidad secundaria: Paso  
   Atributos:  
   - id (identificador único, numérico)  
   - receta_id (identificador de la receta a la que pertenece)  
