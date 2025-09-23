@@ -1,7 +1,6 @@
 # 🍴 Secretos de Cocina
 
-Un catálogo web de recetas pensado para inspirar, organizar y compartir platos de todo tipo.  
-Este repositorio contiene el código fuente y la documentación del proyecto.
+Un catálogo web de recetas caseras.
 
 ---
 
@@ -17,8 +16,8 @@ Este repositorio contiene el código fuente y la documentación del proyecto.
 
 ## 📌 Herramientas de coordinación
 
-Actualmente no utilizamos Trello ni otras herramientas de coordinación públicas.  
-En caso de incorporarlas, el enlace aparecerá aquí.
+No utilizamos Trello. 
+Si incorporamos alguna herramienta, pondremos el enlace aquí.
 
 ---
 
@@ -36,28 +35,29 @@ En caso de incorporarlas, el enlace aparecerá aquí.
   - tiempo_preparacion (entero, en minutos)  
   - dificultad (string: fácil, media, difícil)  
 
-- *Entidad secundaria: Usuario*  
+- *Entidad secundaria: Paso*  
   Atributos:  
   - id (identificador único, numérico)  
-  - nombre (string)  
-  - correo (string)  
-  - rol (string: administrador, visitante)  
+  - receta_id (identificador de la receta a la que pertenece)  
+  - orden (entero, indica el número de paso en la secuencia)  
+  - descripcion (texto detallado del paso)  
+  - imagen (opcional, muestra el resultado de ese paso intermedio)  
 
 ---
 
 ### 🖼️ Imágenes
 
-- Cada *receta* podrá tener asociada *una o varias imágenes* que muestren el plato terminado o pasos intermedios.  
-- Los *usuarios* tendrán opcionalmente una imagen de perfil.  
+- Cada *receta* podrá tener asociada *una o varias imágenes* que muestren el plato terminado.  
+- Cada *paso* podrá incluir *una imagen opcional* que muestre el estado intermedio de la preparación.  
 
-Ejemplo de almacenamiento de rutas de imágenes en código:
+### 🔍 Categorización
+Utilizaremos la consulta de categorización para las recetas. 
+El usuario podrá consultar recetas según su categoría, por ejemplo: 
 
-```json
-{
-  "id": 12,
-  "nombre": "Paella Valenciana",
-  "imagenes": [
-    "/img/paella1.jpg",
+- Platos principales  
+- Postres  
+- Entrantes  
+- Vegetarianos / Veganos
     "/img/paella2.jpg"
   ]
 }
