@@ -29,8 +29,7 @@ Si incorporamos alguna herramienta, pondremos el enlace aquí.
   Atributos:  
   - id (identificador único, numérico)  
   - nombre (string)  
-  - ingredientes (lista de strings)  
-  - instrucciones (texto detallado)  
+  - ingredientes (lista de strings)    
   - categoría (string: postre, entrante, plato principal, vegano, etc.)  
   - tiempo_preparacion (entero, en minutos)  
   - dificultad (string: fácil, media, difícil)  
