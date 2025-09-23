@@ -46,8 +46,8 @@ Si incorporamos alguna herramienta, pondremos el enlace aquí.
 
 ### 🖼️ Imágenes
 
-- Cada *receta* podrá tener asociada *una o varias imágenes* que muestren el plato terminado.  
-- Cada *paso* podrá incluir *una imagen opcional* que muestre el estado intermedio de la preparación.  
+- Cada receta podrá tener asociada una o varias imágenes que muestren el plato terminado.  
+- Cada paso podrá incluir una imagen que muestre el estado intermedio de la preparación.  
 
 ### 🔍 Categorización
 Utilizaremos la consulta de categorización para las recetas. 
