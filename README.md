@@ -2,7 +2,7 @@
 
 Una página web de recetas caseras.
 
----
+
 
 ## 👥 Equipo de desarrollo
 
@@ -12,14 +12,14 @@ Una página web de recetas caseras.
 | Izan Calle Feijoo       | i.calle.2024@alumnos.urjc.es             | [IzanCalle](https://github.com/IzanCalle)   |
 | Rubén Torres Rivero     | r.torresr.2024@alumnos.urjc.es           | [Ruben2843](https://github.com/Ruben2843)   |
 
----
+
 
 ## 📌 Herramientas de coordinación
 
 No utilizamos Trello. 
 Si incorporamos alguna herramienta, pondremos el enlace aquí.
 
----
+
 
 ## ⚙️ Funcionalidad
 
@@ -42,7 +42,7 @@ Si incorporamos alguna herramienta, pondremos el enlace aquí.
   - descripcion (texto detallado del paso)  
   - imagen (opcional, muestra el resultado de ese paso intermedio)  
 
----
+
 
 ### 🖼️ Imágenes
 
