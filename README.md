@@ -1,6 +1,6 @@
 # 🍴 Secretos de Cocina
 
-Un catálogo web de recetas caseras.
+Una página web de recetas caseras.
 
 ---
 
