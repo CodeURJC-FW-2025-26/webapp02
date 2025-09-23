@@ -58,6 +58,3 @@ El usuario podrá consultar recetas según su categoría, por ejemplo:
 - Postres  
 - Entrantes  
 - Vegetarianos / Veganos
-    "/img/paella2.jpg"
-  ]
-}
