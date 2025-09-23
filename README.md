@@ -1,10 +1,10 @@
-# 🍴 Secretos de Cocina
+# Secretos de Cocina
 
 Una página web de recetas caseras.
 
 
 
-## 👥 Equipo de desarrollo
+## Equipo de desarrollo
 
 | Nombre completo         | Correo oficial de la URJC                | GitHub      |
 |-------------------------|------------------------------------------|-------------|
@@ -14,14 +14,14 @@ Una página web de recetas caseras.
 
 
 
-## 📌 Herramientas de coordinación
+## Herramientas de coordinación
 
 No utilizamos Trello. 
 Si incorporamos alguna herramienta, pondremos el enlace aquí.
 
 
 
-## ⚙️ Funcionalidad
+## Funcionalidad
 
 ### 🔹 Entidades
 
@@ -44,12 +44,12 @@ Si incorporamos alguna herramienta, pondremos el enlace aquí.
 
 
 
-### 🖼️ Imágenes
+### Imágenes
 
 - Cada receta podrá tener asociada una o varias imágenes que muestren el plato terminado.  
 - Cada paso podrá incluir una imagen que muestre el estado intermedio de la preparación.  
 
-### 🔍 Categorización
+### Categorización
 Utilizaremos la consulta de categorización para las recetas. 
 El usuario podrá consultar recetas según su categoría, por ejemplo: 
 
