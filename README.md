@@ -4,7 +4,7 @@ Una página web de recetas caseras.
 
 
 
-## Equipo de desarrollo
+## Development team
 
 | Nombre completo         | Correo oficial de la URJC                | GitHub      |
 |-------------------------|------------------------------------------|-------------|
@@ -14,16 +14,16 @@ Una página web de recetas caseras.
 
 
 
-## Herramientas de coordinación
+## Coordination tools
 
 No utilizamos Trello. 
 Si incorporamos alguna herramienta, pondremos el enlace aquí.
 
 
 
-## Funcionalidad
+## Functionality
 
-###  Entidades
+###  Entities
 
 - Entidad principal: Recipe  
   Atributos:  
@@ -43,12 +43,12 @@ Si incorporamos alguna herramienta, pondremos el enlace aquí.
 
 
 
-### Imágenes
+### Images
 
 - Cada receta podrá tener asociada una o varias imágenes que muestren el plato terminado.  
 - Cada paso podrá incluir una imagen que muestre el estado intermedio de la preparación.  
 
-### Categorización
+### Categorization
 Utilizaremos la consulta de categorización para las recetas. 
 El usuario podrá consultar recetas según su categoría: 
 
