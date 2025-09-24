@@ -6,7 +6,7 @@ Una página web de recetas caseras.
 
 ## Development team
 
-| Nombre completo         | Correo oficial de la URJC                | GitHub      |
+| Full Name         | Official URJC email address                | GitHub      |
 |-------------------------|------------------------------------------|-------------|
 | Fernán Rama Hombreiro   | f.rama.2024@alumnos.urjc.es              | [fernanrama](https://github.com/fernanrama) |
 | Izan Calle Feijoo       | i.calle.2024@alumnos.urjc.es             | [IzanCalle](https://github.com/IzanCalle)   |
@@ -16,7 +16,7 @@ Una página web de recetas caseras.
 
 ## Coordination tools
 
-No utilizamos Trello. 
+No utilizamos Trello.  
 Si incorporamos alguna herramienta, pondremos el enlace aquí.
 
 
@@ -25,17 +25,17 @@ Si incorporamos alguna herramienta, pondremos el enlace aquí.
 
 ###  Entities
 
-- Entidad principal: Recipe  
-  Atributos:  
+- Main Entity: Recipe  
+  Attributes:  
   - id (identificador único, numérico)  
   - name (string)  
   - ingredients (string)    
   - category (string: dessert, starter, main dish, vegan)  
   - preparation_time (entero, en minutos)  
-  - dificulty (string: fácil, media, difícil)  
+  - difficulty (string: fácil, media, difícil)  
 
-- Entidad secundaria: Step  
-  Atributos:  
+- Secondary Entity: Step  
+  Attributes:  
   - id (identificador único, numérico)    
   - order (entero, indica el número de paso en la secuencia)  
   - description (texto detallado del paso)  
@@ -49,10 +49,13 @@ Si incorporamos alguna herramienta, pondremos el enlace aquí.
 - Cada paso podrá incluir una imagen que muestre el estado intermedio de la preparación.  
 
 ### Categorization
-Utilizaremos la consulta de categorización para las recetas. 
+Utilizaremos la consulta de categorización para las recetas.  
 El usuario podrá consultar recetas según su categoría: 
 
 - Starters 
 - Main dish  
 - Desserts  
 - Vegans
+
+### Search engine  
+Añadiremos un buscador a la página web para facilitar la exploración de las distintas recetas
