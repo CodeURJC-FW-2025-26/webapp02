@@ -50,9 +50,9 @@ Si incorporamos alguna herramienta, pondremos el enlace aquí.
 
 ### Categorización
 Utilizaremos la consulta de categorización para las recetas. 
-El usuario podrá consultar recetas según su categoría, por ejemplo: 
+El usuario podrá consultar recetas según su categoría: 
 
-- Platos principales  
-- Postres  
-- Entrantes  
-- Vegetarianos / Veganos
+- Starters 
+- Main dish  
+- Desserts  
+- Vegans
