@@ -25,22 +25,21 @@ Si incorporamos alguna herramienta, pondremos el enlace aquí.
 
 ###  Entidades
 
-- Entidad principal: Recipe 
+- Entidad principal: Recipe  
   Atributos:  
   - id (identificador único, numérico)  
-  - nombre (string)  
-  - ingredientes (lista de strings)    
-  - categoría (string: postre, entrante, plato principal, vegano, etc.)  
-  - tiempo_preparacion (entero, en minutos)  
-  - dificultad (string: fácil, media, difícil)  
+  - name (string)  
+  - ingredients (string)    
+  - category (string: dessert, starter, main dish, vegan)  
+  - preparation_time (entero, en minutos)  
+  - dificulty (string: fácil, media, difícil)  
 
 - Entidad secundaria: Step  
   Atributos:  
-  - id (identificador único, numérico)  
-  - receta_id (identificador de la receta a la que pertenece)  
-  - orden (entero, indica el número de paso en la secuencia)  
-  - descripcion (texto detallado del paso)  
-  - imagen (opcional, muestra el resultado de ese paso intermedio)  
+  - id (identificador único, numérico)    
+  - order (entero, indica el número de paso en la secuencia)  
+  - description (texto detallado del paso)  
+  - image (opcional, muestra el resultado de ese paso intermedio)  
 
 
 
