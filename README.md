@@ -23,7 +23,7 @@ Si incorporamos alguna herramienta, pondremos el enlace aquí.
 
 ## Funcionalidad
 
-### 🔹 Entidades
+###  Entidades
 
 - Entidad principal: Receta 
   Atributos:  
