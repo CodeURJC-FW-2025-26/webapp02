@@ -12,9 +12,40 @@ h1 {
     padding-left: 50px;
 }
 
-.header {
+.header-link {
     text-decoration: none;
     color: black;
+}
+
+.header-button {
+    padding-right: 50px;
+}
+
+.header-button .btn {
+    border-radius: 25px;
+    padding: 8px 20px;
+}
+
+.category-nav {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.category-nav a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    font-size: 18px;
+    padding: 5px 10px;
+    border-radius: 15px;
+    transition: background-color 0.3s ease;
+}
+
+.category-nav a:hover {
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 
@@ -75,3 +106,4 @@ h3{
     margin-top: 20px;
 
 }
+
