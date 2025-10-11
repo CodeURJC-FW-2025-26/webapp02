@@ -1,5 +1,5 @@
 body {
-    background-color: #f1db33;
+    background-color: #e9ee53;
     margin: 0;
     padding: 0;
 }
@@ -103,7 +103,7 @@ h3{
 }
 
 .top-section{
-    background-color: #944703;
+    background-color: #b87235;
 }
 
 h2{
@@ -123,6 +123,49 @@ form{
     display: flex;
     margin-left: 100px;
 
+}
+
+.ingredients{
+    align-items: flex-start;
+    gap: 30px;
+}
+
+.ingredients-table{
+    margin-left: 25px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 25%;
+    border-collapse: collapse;
+}
+
+.ingredients-table th,
+.ingredients-table td {
+    border: 2px solid black; 
+    padding: 8px;
+    text-align: left;
+}
+
+.ingredients-table th {
+    background-color: #f2b705; 
+    font-weight: bold;
+}
+
+.ingredients-image img{
+    display:flex;
+    border-radius: 10px;
+    gap: 20px;
+   
+}
+
+h4{
+    margin-left: 20px;
+}
+.pasos img{
+    width: 400px;
+    height: 200px;
+    padding: 20px;
+
+    
 }
 
 
