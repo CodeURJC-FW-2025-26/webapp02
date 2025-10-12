@@ -99,6 +99,7 @@ h3{
     display: block;   
     margin-bottom: 20px;
     margin-top: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 1); 
 
 }
 
@@ -110,13 +111,9 @@ h2{
     margin-left: 30px;
 }
 
-form{
-    margin-left: 25px;
-}
-
 .form-control{
     border-radius: 25px;
-    width:500px;
+    width:550px;
 }
 
 .botons{    
@@ -168,4 +165,35 @@ h4{
     
 }
 
+.form-container {
+    display: flex;                         
+    margin-left: 20px;
+    margin-top: 20px;
+    margin-right: 40px;
+}
+
+.Decor-img {
+    width: 325px;            
+    display: flex;
+    flex-direction: column;  
+    margin-left: 30px;
+}
+
+.Decor-img img {
+    width: 100%;
+    border-radius: 10px;
+    margin-top: 10px;
+    margin-left: 40px;
+    box-shadow: 10px 10px 30px rgb(255, 255, 255); 
+
+}
+
+.Decor-img img:first-child {
+    transform: translate(0, 0);  
+
+}
+
+.Decor-img img:nth-child(2) {
+    transform: translate(225px, 10px); 
+}
 
