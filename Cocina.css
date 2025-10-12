@@ -84,6 +84,7 @@ h1 {
     margin-top: 40px;
     background-color:azure;
     border-radius: 10px;
+    margin-top: 20px;
 }
 
 h3{
@@ -196,4 +197,5 @@ h4{
 .Decor-img img:nth-child(2) {
     transform: translate(225px, 10px); 
 }
+
 
