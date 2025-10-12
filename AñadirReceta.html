@@ -32,40 +32,51 @@
     </div>
 
     <h2>Añade la receta</h2>
-    <form role="form">
-        <div class="form-group">
-            <label for="RecipeName">Nombre de la receta:</label>
-            <input type="text" class="form-control" id="RecipeName" placeholder="Introduzca el nombre de la receta">
-        </div>
-        <div class="form-group">
-            <label for="Ingredients">Ingredientes del plato:</label>
-            <input type="text" class="form-control" id="Ingredients" placeholder="Introduzca los ingredientes necesarios">
-        </div>
-        <div class="form-group">
-            <label for="Category">Categoría:</label>
-            <input type="text" class="form-control" id="Category" placeholder="Introduzca la categoría del plato">
-        </div>
-        <div class="form-group">
-            <label for="Preparation Time">Tiempo:</label>
-            <input type="text" class="form-control" id="Preparation Time" placeholder="Introduzca el tiempo de preparación (minutos)">
-        </div>
-        <div class="form-group">
-            <label for="Dificulty">Dificultad:</label>
-            <input type="text" class="form-control" id="Dificulty" placeholder="Introduzca la dificultad de la receta (Alta, Media, Baja)">
-        </div>
-    </form>
+    <div class="form-container">
+        <form role="form">
+          <div class="form-group">
+               <label for="RecipeName">Nombre de la receta:</label>
+               <input type="text" class="form-control" id="RecipeName" placeholder="Introduzca el nombre de la receta">
+          </div>
+          <div class="form-group">
+               <label for="Ingredients">Ingredientes del plato:</label>
+               <input type="text" class="form-control" id="Ingredients" placeholder="Introduzca los ingredientes necesarios">
+          </div>
+          <div class="form-group">
+               <label for="Category">Categoría:</label>
+               <input type="text" class="form-control" id="Category" placeholder="Introduzca la categoría del plato">
+          </div>
+          <div class="form-group">
+               <label for="Preparation Time">Tiempo:</label>
+               <input type="text" class="form-control" id="Preparation Time" placeholder="Introduzca el tiempo de preparación (minutos)">
+          </div>
+          <div class="form-group">
+               <label for="Dificulty">Dificultad:</label>
+               <input type="text" class="form-control" id="Dificulty" placeholder="Introduzca la dificultad de la receta (Alta, Media, Baja)">
+          </div>
+          <div class="form-group">
+               <label for="RecipeImage">Imagen:</label>
+               <input type="file" class="form-control" id="RecipeImage" accept="image/*">
+         </div>
 
-    <div class="botons">
-        <!--Boton de guardar-->
-        <div class="button">
-             <a class="btn btn-dark">Guardar</a>
-        </div>
+         <div class="botons">
+            <!--Boton de guardar-->
+            <div class="button">
+                 <a class="btn btn-dark">Guardar</a>
+            </div>
 
-        <!--Boton de cancelar-->
-        <div class="button">
-             <a class="btn btn-dark" href="index.html">Cancelar</a>
+            <!--Boton de cancelar-->
+             <div class="button">
+                 <a class="btn btn-dark" href="index.html">Cancelar</a>
+             </div>
+         </div>
+        </form>
+        <div class="Decor-img">
+                <img src="lubina.jpg" alt="Lubina">
+                <img src="entrecot.jpg" alt="Entrecot">
         </div>
     </div>
+
 
 </body>
 </html>
