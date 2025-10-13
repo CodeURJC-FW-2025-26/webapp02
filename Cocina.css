@@ -1,5 +1,5 @@
 body {
-    background-color: #e9ee53;
+    background-color: #F8E7A5;
     margin: 0;
     padding: 0;
 }
@@ -15,7 +15,7 @@ h1 {
 
 .header {
     text-decoration: none;
-    color: black;
+    color: whitesmoke;
 }
 
 .header-button {
@@ -37,7 +37,7 @@ h1 {
 
 .categorys a {
     text-decoration: none;
-    color: #333;
+    color: whitesmoke;
     font-weight: bold;
     font-size: 18px;
     padding: 5px 10px;
@@ -46,7 +46,7 @@ h1 {
 }
 
 .categorys a:hover {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: #2d3e4d;
 }
 
 
@@ -60,23 +60,10 @@ h1 {
     width: 100%;
     max-width: 800px;
     padding: 10px;
-    border: 2px solid #c7c2a0;
+    border: 2px solid #F8E7A5;
     border-radius: 45px;
     font-size: 17px;
     margin-bottom: 20px;
-}
-
-.button {
-    display: flex;
-    justify-content: right;
-    margin-top: auto;
-    padding-top: 10px;
-    padding-right: 50px;
-}
-
-.button .btn {
-    border-radius: 25px;
-    padding: 8px 20px;
 }
 
 .container{
@@ -85,6 +72,7 @@ h1 {
     background-color:azure;
     border-radius: 10px;
     margin-top: 20px;
+    margin-bottom: 40px;
 }
 
 h3{
@@ -105,11 +93,15 @@ h3{
 }
 
 .top-section{
-    background-color: #b87235;
+    background-color: #222e38;
 }
 
 h2{
     margin-left: 30px;
+}
+
+.form-group {
+    padding: 3px;
 }
 
 .form-control{
@@ -119,8 +111,13 @@ h2{
 
 .botons{    
     display: flex;
-    margin-left: 100px;
+    margin-left: 150px;
+    padding-top: 20px;
+    padding-bottom: 50px;
+}
 
+.botons .button {
+    padding-right: 50px;
 }
 
 .ingredients{
@@ -199,3 +196,87 @@ h4{
 }
 
 
+.banner {
+    background: #F8E7A5;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 60px;
+    width: 100%;
+}
+
+.banner h2 {
+    color: #222e38;
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+    margin: 0;
+    flex: 1;
+    padding-left: 150px;
+}
+
+.banner .btn {
+    border-radius: 25px;
+    padding: 10px 25px;
+    background-color: #222e38;
+    color: white;
+    font-size: 18px;
+}
+
+.banner .btn:hover {
+    background-color: #2d3e4d;
+}
+
+.bottom {
+    display: flex;;
+    background: #222e38;
+    width: 100%; 
+    padding: 50px 10px;
+}
+
+.bottom .footer {
+    color: whitesmoke;
+    text-decoration: none;
+    font-size: 20px;
+    text-align: center;
+}
+
+
+
+/* a partir de aqui es para la pagina de detalle */
+
+.recipe-container {
+    display: flex;
+    flex-direction: column;
+
+
+    width: 80%;
+    margin: 40px auto;
+    background-color: azure;
+    border-radius: 10px;
+    padding: 40px;
+}
+
+.dish-title {
+    color: black;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 40px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+}
+
+.dish-subtitle {
+    color: black;
+    font-size: 28px;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.dish-content {
+    color: black;
+    font-size: 18x;
+}
