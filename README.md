@@ -68,6 +68,7 @@ We will add a search bar to the website to make it easier to explore the differe
 ### Participacion de los miembros
 
 #### Rubén Torres Rivero
+
 I have been working on the index.html, creating and improving its design to make it look nice and ensuring that the grid is responsive.
 However, most of my work has been focused on the AñadirReceta.html page, as I was the one who created that page, the form, and the images on the right side.
 5 most important commits are:
