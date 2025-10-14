@@ -257,6 +257,13 @@ h4{
     text-align: center;
 }
 
+.bottom p {
+    color: whitesmoke;
+    margin-left: auto;
+    text-align: left;
+    opacity: 0.8;
+}
+
 
 
 /* a partir de aqui es para la pagina de detalle */
