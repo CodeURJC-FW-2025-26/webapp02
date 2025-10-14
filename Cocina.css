@@ -308,3 +308,11 @@ footer {
     border-radius: 8px;
     margin-top: 20px;
 }
+
+.btn.btn-success {
+    margin-top: 10px;
+}
+
+#StepImage {
+    margin-top: 5px;
+}
