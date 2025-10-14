@@ -3,6 +3,18 @@ body {
     height: 100%;
 }
 
+.dm-serif-display-regular {
+    font-family: "DM Serif Display", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.dm-serif-display-regular-italic {
+    font-family: "DM Serif Display", serif;
+    font-weight: 400;
+    font-style: italic;
+}
+
 body {
     display: flex;
     flex-direction: column;
@@ -23,6 +35,8 @@ h1 {
 .header {
     text-decoration: none;
     color: whitesmoke;
+    font-size: 75px;
+    font-family: "DM Serif Display";
 }
 
 .header-button {
@@ -107,10 +121,9 @@ h2 {
     margin-left: 30px;
 }
 
-.AdRec {
-    margin-top: 20px;
+.Addrecipie {
+    padding-top: 10px;
 }
-
 
 .form-group {
     padding: 3px;
