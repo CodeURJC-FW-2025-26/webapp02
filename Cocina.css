@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
     height: 100%;
 }
 
@@ -33,7 +34,7 @@ h1 {
     padding: 8px 20px;
 }
 
-.categorys{
+.categorys {
     display: flex;
     justify-content: center;
     gap: 30px;
@@ -72,37 +73,37 @@ h1 {
     margin-bottom: 20px;
 }
 
-.container{
+.container {
     width: 80%;
     margin-top: 40px;
-    background-color:azure;
+    background-color: azure;
     border-radius: 10px;
     margin-top: 20px;
     margin-bottom: 40px;
 }
 
-h3{
-    text-align:center;
+h3 {
+    text-align: center;
     font-size: 20px;
-    
+
 }
 
 .container img {
-    width: 100%;       
-    height: 200px;     
-    border-radius: 10px; 
-    display: block;   
+    width: 100%;
+    height: 200px;
+    border-radius: 10px;
+    display: block;
     margin-bottom: 20px;
     margin-top: 20px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 1); 
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 1);
 
 }
 
-.top-section{
+.top-section {
     background-color: #222e38;
 }
 
-h2{
+h2 {
     margin-left: 30px;
 }
 
@@ -110,12 +111,12 @@ h2{
     padding: 3px;
 }
 
-.form-control{
+.form-control {
     border-radius: 25px;
-    width:550px;
+    width: 550px;
 }
 
-.botons{    
+.botons {
     display: flex;
     margin-left: 150px;
     padding-top: 20px;
@@ -126,12 +127,12 @@ h2{
     padding-right: 50px;
 }
 
-.ingredients{
+.ingredients {
     align-items: flex-start;
     gap: 30px;
 }
 
-.ingredients-table{
+.ingredients-table {
     margin-left: 25px;
     margin-top: 20px;
     margin-bottom: 20px;
@@ -141,45 +142,46 @@ h2{
 
 .ingredients-table th,
 .ingredients-table td {
-    border: 2px solid black; 
+    border: 2px solid black;
     padding: 8px;
     text-align: left;
 }
 
 .ingredients-table th {
-    background-color: #f2b705; 
+    background-color: #f2b705;
     font-weight: bold;
 }
 
-.ingredients-image img{
-    display:flex;
+.ingredients-image img {
+    display: flex;
     border-radius: 10px;
     gap: 20px;
-   
+
 }
 
-h4{
+h4 {
     margin-left: 20px;
 }
-.pasos img{
+
+.pasos img {
     width: 400px;
     height: 200px;
     padding: 20px;
 
-    
+
 }
 
 .form-container {
-    display: flex;                         
+    display: flex;
     margin-left: 20px;
     margin-top: 20px;
     margin-right: 40px;
 }
 
 .Decor-img {
-    width: 325px;            
+    width: 325px;
     display: flex;
-    flex-direction: column;  
+    flex-direction: column;
     margin-left: 30px;
 }
 
@@ -188,17 +190,17 @@ h4{
     border-radius: 10px;
     margin-top: 10px;
     margin-left: 40px;
-    box-shadow: 10px 10px 30px rgb(255, 255, 255); 
+    box-shadow: 10px 10px 30px rgb(255, 255, 255);
 
 }
 
 .Decor-img img:first-child {
-    transform: translate(0, 0);  
+    transform: translate(0, 0);
 
 }
 
 .Decor-img img:nth-child(2) {
-    transform: translate(225px, 10px); 
+    transform: translate(225px, 10px);
 }
 
 
@@ -233,30 +235,19 @@ h4{
     background-color: #2d3e4d;
 }
 
-.bottom {
-    display: flex;;
+footer {
     background: #222e38;
-    width: 100%; 
-    padding: 50px 10px;
-    margin-top: auto;
-}
-
-.bottom .footer {
     color: whitesmoke;
-    text-decoration: none;
-    font-size: 20px;
     text-align: center;
+    padding: 20px 10px;
+    margin-top: auto;
+    /* Empuja el footer a la parte inferior de la página */
+    width: 100%;
 }
-
-
 
 /* a partir de aqui es para la pagina de detalle */
 
 .recipe-container {
-    display: flex;
-    flex-direction: column;
-
-
     width: 80%;
     margin: 40px auto;
     background-color: azure;
@@ -269,10 +260,8 @@ h4{
     text-decoration: none;
     font-weight: bold;
     font-size: 40px;
-    justify-content: center;
-    align-items: center;
     text-align: center;
-
+    margin-bottom: 20px;
 }
 
 .dish-subtitle {
@@ -280,10 +269,24 @@ h4{
     font-size: 28px;
     margin-top: 30px;
     margin-bottom: 15px;
-    text-align: center;
+    text-align: left;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #ddd;
 }
 
 .dish-content {
     color: black;
-    font-size: 18x;
+    font-size: 18px;
+}
+
+.recipe-image {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border: 1px solid #ddd;
+}
+
+.add-step-form {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
 }
