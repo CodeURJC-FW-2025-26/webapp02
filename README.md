@@ -69,6 +69,7 @@ We will add a search bar to the website to make it easier to explore the differe
 
 #### Rubén Torres Rivero
 
+I have been working on the index.html
 
 #### Izan Calle Feijoo
 
