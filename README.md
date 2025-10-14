@@ -28,11 +28,12 @@ Si incorporamos alguna herramienta, pondremos el enlace aquí.
 - Main Entity: Recipe  
   Attributes:  
   - id (identificador único, numérico)  
-  - name (string)  
+  - name (string)
   - ingredients (string)    
   - category (string: dessert, starter, main dish, vegan)  
   - preparation_time (entero, en minutos)  
-  - difficulty (string: fácil, media, difícil)  
+  - difficulty (string: fácil, media, difícil)
+  - description (texto describiendo la receta)
 
 - Secondary Entity: Step  
   Attributes:  
