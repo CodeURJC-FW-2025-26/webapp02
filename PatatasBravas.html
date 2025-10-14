@@ -63,41 +63,11 @@
 
                 <h3 class="dish-subtitle mt-4">Ingredientes</h3>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        Patatas (800g)
-                        <div class="d-flex gap-2">
-                            <button class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil"></i></button>
-                            <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
-                        </div>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        Aceite de oliva (100ml)
-                        <div class="d-flex gap-2">
-                            <button class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil"></i></button>
-                            <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
-                        </div>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        Salsa brava (200ml)
-                        <div class="d-flex gap-2">
-                            <button class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil"></i></button>
-                            <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
-                        </div>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        Sal (al gusto)
-                        <div class="d-flex gap-2">
-                            <button class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil"></i></button>
-                            <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
-                        </div>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        Alioli (opcional)
-                        <div class="d-flex gap-2">
-                            <button class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil"></i></button>
-                            <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
-                        </div>
-                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">Patatas (800g)</li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">Aceite de oliva (100ml)</li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">Salsa brava (200ml)</li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">Sal (al gusto)</li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">Alioli (opcional)</li>
                 </ul>
 
             </div>
@@ -161,18 +131,21 @@
                 <div class="add-step-form">
                     <h3 class="dish-subtitle">Añadir nuevo paso</h3>
                     <form>
-                        <div class="mb-3">
+                        <div class="form-group">
                             <label for="stepOrder" class="form-label">Número de paso</label>
                             <input type="number" class="form-control" id="stepOrder" placeholder="Ej: 5" min="1">
                         </div>
-                        <div class="mb-3">
+                        <div class="form.group">
+                            <label for="stepName" class="form-label">Nombre del paso</label>
+                            <input type="number" class="form-control" id="stepNombre">
+                        </div>
+                        <div class="form-group">
                             <label for="stepDescription" class="form-label">Descripción del paso</label>
                             <textarea class="form-control" id="stepDescription" rows="3"></textarea>
                         </div>
-                        <div class="mb-3">
-                            <label for="stepImage" class="form-label">URL de la imagen (opcional)</label>
-                            <input type="text" class="form-control" id="stepImage"
-                                placeholder="https://ejemplo.com/imagen.jpg">
+                        <div class="form-group">
+                            <label for="StepImage">Imagen (opcional):</label>
+                            <input type="file" class="form-control" id="StepImage" accept="image/*">
                         </div>
                         <button type="submit" class="btn btn-success">Crear</button>
                     </form>
@@ -183,10 +156,11 @@
 
     <!-- Pie de página -->
     <footer>
-        <p>&copy; 2025 Secretos de Cocina. Izan Calle, Rubén Torres y Fernán Rama.</p>
+        <p>&copy; 2025 Secretos de Cocina. Todos los derechos reservados.</p>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 
 </html>
