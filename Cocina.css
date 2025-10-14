@@ -1,18 +1,7 @@
+/* --- ESTILOS GENERALES --- */
 html,
 body {
     height: 100%;
-}
-
-.dm-serif-display-regular {
-    font-family: "DM Serif Display", serif;
-    font-weight: 400;
-    font-style: normal;
-}
-
-.dm-serif-display-regular-italic {
-    font-family: "DM Serif Display", serif;
-    font-weight: 400;
-    font-style: italic;
 }
 
 body {
@@ -23,83 +12,27 @@ body {
     padding: 0;
 }
 
+.dm-serif-display-regular {
+    font-family: "DM Serif Display", serif;
+    font-weight: 400;
+    font-style: normal;
+}
 
-h1 {
-    font-size: 45px;
-    color: black;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+h2 {
     margin-left: 30px;
-    margin-top: 20px;
 }
 
-.header {
-    text-decoration: none;
-    color: whitesmoke;
-    font-size: 75px;
-    font-family: "DM Serif Display";
-}
-
-.header-button {
-    padding-right: 50px;
-}
-
-.header-button .btn {
-    border-radius: 25px;
-    padding: 8px 20px;
-}
-
-.categorys {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    margin-top: 10px;
-    margin-bottom: 20px;
-}
-
-.categorys a {
-    text-decoration: none;
-    color: whitesmoke;
-    font-weight: bold;
-    font-size: 18px;
-    padding: 5px 10px;
-    border-radius: 15px;
-    transition: background-color 0.3s ease;
-}
-
-.categorys a:hover {
-    background-color: #2d3e4d;
-}
-
-
-.search-bar {
-    display: flex;
-    justify-content: center;
-    margin-top: 30px;
-}
-
-.search-bar input {
-    width: 100%;
-    max-width: 800px;
-    padding: 10px;
-    border: 2px solid #F8E7A5;
-    border-radius: 45px;
-    font-size: 17px;
-    margin-bottom: 20px;
-}
-
+/* --- ESTILOS ORIGINALES PARA INDEX.HTML --- */
 .container {
     width: 80%;
-    margin-top: 40px;
+    margin: 20px auto 40px auto;
     background-color: azure;
     border-radius: 10px;
-    margin-top: 20px;
-    margin-bottom: 40px;
 }
 
-h3 {
+.container h3 {
     text-align: center;
     font-size: 20px;
-
 }
 
 .container img {
@@ -107,22 +40,18 @@ h3 {
     height: 200px;
     border-radius: 10px;
     display: block;
-    margin-bottom: 20px;
-    margin-top: 20px;
+    margin: 20px 0;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 1);
-
 }
 
-.top-section {
-    background-color: #222e38;
-}
-
-h2 {
-    margin-left: 30px;
-}
-
+/* --- ESTILOS ORIGINALES PARA AÑADIRRECETA.HTML --- */
 .Addrecipie {
     padding-top: 20px;
+}
+
+.form-container {
+    display: flex;
+    margin: 20px 20px 0 40px;
 }
 
 .form-group {
@@ -137,63 +66,11 @@ h2 {
 .botons {
     display: flex;
     margin-left: 150px;
-    padding-top: 20px;
-    padding-bottom: 50px;
+    padding: 20px 0 50px 0;
 }
 
 .botons .button {
     padding-right: 50px;
-}
-
-.ingredients {
-    align-items: flex-start;
-    gap: 30px;
-}
-
-.ingredients-table {
-    margin-left: 25px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    width: 25%;
-    border-collapse: collapse;
-}
-
-.ingredients-table th,
-.ingredients-table td {
-    border: 2px solid black;
-    padding: 8px;
-    text-align: left;
-}
-
-.ingredients-table th {
-    background-color: #f2b705;
-    font-weight: bold;
-}
-
-.ingredients-image img {
-    display: flex;
-    border-radius: 10px;
-    gap: 20px;
-
-}
-
-h4 {
-    margin-left: 20px;
-}
-
-.pasos img {
-    width: 400px;
-    height: 200px;
-    padding: 20px;
-
-
-}
-
-.form-container {
-    display: flex;
-    margin-left: 20px;
-    margin-top: 20px;
-    margin-right: 40px;
 }
 
 .Decor-img {
@@ -209,62 +86,17 @@ h4 {
     margin-top: 10px;
     margin-left: 40px;
     box-shadow: 10px 10px 30px rgb(255, 255, 255);
-
 }
 
 .Decor-img img:first-child {
     transform: translate(0, 0);
-
 }
 
 .Decor-img img:nth-child(2) {
     transform: translate(225px, 10px);
 }
 
-
-.banner {
-    background: #F8E7A5;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 25px 60px;
-    width: 100%;
-}
-
-.banner h2 {
-    color: #222e38;
-    text-align: center;
-    font-size: 40px;
-    font-weight: bold;
-    margin: 0;
-    flex: 1;
-    padding-left: 150px;
-}
-
-.banner .btn {
-    border-radius: 25px;
-    padding: 10px 25px;
-    background-color: #222e38;
-    color: white;
-    font-size: 18px;
-}
-
-.banner .btn:hover {
-    background-color: #2d3e4d;
-}
-
-footer {
-    background: #222e38;
-    color: whitesmoke;
-    text-align: center;
-    padding: 20px 10px;
-    margin-top: auto;
-    /* Empuja el footer a la parte inferior de la página */
-    width: 100%;
-}
-
-/* a partir de aqui es para la pagina de detalle */
-
+/* --- ESTILOS ORIGINALES PARA PULPO.HTML --- */
 .recipe-container {
     width: 80%;
     margin: 40px auto;
@@ -292,11 +124,6 @@ footer {
     border-bottom: 2px solid #ddd;
 }
 
-.dish-content {
-    color: black;
-    font-size: 18px;
-}
-
 .recipe-image {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     border: 1px solid #ddd;
@@ -309,14 +136,199 @@ footer {
     margin-top: 20px;
 }
 
-.btn.btn-success {
-    margin-top: 10px;
+/* --- ESTILOS - NUEVA CABECERA --- */
+.navbar-custom {
+    background-color: #222e38;
+    padding: 10px 30px;
 }
 
-#StepImage {
-    margin-top: 5px;
+.navbar-brand {
+    font-family: "DM Serif Display", serif;
+    font-size: 45px !important;
+    color: whitesmoke !important;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
-#RecipeName {
-    margin-top: 5px;
+.dropdown-toggle-icon {
+    background-color: transparent !important;
+    border: none !important;
+    padding: 0.25rem 0.5rem;
+}
+
+.dropdown-toggle-icon:focus {
+    box-shadow: none !important;
+}
+
+.dropdown-toggle-icon .navbar-toggler-icon {
+    filter: brightness(0) invert(1);
+}
+
+.dropdown-menu {
+    background-color: #2d3e4d;
+    border: 1px solid #3c5265;
+}
+
+.dropdown-item {
+    color: whitesmoke;
+    font-weight: bold;
+}
+
+.dropdown-item:hover {
+    background-color: #3c5265;
+    color: white;
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 0.9)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+/* --- NUEVOS BOTONES DE CATEGORÍA Y BUSCADOR (SOLO PARA INDEX) --- */
+.category-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px 0;
+    background-color: #F8E7A5;
+}
+
+.category-buttons a {
+    text-decoration: none;
+    color: #222e38;
+    font-weight: bold;
+    font-size: 18px;
+    padding: 8px 18px;
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.5);
+    transition: all 0.3s ease;
+}
+
+.category-buttons a:hover {
+    background-color: #222e38;
+    color: whitesmoke;
+}
+
+.banner {
+    background: #F8E7A5;
+    padding: 0 60px 25px 60px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.search-container {
+    width: 100%;
+    max-width: 800px;
+    margin-bottom: 25px;
+}
+
+.search-container input {
+    width: 100%;
+    padding: 12px 25px;
+    border: 1px solid #e6d59a;
+    border-radius: 50px;
+    font-size: 17px;
+    background-color: #fffaf0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.banner-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.banner h2 {
+    color: #222e38;
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+    margin: 0;
+    flex: 1;
+}
+
+.banner .btn {
+    border-radius: 25px;
+    padding: 10px 25px;
+    background-color: #222e38;
+    color: white;
+    font-size: 18px;
+}
+
+/* --- PIE DE PÁGINA --- */
+.professional-footer {
+    background: #222e38;
+    color: #adb5bd;
+    padding-top: 50px;
+    margin-top: auto;
+    /* Empuja el footer a la parte inferior */
+}
+
+.professional-footer .container {
+    background-color: transparent;
+    margin: 0 auto;
+    padding: 0;
+    width: 100%;
+    /* Asegura que ocupe el espacio disponible */
+}
+
+.footer-heading {
+    color: #ffffff;
+    margin-bottom: 20px;
+    font-family: "DM Serif Display", serif;
+    font-size: 22px;
+}
+
+.footer-text {
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.footer-links li {
+    margin-bottom: 10px;
+}
+
+.footer-links a {
+    text-decoration: none;
+    color: #adb5bd;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: #f2b705;
+}
+
+.social-icons a {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+    background-color: #343a40;
+    color: #ffffff;
+    margin-right: 10px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 40px;
+    font-size: 18px;
+    transition: background-color 0.3s ease;
+}
+
+.social-icons a:hover {
+    background-color: #f2b705;
+    color: #222e38;
+}
+
+.footer-bottom {
+    background-color: #1c252d;
+    text-align: center;
+    padding: 15px 0;
+    margin-top: 40px;
+    font-size: 14px;
+}
+
+.footer-bottom p {
+    margin: 0;
 }
