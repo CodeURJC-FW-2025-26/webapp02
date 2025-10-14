@@ -68,9 +68,9 @@
                     <li class="list-group-item d-flex justify-content-between align-items-center">4 patatas gallegas
                         grandes (cachelos)</li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">Pimentón de la
-                        Vera(dulce y picante)</li>
+                        Vera (dulce y picante)</li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">Aceite de oliva
-                        virgenextra</li>
+                        virgen extra</li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">Sal gorda</li>
                 </ul>
             </div>
@@ -147,15 +147,18 @@
                     <form>
                         <div class="form.group">
                             <label for="stepOrder" class="form-label">Número de paso</label>
-                            <input type="number" class="form-control" id="stepOrder" placeholder="Ej: 6" min="1">
+                            <input type="number" class="form-control" id="stepOrder" placeholder="Ej: 6" min="1"
+                                required>
                         </div>
-                        <div class="form.group">
-                            <label for="stepName" class="form-label">Nombre del paso</label>
-                            <input type="number" class="form-control" id="stepNombre">
+                        <!-- Campo Nombre -->
+                        <div class="form-group">
+                            <label for="RecipeName">Nombre:</label>
+                            <input type="text" class="form-control" id="RecipeName" required>
                         </div>
                         <div class="form-group">
                             <label for="stepDescription" class="form-label">Descripción del paso</label>
-                            <textarea class="form-control" id="stepDescription" rows="3"></textarea>
+                            <textarea class="form-control" id="stepDescription" rows="3"
+                                placeholder="Describa brevemente el paso" required></textarea>
                         </div>
                         <div class="form-group">
                             <label for="StepImage">Imagen (opcional):</label>

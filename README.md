@@ -29,15 +29,17 @@ Si incorporamos alguna herramienta, pondremos el enlace aquí.
   Attributes:  
   - id (identificador único, numérico)  
   - name (string)
-  - ingredients (string)    
+  - description (string describiendo la receta)
+  - ingredients (string)
   - category (string: dessert, starter, main dish, vegan)  
   - preparation_time (entero, en minutos)  
   - difficulty (string: fácil, media, difícil)
-  - description (texto describiendo la receta)
+  - image (archivo de imagen)
 
 - Secondary Entity: Step  
   Attributes:  
-  - id (identificador único, numérico)    
+  - id (identificador único, numérico)  
+  - name (string, nombre del paso)  
   - order (entero, indica el número de paso en la secuencia)  
   - description (texto detallado del paso)  
   - image (opcional, muestra el resultado de ese paso intermedio)  
