@@ -72,6 +72,7 @@ We will add a search bar to the website to make it easier to explore the differe
 I have been working on the index.html, creating and improving its design to make it look nice and ensuring that the grid is responsive.
 However, most of my work has been focused on the AñadirReceta.html page, as I was the one who created that page, the form, and the images on the right side.
 5 most important commits:
+
   -Creation of the form in the AñadirReceta.html: https://github.com/CodeURJC-FW-2025-26/webapp02/commit/96afaf88d0b151c30b76c58a8ba5ea5a2d8559bb
   -Creation of the grid in the index.html: https://github.com/CodeURJC-FW-2025-26/webapp02/commit/1906256d8950cf646be112afbca4de00ecec0d34
   -Achieve that the grid is responsive: https://github.com/CodeURJC-FW-2025-26/webapp02/commit/5da793c4ae0a8c309ba337b683dd247541c2015b
