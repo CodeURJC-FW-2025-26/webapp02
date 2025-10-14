@@ -70,14 +70,6 @@ We will add a search bar to the website to make it easier to explore the differe
 #### Rubén Torres Rivero
 
 
-5 most important commits are:
-  -
-  -
-  -
-  -
-  -
-
-
 #### Izan Calle Feijoo
 
 
