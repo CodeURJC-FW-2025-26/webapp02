@@ -1,7 +1,6 @@
 # Secretos de Cocina
 
-Una página web de recetas caseras.
-
+A website for homemade recipes.
 
 
 ## Development team
@@ -16,9 +15,8 @@ Una página web de recetas caseras.
 
 ## Coordination tools
 
-No utilizamos Trello.  
-Si incorporamos alguna herramienta, pondremos el enlace aquí.
-
+We do not use Trello.
+If we incorporate any tool, we will add the link here.
 
 
 ## Functionality
@@ -27,33 +25,33 @@ Si incorporamos alguna herramienta, pondremos el enlace aquí.
 
 - Main Entity: Recipe  
   Attributes:  
-  - id (identificador único, numérico)  
+  - id (unique numeric identifier)  
   - name (string)
-  - description (string describiendo la receta)
+  - description (string describing the recipe)
   - ingredients (string)
   - category (string: dessert, starter, main dish, vegan)  
-  - preparation_time (entero, en minutos)  
-  - difficulty (string: fácil, media, difícil)
-  - image (archivo de imagen)
+  - preparation_time (integer, in minutes)  
+  - difficulty (string: easy, medium, dificult)
+  - image (image file)
 
 - Secondary Entity: Step  
   Attributes:  
-  - id (identificador único, numérico)  
-  - name (string, nombre del paso)  
-  - order (entero, indica el número de paso en la secuencia)  
-  - description (texto detallado del paso)  
-  - image (opcional, muestra el resultado de ese paso intermedio)  
+  - id (unique numeric identifier) 
+  - name (string, name of the step) 
+  - order (integer, indicates the step number in the sequence)
+  - description (detailed text of the step)  
+  - image (optional, shows the result of that intermediate step)
 
 
 
 ### Images
 
-- Cada receta podrá tener asociada una o varias imágenes que muestren el plato terminado.  
-- Cada paso podrá incluir una imagen que muestre el estado intermedio de la preparación.  
+- Each recipe may have one or several images showing the finished dish.
+- Each step may include an image showing the intermediate state of the preparation.
 
 ### Categorization
-Utilizaremos la consulta de categorización para las recetas.  
-El usuario podrá consultar recetas según su categoría: 
+We will use categorization queries for the recipes.
+The user will be able to consult recipes according to their category:
 
 - Starters 
 - Main dish  
@@ -62,3 +60,19 @@ El usuario podrá consultar recetas según su categoría:
 
 ### Search engine  
 Añadiremos un buscador a la página web para facilitar la exploración de las distintas recetas
+
+
+## Practica 1
+
+### Capturas de pantalla
+
+### Participacion de los miembros
+
+#### Rubén Torres Rivero
+
+
+#### Izan Calle Feijoo
+
+
+#### Fernán Rama Hombreiro
+
