@@ -59,8 +59,7 @@ The user will be able to consult recipes according to their category:
 - Vegans
 
 ### Search engine  
-Añadiremos un buscador a la página web para facilitar la exploración de las distintas recetas
-
+We will add a search bar to the website to make it easier to explore the different recipes.
 
 ## Practica 1
 
