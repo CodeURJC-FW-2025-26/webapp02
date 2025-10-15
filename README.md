@@ -61,11 +61,23 @@ The user will be able to consult recipes according to their category:
 ### Search engine  
 We will add a search bar to the website to make it easier to explore the different recipes.
 
-## Practica 1
+## Practice 1
 
-### Capturas de pantalla
+### Screenshots
 
-### Participacion de los miembros
+<p align='center'>
+  <img src="ScreenShots/Index.jpeg" width="800" >
+</p>
+<p align='center'>
+  <img src="ScreenShots/AñadirReceta.jpeg" width="800" >
+</p>
+<p align='center'>
+  <img src="ScreenShots/PulpoALaGAlllega.jpeg" width="800" >
+</p>
+
+
+
+### Members Participation
 
 #### Rubén Torres Rivero
 
