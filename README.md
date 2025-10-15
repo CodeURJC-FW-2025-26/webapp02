@@ -89,6 +89,23 @@ The 5 files I have worked on the most are:
 
 #### Izan Calle Feijoo
 
+I have been working in several areas of the page, trying to improve its design and to add functionalities, as well as creating the layout for the webpage. I have also worked in the detail page, especially in its firsts versions, looking up the content and creating and detailing de layout with flexbox. Also, I have reviewed all of the pages to check if everything was in the right place, trying to make it easy to use for the average user.
+
+5 most important commits:
+
+  1. Creation of the navigation bar and top layout in the main page: https://github.com/CodeURJC-FW-2025-26/webapp02/commit/e8a3bfb4e46a2f997f76f9e50d200e0ca5f74374
+  2. Creation of the "Añadir Receta" button and improvement of the CSS: https://github.com/CodeURJC-FW-2025-26/webapp02/commit/51a3bd785713f42916e876e5d1ba2a020f7f2979
+  3. Color palette change and creation of the footer: https://github.com/CodeURJC-FW-2025-26/webapp02/commit/640b2bcfa7ff3851ddeaf907f47b5246c5d12e93
+  4. Creation of the layout and content of the first 2 detail pages (Pulpo.html and PatatasBravas.html): https://github.com/CodeURJC-FW-2025-26/webapp02/commit/b9c6be3757ead0e74e4c3ad2009423e9988d9ecc
+  5. Change in the style of the top header, including font style: https://github.com/CodeURJC-FW-2025-26/webapp02/commit/9e9be4fdfc60c73f56b103cdf08d2fd23d5abddd
+
+The 5 files I have worked on the most are:
+
+  1. Index.html
+  2. Cocina.css
+  3. Pulpo.html
+  4. PatatasBravas.html
+  5. Añadir receta.html
 
 #### Fernán Rama Hombreiro
 
