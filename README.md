@@ -121,3 +121,21 @@ The 5 files I have worked on the most are:
 
 #### Fernán Rama Hombreiro
 
+I have been working mainly on trying to give the entire website a more professional look. Starting from a very solid foundation laid by my colleagues, I have been able to improve the detail page (Pulpo.html) so that it has an aesthetic worthy of a serious project. 
+Also, thanks to the good foundation we had built, I have been refining the most important sections so that the project adheres to the guidelines given.  
+Lastly, I organised the code contained in the files into sections to make it easier to understand and added comments that clearly explain each of the project's functionalities.
+
+5 most important commits:
+
+  1. Modification and improvement of the detail page ‘Pulpo.html’: (https://github.com/CodeURJC-FW-2025-26/webapp02/commit/3837443d9d87b62e78b9467422e624dcdbf004e4#diff-722c545a3b7dec713c7a7e32fabd71a0f0e0afec4197d400e95ce146db9222ff)
+  2. Restructuring and organisation of the pages ‘AñadirReceta.html’ and ‘Index.html’: (https://github.com/CodeURJC-FW-2025-26/webapp02/commit/d0b51dfe69646be2268b55baace1b070221b36da)
+  3. Improvement of headers and footers in all files for a more professional look: (https://github.com/CodeURJC-FW-2025-26/webapp02/commit/fd5ded0cafa585b198651cae40c297e1f231aec2)
+  4. Added comments to improve understanding of the entire code. All files: (https://github.com/CodeURJC-FW-2025-26/webapp02/commit/66c3dc50e96a2d0e4e088227e45fbdca28520546)
+  5. Improved functionalities of the form on file "AñadirReceta.html": (https://github.com/CodeURJC-FW-2025-26/webapp02/commit/3837443d9d87b62e78b9467422e624dcdbf004e4)
+
+The 5 files I have worked on the most are:
+  1. Pulpo.html (https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/Pulpo.html)
+  2. Index.html (https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/Index.html)
+  3. Cocina.css (https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/Cocina.css)
+  4. AñadirReceta.html (https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/A%C3%B1adirReceta.html)
+  5. PatatasBravas.html (https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/PatatasBravas.html)
