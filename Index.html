@@ -1,41 +1,42 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 
 <head>
-     <!-- Logotipo de la pestaña -->
-     <link rel="icon" type="image/png" href="images/logo.jpg">
-     <!-- Metadatos básicos del documento -->
+     <!-- Basic document metadata -->
      <meta charset="UTF-8">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <title>Secretos de Cocina</title>
 
-     <!-- Google Fonts: Carga de tipografías personalizadas -->
+     <!-- Tab Icon (Favicon) -->
+     <link rel="icon" type="image/png" href="images/logo.jpg">
+
+     <!-- Google Fonts: Custom typography -->
      <link rel="preconnect" href="https://fonts.googleapis.com">
      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
      <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
 
-     <!-- Bootstrap: Framework CSS para estilos y componentes responsivos -->
+     <!-- Bootstrap: CSS framework for responsive components -->
      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-     <!-- Bootstrap Icons: Biblioteca de iconos SVG -->
+     <!-- Bootstrap Icons: SVG icon library -->
      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-     <!-- Hoja de estilos personalizada -->
+     <!-- Custom stylesheet -->
      <link type="text/css" rel="stylesheet" href="Cocina.css" />
 </head>
 
 <body>
 
      <!-- =================================================================
-     HEADER / BARRA DE NAVEGACIÓN
+     HEADER / NAVIGATION BAR
      ================================================================== -->
      <header>
           <nav class="navbar navbar-expand-lg navbar-custom">
                <div class="container-fluid">
-                    <!-- Logotipo -->
+                    <!-- Logo -->
                     <a href="Index.html" class="navbar-logo">
-                         <img src="images/logo.jpg" alt="Logo Secretos de Cocina">
+                         <img src="images/logo.jpg" alt="Secretos de Cocina Logo">
                     </a>
-                    <!-- Menú desplegable de categorías -->
+                    <!-- Category Dropdown Menu -->
                     <div class="dropdown">
                          <button class="btn btn-secondary dropdown-toggle-icon" type="button" id="dropdownMenuButton"
                               data-bs-toggle="dropdown" aria-expanded="false" aria-label="Toggle Categories">
@@ -49,16 +50,16 @@
                          </ul>
                     </div>
 
-                    <!-- Título principal centrado -->
+                    <!-- Centered Main Title -->
                     <a href="Index.html" class="navbar-brand">Secretos De Cocina</a>
 
-                    <!-- Botón toggler para menú en dispositivos móviles (actualmente sin elementos visibles) -->
+                    <!-- Mobile Nav Toggler (for other links if any) -->
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                          <span class="navbar-toggler-icon"></span>
                     </button>
 
-                    <!-- Contenedor de enlaces de navegación (oculto) para mantener el título centrado -->
+                    <!-- Empty container on the right to keep the title centered -->
                     <div class="collapse navbar-collapse" id="navbarNav">
                          <ul class="navbar-nav ms-auto navbar-placeholder">
                               <li class="nav-item">
@@ -66,16 +67,15 @@
                               </li>
                          </ul>
                     </div>
-
                </div>
           </nav>
      </header>
 
      <!-- =================================================================
-     CONTENIDO PRINCIPAL
+     MAIN CONTENT
      ================================================================== -->
      <main>
-          <!-- Sección de botones de categorías (debajo de la cabecera) -->
+          <!-- Category buttons section (below the header) -->
           <section class="category-buttons">
                <a href="#">Entrantes</a>
                <a href="#">Platos Principales</a>
@@ -83,65 +83,65 @@
                <a href="#">Veganos</a>
           </section>
 
-          <!-- Banner con buscador y botón para añadir recetas -->
+          <!-- Banner with search bar and add button -->
           <section class="banner">
-               <!-- Barra de búsqueda -->
+               <!-- Redesigned search bar -->
                <div class="search-container">
                     <input type="text" placeholder="Buscar una receta...">
                </div>
-               <!-- Título de la sección de recetas y botón de acción -->
+               <!-- Recipe section title and action button -->
                <div class="banner-content">
                     <h2 class="banner-title">RECETAS RECOMENDADAS</h2>
                     <a class="btn btn-dark" href="AñadirReceta.html">Añadir receta</a>
                </div>
           </section>
 
-          <!-- Grid de recetas recomendadas -->
+          <!-- Recommended recipes grid -->
           <section class="container">
                <div class="row">
-                    <!-- Tarjeta de Receta 1 -->
+                    <!-- Recipe Card 1 -->
                     <div class="col-12 col-sm-6 col-lg-4">
-                         <a href='Pulpo.html'><img src="images/pulpo.jpg" alt="Pulpo a la Gallega"></a>
+                         <a href='Pulpo.html'><img src="images/pulpo.jpg" alt="Galician-style Octopus"></a>
                          <h3>Pulpo a la Gallega</h3>
                     </div>
-                    <!-- Tarjeta de Receta 2 -->
+                    <!-- Recipe Card 2 -->
                     <div class="col-12 col-sm-6 col-lg-4">
-                         <a href='Pulpo.html'><img src="images/spagueti.jpg" alt="Spagueti a la Boloñesa"></a>
+                         <a href='Pulpo.html'><img src="images/spagueti.jpg" alt="Spaghetti Bolognese"></a>
                          <h3>Spagueti a la Boloñesa</h3>
                     </div>
-                    <!-- Tarjeta de Receta 3 -->
+                    <!-- Recipe Card 3 -->
                     <div class="col-12 col-sm-6 col-lg-4">
-                         <a href='Pulpo.html'><img src="images/flan.jpg" alt="Flan casero"></a>
+                         <a href='Pulpo.html'><img src="images/flan.jpg" alt="Homemade Egg Flan"></a>
                          <h3>Flan de Huevo</h3>
                     </div>
-                    <!-- Tarjeta de Receta 4 -->
+                    <!-- Recipe Card 4 -->
                     <div class="col-12 col-sm-6 col-lg-4">
-                         <a href='Pulpo.html'><img src="images/cremaZanahoria.jpg" alt="Crema de Zanahoria"></a>
+                         <a href='Pulpo.html'><img src="images/cremaZanahoria.jpg" alt="Carrot Cream Soup"></a>
                          <h3>Crema de Zanahoria</h3>
                     </div>
-                    <!-- Tarjeta de Receta 5 -->
+                    <!-- Recipe Card 5 -->
                     <div class="col-12 col-sm-6 col-lg-4">
-                         <a href='Pulpo.html'><img src="images/TartaQueso.jpg" alt="Tarta de Queso"></a>
+                         <a href='Pulpo.html'><img src="images/TartaQueso.jpg" alt="Cheesecake"></a>
                          <h3>Tarta de Queso</h3>
                     </div>
-                    <!-- Tarjeta de Receta 6 -->
+                    <!-- Recipe Card 6 -->
                     <div class="col-12 col-sm-6 col-lg-4">
-                         <a href='Pulpo.html'><img src="images/Salmon.jpg" alt="Salmón al Horno"></a>
+                         <a href='Pulpo.html'><img src="images/Salmon.jpg" alt="Baked Salmon"></a>
                          <h3>Salmón al Horno</h3>
                     </div>
-                    <!-- Tarjeta de Receta 7 -->
+                    <!-- Recipe Card 7 -->
                     <div class="col-12 col-sm-6 col-lg-4">
                          <a href='Pulpo.html'><img src="images/PatatasBravas.jpg" alt="Patatas Bravas"></a>
                          <h3>Patatas Bravas</h3>
                     </div>
-                    <!-- Tarjeta de Receta 8 -->
+                    <!-- Recipe Card 8 -->
                     <div class="col-12 col-sm-6 col-lg-4">
-                         <a href='Pulpo.html'><img src="images/burrito.jpg" alt="Burrito de Frijoles"></a>
+                         <a href='Pulpo.html'><img src="images/burrito.jpg" alt="Bean Burrito"></a>
                          <h3>Burrito de Frijoles</h3>
                     </div>
-                    <!-- Tarjeta de Receta 9 -->
+                    <!-- Recipe Card 9 -->
                     <div class="col-12 col-sm-6 col-lg-4">
-                         <a href='Pulpo.html'><img src="images/PolloCurry.jpg" alt="Pollo al Curry"></a>
+                         <a href='Pulpo.html'><img src="images/PolloCurry.jpg" alt="Chicken Curry"></a>
                          <h3>Pollo al Curry</h3>
                     </div>
                </div>
@@ -149,20 +149,20 @@
      </main>
 
      <!-- =================================================================
-     FOOTER / PIE DE PÁGINA
+     FOOTER
      ================================================================== -->
      <footer class="professional-footer">
           <div class="container">
                <div class="row">
 
-                    <!-- Columna 1: Información del sitio -->
+                    <!-- Column 1: About Us -->
                     <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
                          <h5 class="footer-heading">Secretos de Cocina</h5>
                          <p class="footer-text">Compartiendo la pasión por la cocina casera. Encuentra inspiración,
                               consejos y las mejores recetas para cada ocasión.</p>
                     </div>
 
-                    <!-- Columna 2: Enlaces de interés -->
+                    <!-- Column 2: Quick Links -->
                     <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
                          <h5 class="footer-heading">Enlaces de Interés</h5>
                          <ul class="list-unstyled footer-links">
@@ -173,7 +173,7 @@
                          </ul>
                     </div>
 
-                    <!-- Columna 3: Redes sociales -->
+                    <!-- Column 3: Social Media -->
                     <div class="col-lg-4 col-md-12">
                          <h5 class="footer-heading">Síguenos</h5>
                          <div class="social-icons">
@@ -185,14 +185,13 @@
                     </div>
                </div>
           </div>
-
-          <!-- Barra inferior con el copyright -->
+          <!-- Copyright Bar -->
           <div class="footer-bottom">
                <p>&copy; 2025 Secretos de Cocina. Todos los derechos reservados.</p>
           </div>
      </footer>
 
-     <!-- Scripts de Bootstrap (JavaScript) -->
+     <!-- Bootstrap (JavaScript) Scripts -->
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

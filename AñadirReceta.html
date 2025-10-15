@@ -1,37 +1,37 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 
 <head>
-     <!-- Metadatos básicos del documento -->
+     <!-- Basic document metadata -->
      <meta charset="UTF-8">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <title>Añadir Receta - Secretos de Cocina</title>
 
-     <!-- Icono de la pestaña (Favicon) -->
+     <!-- Tab Icon (Favicon) -->
      <link rel="icon" type="image/png" href="images/logo.jpg">
 
-     <!-- Bootstrap: Framework CSS para estilos y componentes responsivos -->
+     <!-- Bootstrap: CSS framework for responsive components -->
      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-     <!-- Bootstrap Icons: Biblioteca de iconos SVG -->
+     <!-- Bootstrap Icons: SVG icon library -->
      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-     <!-- Hoja de estilos personalizada -->
+     <!-- Custom stylesheet -->
      <link type="text/css" rel="stylesheet" href="Cocina.css" />
 </head>
 
 <body>
 
      <!-- =================================================================
-     HEADER / BARRA DE NAVEGACIÓN
+     HEADER / NAVIGATION BAR
      ================================================================== -->
      <header>
           <nav class="navbar navbar-expand-lg navbar-custom">
                <div class="container-fluid">
-                    <!-- Logotipo -->
+                    <!-- Logo -->
                     <a href="Index.html" class="navbar-logo">
-                         <img src="images/logo.jpg" alt="Logo Secretos de Cocina">
+                         <img src="images/logo.jpg" alt="Secretos de Cocina Logo">
                     </a>
-                    <!-- Menú desplegable de categorías -->
+                    <!-- Category Dropdown -->
                     <div class="dropdown">
                          <button class="btn btn-secondary dropdown-toggle-icon" type="button" id="dropdownMenuButton"
                               data-bs-toggle="dropdown" aria-expanded="false" aria-label="Toggle Categories">
@@ -45,16 +45,16 @@
                          </ul>
                     </div>
 
-                    <!-- Título principal centrado -->
+                    <!-- Centered Main Title -->
                     <a href="Index.html" class="navbar-brand">Secretos De Cocina</a>
 
-                    <!-- Botón toggler para menú en dispositivos móviles -->
+                    <!-- Mobile Nav Toggler -->
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                          <span class="navbar-toggler-icon"></span>
                     </button>
 
-                    <!-- Contenedor de enlaces (oculto) para mantener el título centrado -->
+                    <!-- Placeholder for centering the title -->
                     <div class="collapse navbar-collapse" id="navbarNav">
                          <ul class="navbar-nav ms-auto navbar-placeholder">
                               <li class="nav-item"><a class="nav-link" href="#"></a></li>
@@ -65,34 +65,34 @@
      </header>
 
      <!-- =================================================================
-     CONTENIDO PRINCIPAL - FORMULARIO
+     MAIN CONTENT - FORM
      ================================================================== -->
      <main>
-          <h2 class="Addrecipie">Añade la receta</h2>
+          <h2 class="AddRecipe">Añade la receta</h2>
           <div class="form-container">
 
-               <!-- Formulario para añadir una nueva receta -->
+               <!-- Form to add a new recipe -->
                <form role="form">
-                    <!-- Campo: Nombre de la receta -->
+                    <!-- Field: Recipe Name -->
                     <div class="form-group">
                          <label for="RecipeName">Nombre:</label>
                          <input type="text" class="form-control" id="RecipeName"
                               placeholder="Introduzca el nombre de la receta" required>
                     </div>
-                    <!-- Campo: Descripción -->
+                    <!-- Field: Description -->
                     <div class="form-group">
                          <label for="description" class="form-label">Descripción:</label>
                          <textarea class="form-control" id="description" rows="2"
                               placeholder="Introduzca una breve descripción de la receta" required></textarea>
                     </div>
-                    <!-- Campo: Ingredientes -->
+                    <!-- Field: Ingredients -->
                     <div class="form-group">
                          <label for="ingredients" class="form-label">Ingredientes:</label>
                          <textarea class="form-control" id="ingredients" rows="3"
                               placeholder="Introduzca los ingredientes necesarios, separados por líneas"
                               required></textarea>
                     </div>
-                    <!-- Campo: Categoría (Selector) -->
+                    <!-- Field: Category (Selector) -->
                     <div class="form-group">
                          <label for="category" class="form-label">Categoría:</label>
                          <select class="form-select" id="category" required>
@@ -103,7 +103,7 @@
                               <option value="vegano">Vegano</option>
                          </select>
                     </div>
-                    <!-- Campo: Dificultad (Selector) -->
+                    <!-- Field: Difficulty (Selector) -->
                     <div class="form-group">
                          <label for="difficulty" class="form-label">Dificultad:</label>
                          <select class="form-select" id="difficulty" required>
@@ -113,20 +113,20 @@
                               <option value="dificil">Difícil</option>
                          </select>
                     </div>
-                    <!-- Campo: Tiempo de preparación -->
+                    <!-- Field: Preparation Time -->
                     <div class="form-group">
                          <label for="preparationTime" class="form-label">Tiempo (minutos):</label>
                          <input type="number" class="form-control" id="preparationTime" placeholder="Ej: 30" min="1"
                               required>
                     </div>
-                    <!-- Campo: Subir imagen -->
+                    <!-- Field: Image Upload -->
                     <div class="form-group">
                          <label for="RecipeImage">Imagen:</label>
                          <input type="file" class="form-control" id="RecipeImage" accept="image/*" required>
                     </div>
 
-                    <!-- Botones de acción del formulario -->
-                    <div class="botons">
+                    <!-- Form action buttons -->
+                    <div class="buttons">
                          <div class="button">
                               <button type="submit" class="btn btn-dark">Guardar</button>
                          </div>
@@ -136,27 +136,27 @@
                     </div>
                </form>
 
-               <!-- Sección de imágenes decorativas al lado del formulario -->
-               <aside class="Decor-img">
-                    <img src="images/lubina.jpg" alt="Lubina">
-                    <img src="images/entrecot.jpg" alt="Entrecot">
+               <!-- Decorative images section alongside the form -->
+               <aside class="DecorativeImages">
+                    <img src="images/lubina.jpg" alt="Sea Bass dish">
+                    <img src="images/entrecot.jpg" alt="Ribeye Steak dish">
                </aside>
           </div>
      </main>
 
      <!-- =================================================================
-     FOOTER / PIE DE PÁGINA
+     FOOTER
      ================================================================== -->
      <footer class="professional-footer">
           <div class="container">
                <div class="row">
-                    <!-- Columna 1: Información del sitio -->
+                    <!-- Column 1: Site Information -->
                     <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
                          <h5 class="footer-heading">Secretos de Cocina</h5>
                          <p class="footer-text">Compartiendo la pasión por la cocina casera. Encuentra inspiración,
                               consejos y las mejores recetas para cada ocasión.</p>
                     </div>
-                    <!-- Columna 2: Enlaces de interés -->
+                    <!-- Column 2: Quick Links -->
                     <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
                          <h5 class="footer-heading">Enlaces de Interés</h5>
                          <ul class="list-unstyled footer-links">
@@ -166,7 +166,7 @@
                               <li><a href="#">Contacto</a></li>
                          </ul>
                     </div>
-                    <!-- Columna 3: Redes Sociales -->
+                    <!-- Column 3: Social Media -->
                     <div class="col-lg-4 col-md-12">
                          <h5 class="footer-heading">Síguenos</h5>
                          <div class="social-icons">
@@ -178,13 +178,13 @@
                     </div>
                </div>
           </div>
-          <!-- Barra inferior con el copyright -->
+          <!-- Copyright Bar -->
           <div class="footer-bottom">
                <p>&copy; 2025 Secretos de Cocina. Todos los derechos reservados.</p>
           </div>
      </footer>
 
-     <!-- Scripts de Bootstrap (JavaScript) -->
+     <!-- Bootstrap (JavaScript) Scripts -->
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

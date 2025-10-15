@@ -1,177 +1,178 @@
 /*
 ---
-Archivo: Cocina.css
-Descripción: Hoja de estilos principal para el sitio web "Secretos de Cocina".
+File: Cocina.css
+Description: Main stylesheet for the "Secretos de Cocina" website.
 ---
 */
 
-/* --- ÍNDICE DE ESTILOS ---
-1. ESTILOS GENERALES Y TIPOGRAFÍA
-2. CABECERA (NAVBAR)
-3. PIE DE PÁGINA (FOOTER)
-4. PÁGINA PRINCIPAL (INDEX.HTML)
-    - Botones de Categoría
-    - Banner y Buscador
-    - Grid de Recetas
-5. PÁGINA DE DETALLE DE RECETA (PULPO.HTML)
-    - Contenedor Principal
-    - Títulos y Distintivos
-    - Formulario para Añadir Pasos
-6. PÁGINA DE AÑADIR RECETA (AÑADIRRECETA.HTML)
-    - Contenedor del Formulario
-    - Formulario y Botones
-    - Imágenes Decorativas
+/* --- STYLES INDEX ---
+1. GENERAL STYLES & TYPOGRAPHY
+2. HEADER (NAVBAR)
+3. FOOTER
+4. MAIN PAGE (INDEX.HTML)
+    - Category Buttons
+    - Banner & Search Bar
+    - Recipe Grid
+5. RECIPE DETAIL PAGE (PULPO.HTML)
+    - Main Container
+    - Titles & Badges
+    - Add Step Form
+6. ADD RECIPE PAGE (AÑADIRRECETA.HTML)
+    - Form Container
+    - Form & Buttons
+    - Decorative Images
+7. MEDIA QUERIES FOR RESPONSIVENESS
 --- */
 
 
-/* --- 1. ESTILOS GENERALES Y TIPOGRAFÍA --- */
+/* --- 1. GENERAL STYLES & TYPOGRAPHY --- */
 /*
- * Define la configuración básica para todo el documento.
- * Se asegura de que el body ocupe toda la altura de la ventana
- * y establece un color de fondo general.
+ * Defines the basic setup for the entire document.
+ * Ensures the body takes up the full viewport height
+ * and sets a general background color.
  */
 html,
 body {
     height: 100%;
-    /* Asegura que el contenedor principal ocupe toda la altura de la vista */
+    /* Ensures the main container takes up the full viewport height */
 }
 
 body {
     display: flex;
-    /* Utiliza Flexbox para organizar el contenido principal y el pie de página */
+    /* Uses Flexbox to organize the main content and footer */
     flex-direction: column;
-    /* Apila los elementos verticalmente (cabecera, contenido, footer) */
+    /* Stacks elements vertically (header, content, footer) */
     background-color: #F8E7A5;
-    /* Color de fondo general de la página */
+    /* General page background color */
     margin: 0;
     padding: 0;
 }
 
-/* Importación y definición de la fuente principal para títulos */
+/* Main font definition for titles */
 .dm-serif-display-regular {
     font-family: "DM Serif Display", serif;
     font-weight: 400;
     font-style: normal;
 }
 
-/* Estilo base para los subtítulos h2 */
+/* Base style for h2 subheadings */
 h2 {
     margin-left: 30px;
-    /* Añade un margen izquierdo para alinear con el contenido */
+    /* Adds a left margin to align with content */
 }
 
 
-/* --- 2. CABECERA (NAVBAR) --- */
+/* --- 2. HEADER (NAVBAR) --- */
 /*
- * Estilos para la barra de navegación superior.
- * Incluye el color de fondo, el estilo del título principal (marca)
- * y la personalización del menú desplegable (hamburguesa).
+ * Styles for the top navigation bar.
+ * Includes background color, main title (brand) style,
+ * and customization for the dropdown menu (hamburger).
  */
 
-/* Estilo para el logotipo */
+/* Style for the logo image */
 .navbar-logo img {
     height: 35px;
-    /* Altura fija para el logo */
+    /* Fixed height for the logo */
     width: auto;
-    /* Ancho automático para mantener la proporción */
+    /* Auto width to maintain aspect ratio */
     margin-right: 15px;
-    /* Espacio entre el logo y el menú desplegable */
+    /* Space between the logo and the dropdown menu */
     border-radius: 5px;
-    /* Opcional: bordes ligeramente redondeados si la imagen es cuadrada */
+    /* Optional: slightly rounded corners if the image is square */
 }
 
 .navbar-custom {
     background-color: #222e38;
-    /* Color de fondo oscuro para la barra de navegación */
+    /* Dark background color for the navbar */
     padding: 10px 30px;
-    /* Relleno interior para dar espacio */
+    /* Inner padding for spacing */
 }
 
 .navbar-brand {
     font-family: "DM Serif Display", serif;
-    /* Tipografía especial para el título */
+    /* Special typography for the title */
     font-size: 45px !important;
-    /* Tamaño de fuente grande y con prioridad */
+    /* Large font size with high priority */
     color: whitesmoke !important;
-    /* Color del texto */
+    /* Text color */
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-    /* Sombra para dar profundidad */
+    /* Shadow for depth */
     position: absolute;
-    /* Posicionamiento absoluto para centrarlo fácilmente */
+    /* Absolute positioning for easy centering */
     left: 50%;
     transform: translateX(-50%);
-    /* Truco para centrar el elemento horizontalmente */
+    /* Trick to center the element horizontally */
 }
 
-/* Estilos para el botón del menú desplegable (hamburguesa) */
+/* Styles for the dropdown toggle button (hamburger) */
 .dropdown-toggle-icon {
     background-color: transparent !important;
-    /* Fondo transparente */
+    /* Transparent background */
     border: none !important;
-    /* Sin bordes */
+    /* No borders */
     padding: 0.25rem 0.5rem;
 }
 
 .dropdown-toggle-icon:focus {
     box-shadow: none !important;
-    /* Elimina el resplandor al hacer clic */
+    /* Removes the glow on click */
 }
 
-/* Cambia el color del icono de hamburguesa a blanco */
+/* Changes the hamburger icon color to white */
 .dropdown-toggle-icon .navbar-toggler-icon {
     filter: brightness(0) invert(1);
 }
 
-/* Estilo del menú que se despliega */
+/* Style for the dropdown menu */
 .dropdown-menu {
     background-color: #2d3e4d;
-    /* Fondo oscuro */
+    /* Dark background */
     border: 1px solid #3c5265;
-    /* Borde sutil */
+    /* Subtle border */
 }
 
-/* Estilo de los elementos dentro del menú desplegable */
+/* Style for items within the dropdown menu */
 .dropdown-item {
     color: whitesmoke;
-    /* Color del texto */
+    /* Text color */
     font-weight: bold;
-    /* Texto en negrita */
+    /* Bold text */
 }
 
 .dropdown-item:hover {
     background-color: #3c5265;
-    /* Color al pasar el ratón */
+    /* Hover color */
     color: white;
 }
 
-/* SVG personalizado para el icono del toggler de la navbar (hamburguesa) */
+/* Custom SVG for the navbar toggler icon */
 .navbar-toggler-icon {
     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 0.9)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
 }
 
-/* Oculta los elementos de navegación de la derecha, que solo sirven para centrar el título */
+/* Hides the right-side nav items, used only to center the title */
 .navbar-placeholder {
     visibility: hidden;
 }
 
 
-/* --- 3. PIE DE PÁGINA (FOOTER) --- */
+/* --- 3. FOOTER --- */
 /*
- * Define el aspecto del pie de página profesional.
- * Utiliza Flexbox para posicionarse siempre en la parte inferior.
- * Incluye estilos para los títulos, texto, enlaces e iconos de redes sociales.
+ * Defines the appearance of the professional footer.
+ * Uses Flexbox to always stick to the bottom.
+ * Includes styles for headings, text, links, and social media icons.
  */
 .professional-footer {
     background: #222e38;
-    /* Mismo color oscuro que la cabecera para consistencia */
+    /* Same dark color as the header for consistency */
     color: #adb5bd;
-    /* Color de texto gris claro para el contenido */
+    /* Light gray text color for content */
     padding-top: 50px;
     margin-top: auto;
-    /* Empuja el footer a la parte inferior de la página */
+    /* Pushes the footer to the bottom of the page */
 }
 
-/* Ajusta el contenedor del footer para que no tenga fondo propio */
+/* Adjusts the footer container to have no background of its own */
 .professional-footer .container {
     background-color: transparent;
     margin: 0 auto;
@@ -181,10 +182,10 @@ h2 {
 
 .footer-heading {
     color: #ffffff;
-    /* Títulos en blanco */
+    /* Headings in white */
     margin-bottom: 20px;
     font-family: "DM Serif Display", serif;
-    /* Fuente de títulos */
+    /* Title font */
     font-size: 22px;
 }
 
@@ -195,52 +196,52 @@ h2 {
 
 .footer-links li {
     margin-bottom: 10px;
-    /* Espacio entre los enlaces */
+    /* Spacing between links */
 }
 
 .footer-links a {
     text-decoration: none;
     color: #adb5bd;
-    /* Mismo color que el texto del footer */
+    /* Same color as the footer text */
     transition: color 0.3s ease;
-    /* Transición suave para el cambio de color */
+    /* Smooth transition for color change */
 }
 
 .footer-links a:hover {
     color: #f2b705;
-    /* Color de acento al pasar el ratón */
+    /* Accent color on hover */
 }
 
-/* Estilo de los iconos de redes sociales */
+/* Style for social media icons */
 .social-icons a {
     display: inline-block;
     height: 40px;
     width: 40px;
     background-color: #343a40;
-    /* Fondo gris oscuro */
+    /* Dark gray background */
     color: #ffffff;
-    /* Icono en blanco */
+    /* Icon in white */
     margin-right: 10px;
     border-radius: 50%;
-    /* Forma circular */
+    /* Circular shape */
     text-align: center;
     line-height: 40px;
-    /* Centra el icono verticalmente */
+    /* Vertically centers the icon */
     font-size: 18px;
     transition: background-color 0.3s ease;
 }
 
 .social-icons a:hover {
     background-color: #f2b705;
-    /* Color de acento al pasar el ratón */
+    /* Accent color on hover */
     color: #222e38;
-    /* Color del icono cambia para contrastar */
+    /* Icon color changes for contrast */
 }
 
-/* Barra inferior del pie de página con el copyright */
+/* Bottom bar of the footer with copyright info */
 .footer-bottom {
     background-color: #1c252d;
-    /* Tono ligeramente más oscuro */
+    /* Slightly darker shade */
     text-align: center;
     padding: 15px 0;
     margin-top: 40px;
@@ -252,18 +253,18 @@ h2 {
 }
 
 
-/* --- 4. PÁGINA PRINCIPAL (INDEX.HTML) --- */
+/* --- 4. MAIN PAGE (INDEX.HTML) --- */
 
-/* 4.1 - Botones de Categoría */
+/* 4.1 - Category Buttons */
 .category-buttons {
     display: flex;
     justify-content: center;
-    /* Centra los botones horizontalmente */
+    /* Horizontally centers the buttons */
     gap: 20px;
-    /* Espacio entre los botones */
+    /* Space between buttons */
     padding: 20px 0;
     background-color: #F8E7A5;
-    /* Mismo color que el fondo del body */
+    /* Same as body background */
 }
 
 .category-buttons a {
@@ -273,35 +274,35 @@ h2 {
     font-size: 18px;
     padding: 8px 18px;
     border-radius: 20px;
-    /* Bordes redondeados */
+    /* Rounded corners */
     background-color: rgba(255, 255, 255, 0.5);
-    /* Fondo semitransparente */
+    /* Semi-transparent background */
     transition: all 0.3s ease;
-    /* Transición suave */
+    /* Smooth transition */
 }
 
 .category-buttons a:hover {
     background-color: #222e38;
-    /* Invierte colores al pasar el ratón */
+    /* Inverts colors on hover */
     color: whitesmoke;
 }
 
-/* 4.2 - Banner y Buscador */
+/* 4.2 - Banner & Search Bar */
 .banner {
     background: #F8E7A5;
     padding: 0 60px 25px 60px;
     width: 100%;
     display: flex;
     flex-direction: column;
-    /* Organiza el buscador y el contenido verticalmente */
+    /* Organizes search bar and content vertically */
     align-items: center;
-    /* Centra los elementos */
+    /* Centers the elements */
 }
 
 .search-container {
     width: 100%;
     max-width: 800px;
-    /* Ancho máximo para la barra de búsqueda */
+    /* Max width for the search bar */
     margin-bottom: 25px;
 }
 
@@ -309,55 +310,52 @@ h2 {
     width: 100%;
     padding: 12px 25px;
     border: 1px solid #e6d59a;
-    /* Borde sutil */
+    /* Subtle border */
     border-radius: 50px;
-    /* Barra de búsqueda totalmente redondeada */
+    /* Fully rounded search bar */
     font-size: 17px;
     background-color: #fffaf0;
-    /* Color crema claro */
+    /* Light cream color */
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-    /* Sombra ligera */
+    /* Light shadow */
 }
 
 .banner-content {
+    position: relative;
+    /* Creates a positioning context for the button */
     display: flex;
-    justify-content: space-between;
-    /* Coloca el título a la izquierda y el botón a la derecha */
+    justify-content: center;
+    /* Centers the title naturally */
     align-items: center;
     width: 100%;
 }
 
 .banner-title {
     font-family: "DM Serif Display", serif;
-    /* Misma fuente que el título principal */
     color: #222e38;
     text-align: center;
     font-size: 40px;
     font-weight: bold;
     margin: 0;
-    flex: 1;
-    /* Ocupa el espacio flexible para centrarse correctamente */
-    position: relative;
-    /* Habilita el posicionamiento relativo */
-    left: 77px;
-    /* Desplaza el elemento 50px hacia la derecha desde su posición original */
 }
 
 .banner .btn {
     border-radius: 25px;
-    /* Botón redondeado */
     padding: 10px 25px;
     background-color: #222e38;
     color: white;
     font-size: 18px;
+    position: absolute;
+    /* Positions the button absolutely to the right */
+    right: 0;
 }
 
-/* 4.3 - Grid de Recetas */
+/* 4.3 - Recipe Grid */
 .container {
     width: 80%;
     margin: 20px auto 40px auto;
     background-color: azure;
-    /* Fondo del contenedor de tarjetas */
+    /* Background for the card container */
     border-radius: 10px;
 }
 
@@ -369,28 +367,28 @@ h2 {
 .container img {
     width: 100%;
     height: 200px;
-    /* Altura fija para las imágenes de las recetas */
+    /* Fixed height for recipe images */
     border-radius: 10px;
     display: block;
     margin: 20px 0;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 1);
-    /* Sombra pronunciada para destacar la imagen */
+    /* Pronounced shadow to highlight the image */
 }
 
 
-/* --- 5. PÁGINA DE DETALLE DE RECETA (PULPO.HTML) --- */
+/* --- 5. RECIPE DETAIL PAGE (PULPO.HTML) --- */
 
-/* 5.1 - Contenedor Principal */
+/* 5.1 - Main Container */
 .recipe-container {
     width: 80%;
     margin: 40px auto;
     background-color: azure;
-    /* Mismo color que el contenedor del index */
+    /* Same color as the index container */
     border-radius: 10px;
     padding: 40px;
 }
 
-/* 5.2 - Títulos y Distintivos */
+/* 5.2 - Titles & Badges */
 .dish-title {
     color: black;
     text-decoration: none;
@@ -408,7 +406,7 @@ h2 {
     text-align: left;
     padding-bottom: 10px;
     border-bottom: 2px solid #ddd;
-    /* Línea divisoria para separar secciones */
+    /* Divider line to separate sections */
 }
 
 .recipe-image {
@@ -416,19 +414,20 @@ h2 {
     border: 1px solid #ddd;
 }
 
-/* 5.3 - Formulario para Añadir Pasos */
+/* 5.3 - Add Step Form */
 .add-step-form {
     background-color: #f8f9fa;
-    /* Fondo ligeramente gris para diferenciarlo */
+    /* Slightly gray background to differentiate it */
     padding: 20px;
     border-radius: 8px;
     margin-top: 20px;
 }
 
-/* --- 6. PÁGINA DE AÑADIR RECETA (AÑADIRRECETA.HTML) --- */
-/* ESTILOS PARA ESCRITORIO*/
 
-.Addrecipie {
+/* --- 6. ADD RECIPE PAGE (AÑADIRRECETA.HTML) --- */
+/* DESKTOP STYLES */
+
+.AddRecipe {
     padding-top: 20px;
 }
 
@@ -445,27 +444,27 @@ h2 {
 .form-control {
     border-radius: 25px;
     width: 550px;
-    /* Ancho fijo para pantallas grandes */
+    /* Fixed width for large screens */
 }
 
-.botons {
+.buttons {
     display: flex;
     margin-left: 150px;
     padding: 20px 0 50px 0;
 }
 
-.botons .button {
+.buttons .button {
     padding-right: 50px;
 }
 
-.Decor-img {
+.DecorativeImages {
     width: 325px;
     display: flex;
     flex-direction: column;
     margin-left: 30px;
 }
 
-.Decor-img img {
+.DecorativeImages img {
     width: 100%;
     border-radius: 10px;
     margin-top: 10px;
@@ -473,53 +472,53 @@ h2 {
     box-shadow: 10px 10px 30px rgb(255, 255, 255);
 }
 
-.Decor-img img:first-child {
+.DecorativeImages img:first-child {
     transform: translate(0, 0);
 }
 
-.Decor-img img:nth-child(2) {
+.DecorativeImages img:nth-child(2) {
     transform: translate(225px, 10px);
 }
 
 
-/* --- 7. MEDIA QUERIES PARA RESPONSIVIDAD --- */
+/* --- 7. MEDIA QUERIES FOR RESPONSIVENESS --- */
 /*
- * Contiene las reglas que se aplican solo en pantallas pequeñas
- * para asegurar la correcta visualización del formulario.
+ * Contains rules that apply only on small screens
+ * to ensure the form displays correctly.
  */
 
-/* Se aplica a pantallas con ancho máximo de 991.98px (tablets y móviles) */
+/* Applies to screens with a max-width of 991.98px (tablets and mobile) */
 @media (max-width: 991.98px) {
 
-    /* Centra el contenedor del formulario y ajusta sus márgenes */
+    /* Centers the form container and adjusts its margins */
     .form-container {
         margin: 20px 15px;
         justify-content: center;
     }
 
-    /* Oculta completamente las imágenes decorativas */
-    .Decor-img {
+    /* Completely hides the decorative images */
+    .DecorativeImages {
         display: none;
     }
 
-    /* Hace que el formulario ocupe todo el ancho disponible */
+    /* Makes the form take up the full available width */
     .form-container form {
         width: 100%;
     }
 
-    /* Anula el ancho fijo de los campos para que sean fluidos */
+    /* Overrides the fixed width of form fields to make them fluid */
     .form-control {
         width: 100%;
     }
 
-    /* Elimina el margen de los botones y los centra */
-    .botons {
+    /* Removes the margin from the buttons and centers them */
+    .buttons {
         margin-left: 0;
         justify-content: center;
     }
 
-    .botons .button {
+    .buttons .button {
         padding: 0 10px;
-        /* Ajusta el espaciado entre botones */
+        /* Adjusts spacing between buttons */
     }
 }
