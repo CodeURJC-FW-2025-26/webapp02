@@ -101,11 +101,11 @@ I have been working in several areas of the page, trying to improve its design a
 
 The 5 files I have worked on the most are:
 
-  1. Index.html
-  2. Cocina.css
-  3. Pulpo.html
-  4. PatatasBravas.html
-  5. Añadir receta.html
+  1. Index.html: https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/Index.html
+  2. Cocina.css: https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/Cocina.css
+  3. Pulpo.html: https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/Pulpo.html
+  4. PatatasBravas.html: https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/PatatasBravas.html
+  5. Añadir receta.html: https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/A%C3%B1adirReceta.html
 
 #### Fernán Rama Hombreiro
 
