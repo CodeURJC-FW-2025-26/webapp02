@@ -1,10 +1,3 @@
-/*
----
-File: Cocina.css
-Description: Main stylesheet for the "Secretos de Cocina" website.
----
-*/
-
 /* --- STYLES INDEX ---
 1. GENERAL STYLES & TYPOGRAPHY
 2. HEADER (NAVBAR)
@@ -21,8 +14,6 @@ Description: Main stylesheet for the "Secretos de Cocina" website.
     - Form Container
     - Form & Buttons
     - Decorative Images
-7. MEDIA QUERIES FOR RESPONSIVENESS
---- */
 
 
 /* --- 1. GENERAL STYLES & TYPOGRAPHY --- */
@@ -31,11 +22,6 @@ Description: Main stylesheet for the "Secretos de Cocina" website.
  * Ensures the body takes up the full viewport height
  * and sets a general background color.
  */
-html,
-body {
-    height: 100%;
-    /* Ensures the main container takes up the full viewport height */
-}
 
 body {
     display: flex;
@@ -484,47 +470,4 @@ h2 {
 
 .DecorativeImages img:nth-child(2) {
     transform: translate(225px, 10px);
-}
-
-
-/* --- 7. MEDIA QUERIES FOR RESPONSIVENESS --- */
-/*
- * Contains rules that apply only on small screens
- * to ensure the form displays correctly.
- */
-
-/* Applies to screens with a max-width of 991.98px (tablets and mobile) */
-@media (max-width: 991.98px) {
-
-    /* Centers the form container and adjusts its margins */
-    .form-container {
-        margin: 20px 15px;
-        justify-content: center;
-    }
-
-    /* Completely hides the decorative images */
-    .DecorativeImages {
-        display: none;
-    }
-
-    /* Makes the form take up the full available width */
-    .form-container form {
-        width: 100%;
-    }
-
-    /* Overrides the fixed width of form fields to make them fluid */
-    .form-control {
-        width: 100%;
-    }
-
-    /* Removes the margin from the buttons and centers them */
-    .buttons {
-        margin-left: 0;
-        justify-content: center;
-    }
-
-    .buttons .button {
-        padding: 0 10px;
-        /* Adjusts spacing between buttons */
-    }
 }
