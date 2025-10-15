@@ -1,32 +1,363 @@
-/* --- ESTILOS GENERALES --- */
+/*
+---
+Archivo: Cocina.css
+Descripción: Hoja de estilos principal para el sitio web "Secretos de Cocina".
+---
+*/
+
+/* --- ÍNDICE DE ESTILOS ---
+1. ESTILOS GENERALES Y TIPOGRAFÍA
+2. CABECERA (NAVBAR)
+3. PIE DE PÁGINA (FOOTER)
+4. PÁGINA PRINCIPAL (INDEX.HTML)
+    - Botones de Categoría
+    - Banner y Buscador
+    - Grid de Recetas
+5. PÁGINA DE DETALLE DE RECETA (PULPO.HTML)
+    - Contenedor Principal
+    - Títulos y Distintivos
+    - Formulario para Añadir Pasos
+6. PÁGINA DE AÑADIR RECETA (AÑADIRRECETA.HTML)
+    - Contenedor del Formulario
+    - Formulario y Botones
+    - Imágenes Decorativas
+--- */
+
+
+/* --- 1. ESTILOS GENERALES Y TIPOGRAFÍA --- */
+/*
+ * Define la configuración básica para todo el documento.
+ * Se asegura de que el body ocupe toda la altura de la ventana
+ * y establece un color de fondo general.
+ */
 html,
 body {
     height: 100%;
+    /* Asegura que el contenedor principal ocupe toda la altura de la vista */
 }
 
 body {
     display: flex;
+    /* Utiliza Flexbox para organizar el contenido principal y el pie de página */
     flex-direction: column;
+    /* Apila los elementos verticalmente (cabecera, contenido, footer) */
     background-color: #F8E7A5;
+    /* Color de fondo general de la página */
     margin: 0;
     padding: 0;
 }
 
+/* Importación y definición de la fuente principal para títulos */
 .dm-serif-display-regular {
     font-family: "DM Serif Display", serif;
     font-weight: 400;
     font-style: normal;
 }
 
+/* Estilo base para los subtítulos h2 */
 h2 {
     margin-left: 30px;
+    /* Añade un margen izquierdo para alinear con el contenido */
 }
 
-/* --- ESTILOS ORIGINALES PARA INDEX.HTML --- */
+
+/* --- 2. CABECERA (NAVBAR) --- */
+/*
+ * Estilos para la barra de navegación superior.
+ * Incluye el color de fondo, el estilo del título principal (marca)
+ * y la personalización del menú desplegable (hamburguesa).
+ */
+
+/* Estilo para el logotipo */
+.navbar-logo img {
+    height: 35px;
+    /* Altura fija para el logo */
+    width: auto;
+    /* Ancho automático para mantener la proporción */
+    margin-right: 15px;
+    /* Espacio entre el logo y el menú desplegable */
+    border-radius: 5px;
+    /* Opcional: bordes ligeramente redondeados si la imagen es cuadrada */
+}
+
+.navbar-custom {
+    background-color: #222e38;
+    /* Color de fondo oscuro para la barra de navegación */
+    padding: 10px 30px;
+    /* Relleno interior para dar espacio */
+}
+
+.navbar-brand {
+    font-family: "DM Serif Display", serif;
+    /* Tipografía especial para el título */
+    font-size: 45px !important;
+    /* Tamaño de fuente grande y con prioridad */
+    color: whitesmoke !important;
+    /* Color del texto */
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    /* Sombra para dar profundidad */
+    position: absolute;
+    /* Posicionamiento absoluto para centrarlo fácilmente */
+    left: 50%;
+    transform: translateX(-50%);
+    /* Truco para centrar el elemento horizontalmente */
+}
+
+/* Estilos para el botón del menú desplegable (hamburguesa) */
+.dropdown-toggle-icon {
+    background-color: transparent !important;
+    /* Fondo transparente */
+    border: none !important;
+    /* Sin bordes */
+    padding: 0.25rem 0.5rem;
+}
+
+.dropdown-toggle-icon:focus {
+    box-shadow: none !important;
+    /* Elimina el resplandor al hacer clic */
+}
+
+/* Cambia el color del icono de hamburguesa a blanco */
+.dropdown-toggle-icon .navbar-toggler-icon {
+    filter: brightness(0) invert(1);
+}
+
+/* Estilo del menú que se despliega */
+.dropdown-menu {
+    background-color: #2d3e4d;
+    /* Fondo oscuro */
+    border: 1px solid #3c5265;
+    /* Borde sutil */
+}
+
+/* Estilo de los elementos dentro del menú desplegable */
+.dropdown-item {
+    color: whitesmoke;
+    /* Color del texto */
+    font-weight: bold;
+    /* Texto en negrita */
+}
+
+.dropdown-item:hover {
+    background-color: #3c5265;
+    /* Color al pasar el ratón */
+    color: white;
+}
+
+/* SVG personalizado para el icono del toggler de la navbar (hamburguesa) */
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 0.9)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+/* Oculta los elementos de navegación de la derecha, que solo sirven para centrar el título */
+.navbar-placeholder {
+    visibility: hidden;
+}
+
+
+/* --- 3. PIE DE PÁGINA (FOOTER) --- */
+/*
+ * Define el aspecto del pie de página profesional.
+ * Utiliza Flexbox para posicionarse siempre en la parte inferior.
+ * Incluye estilos para los títulos, texto, enlaces e iconos de redes sociales.
+ */
+.professional-footer {
+    background: #222e38;
+    /* Mismo color oscuro que la cabecera para consistencia */
+    color: #adb5bd;
+    /* Color de texto gris claro para el contenido */
+    padding-top: 50px;
+    margin-top: auto;
+    /* Empuja el footer a la parte inferior de la página */
+}
+
+/* Ajusta el contenedor del footer para que no tenga fondo propio */
+.professional-footer .container {
+    background-color: transparent;
+    margin: 0 auto;
+    padding: 0;
+    width: 100%;
+}
+
+.footer-heading {
+    color: #ffffff;
+    /* Títulos en blanco */
+    margin-bottom: 20px;
+    font-family: "DM Serif Display", serif;
+    /* Fuente de títulos */
+    font-size: 22px;
+}
+
+.footer-text {
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.footer-links li {
+    margin-bottom: 10px;
+    /* Espacio entre los enlaces */
+}
+
+.footer-links a {
+    text-decoration: none;
+    color: #adb5bd;
+    /* Mismo color que el texto del footer */
+    transition: color 0.3s ease;
+    /* Transición suave para el cambio de color */
+}
+
+.footer-links a:hover {
+    color: #f2b705;
+    /* Color de acento al pasar el ratón */
+}
+
+/* Estilo de los iconos de redes sociales */
+.social-icons a {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+    background-color: #343a40;
+    /* Fondo gris oscuro */
+    color: #ffffff;
+    /* Icono en blanco */
+    margin-right: 10px;
+    border-radius: 50%;
+    /* Forma circular */
+    text-align: center;
+    line-height: 40px;
+    /* Centra el icono verticalmente */
+    font-size: 18px;
+    transition: background-color 0.3s ease;
+}
+
+.social-icons a:hover {
+    background-color: #f2b705;
+    /* Color de acento al pasar el ratón */
+    color: #222e38;
+    /* Color del icono cambia para contrastar */
+}
+
+/* Barra inferior del pie de página con el copyright */
+.footer-bottom {
+    background-color: #1c252d;
+    /* Tono ligeramente más oscuro */
+    text-align: center;
+    padding: 15px 0;
+    margin-top: 40px;
+    font-size: 14px;
+}
+
+.footer-bottom p {
+    margin: 0;
+}
+
+
+/* --- 4. PÁGINA PRINCIPAL (INDEX.HTML) --- */
+
+/* 4.1 - Botones de Categoría */
+.category-buttons {
+    display: flex;
+    justify-content: center;
+    /* Centra los botones horizontalmente */
+    gap: 20px;
+    /* Espacio entre los botones */
+    padding: 20px 0;
+    background-color: #F8E7A5;
+    /* Mismo color que el fondo del body */
+}
+
+.category-buttons a {
+    text-decoration: none;
+    color: #222e38;
+    font-weight: bold;
+    font-size: 18px;
+    padding: 8px 18px;
+    border-radius: 20px;
+    /* Bordes redondeados */
+    background-color: rgba(255, 255, 255, 0.5);
+    /* Fondo semitransparente */
+    transition: all 0.3s ease;
+    /* Transición suave */
+}
+
+.category-buttons a:hover {
+    background-color: #222e38;
+    /* Invierte colores al pasar el ratón */
+    color: whitesmoke;
+}
+
+/* 4.2 - Banner y Buscador */
+.banner {
+    background: #F8E7A5;
+    padding: 0 60px 25px 60px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    /* Organiza el buscador y el contenido verticalmente */
+    align-items: center;
+    /* Centra los elementos */
+}
+
+.search-container {
+    width: 100%;
+    max-width: 800px;
+    /* Ancho máximo para la barra de búsqueda */
+    margin-bottom: 25px;
+}
+
+.search-container input {
+    width: 100%;
+    padding: 12px 25px;
+    border: 1px solid #e6d59a;
+    /* Borde sutil */
+    border-radius: 50px;
+    /* Barra de búsqueda totalmente redondeada */
+    font-size: 17px;
+    background-color: #fffaf0;
+    /* Color crema claro */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    /* Sombra ligera */
+}
+
+.banner-content {
+    display: flex;
+    justify-content: space-between;
+    /* Coloca el título a la izquierda y el botón a la derecha */
+    align-items: center;
+    width: 100%;
+}
+
+.banner-title {
+    font-family: "DM Serif Display", serif;
+    /* Misma fuente que el título principal */
+    color: #222e38;
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+    margin: 0;
+    flex: 1;
+    /* Ocupa el espacio flexible para centrarse correctamente */
+    position: relative;
+    /* Habilita el posicionamiento relativo */
+    left: 77px;
+    /* Desplaza el elemento 50px hacia la derecha desde su posición original */
+}
+
+.banner .btn {
+    border-radius: 25px;
+    /* Botón redondeado */
+    padding: 10px 25px;
+    background-color: #222e38;
+    color: white;
+    font-size: 18px;
+}
+
+/* 4.3 - Grid de Recetas */
 .container {
     width: 80%;
     margin: 20px auto 40px auto;
     background-color: azure;
+    /* Fondo del contenedor de tarjetas */
     border-radius: 10px;
 }
 
@@ -38,13 +369,65 @@ h2 {
 .container img {
     width: 100%;
     height: 200px;
+    /* Altura fija para las imágenes de las recetas */
     border-radius: 10px;
     display: block;
     margin: 20px 0;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 1);
+    /* Sombra pronunciada para destacar la imagen */
 }
 
-/* --- ESTILOS ORIGINALES PARA AÑADIRRECETA.HTML --- */
+
+/* --- 5. PÁGINA DE DETALLE DE RECETA (PULPO.HTML) --- */
+
+/* 5.1 - Contenedor Principal */
+.recipe-container {
+    width: 80%;
+    margin: 40px auto;
+    background-color: azure;
+    /* Mismo color que el contenedor del index */
+    border-radius: 10px;
+    padding: 40px;
+}
+
+/* 5.2 - Títulos y Distintivos */
+.dish-title {
+    color: black;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 40px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.dish-subtitle {
+    color: black;
+    font-size: 28px;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    text-align: left;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #ddd;
+    /* Línea divisoria para separar secciones */
+}
+
+.recipe-image {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border: 1px solid #ddd;
+}
+
+/* 5.3 - Formulario para Añadir Pasos */
+.add-step-form {
+    background-color: #f8f9fa;
+    /* Fondo ligeramente gris para diferenciarlo */
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+/* --- 6. PÁGINA DE AÑADIR RECETA (AÑADIRRECETA.HTML) --- */
+/* ESTILOS PARA ESCRITORIO*/
+
 .Addrecipie {
     padding-top: 20px;
 }
@@ -56,11 +439,13 @@ h2 {
 
 .form-group {
     padding: 3px;
+    margin-bottom: 10px;
 }
 
 .form-control {
     border-radius: 25px;
     width: 550px;
+    /* Ancho fijo para pantallas grandes */
 }
 
 .botons {
@@ -96,239 +481,45 @@ h2 {
     transform: translate(225px, 10px);
 }
 
-/* --- ESTILOS ORIGINALES PARA PULPO.HTML --- */
-.recipe-container {
-    width: 80%;
-    margin: 40px auto;
-    background-color: azure;
-    border-radius: 10px;
-    padding: 40px;
-}
 
-.dish-title {
-    color: black;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 40px;
-    text-align: center;
-    margin-bottom: 20px;
-}
+/* --- 7. MEDIA QUERIES PARA RESPONSIVIDAD --- */
+/*
+ * Contiene las reglas que se aplican solo en pantallas pequeñas
+ * para asegurar la correcta visualización del formulario.
+ */
 
-.dish-subtitle {
-    color: black;
-    font-size: 28px;
-    margin-top: 30px;
-    margin-bottom: 15px;
-    text-align: left;
-    padding-bottom: 10px;
-    border-bottom: 2px solid #ddd;
-}
+/* Se aplica a pantallas con ancho máximo de 991.98px (tablets y móviles) */
+@media (max-width: 991.98px) {
 
-.recipe-image {
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    border: 1px solid #ddd;
-}
+    /* Centra el contenedor del formulario y ajusta sus márgenes */
+    .form-container {
+        margin: 20px 15px;
+        justify-content: center;
+    }
 
-.add-step-form {
-    background-color: #f8f9fa;
-    padding: 20px;
-    border-radius: 8px;
-    margin-top: 20px;
-}
+    /* Oculta completamente las imágenes decorativas */
+    .Decor-img {
+        display: none;
+    }
 
-/* --- ESTILOS - NUEVA CABECERA --- */
-.navbar-custom {
-    background-color: #222e38;
-    padding: 10px 30px;
-}
+    /* Hace que el formulario ocupe todo el ancho disponible */
+    .form-container form {
+        width: 100%;
+    }
 
-.navbar-brand {
-    font-family: "DM Serif Display", serif;
-    font-size: 45px !important;
-    color: whitesmoke !important;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-}
+    /* Anula el ancho fijo de los campos para que sean fluidos */
+    .form-control {
+        width: 100%;
+    }
 
-.dropdown-toggle-icon {
-    background-color: transparent !important;
-    border: none !important;
-    padding: 0.25rem 0.5rem;
-}
+    /* Elimina el margen de los botones y los centra */
+    .botons {
+        margin-left: 0;
+        justify-content: center;
+    }
 
-.dropdown-toggle-icon:focus {
-    box-shadow: none !important;
-}
-
-.dropdown-toggle-icon .navbar-toggler-icon {
-    filter: brightness(0) invert(1);
-}
-
-.dropdown-menu {
-    background-color: #2d3e4d;
-    border: 1px solid #3c5265;
-}
-
-.dropdown-item {
-    color: whitesmoke;
-    font-weight: bold;
-}
-
-.dropdown-item:hover {
-    background-color: #3c5265;
-    color: white;
-}
-
-.navbar-toggler-icon {
-    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 0.9)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
-}
-
-/* --- NUEVOS BOTONES DE CATEGORÍA Y BUSCADOR (SOLO PARA INDEX) --- */
-.category-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    padding: 20px 0;
-    background-color: #F8E7A5;
-}
-
-.category-buttons a {
-    text-decoration: none;
-    color: #222e38;
-    font-weight: bold;
-    font-size: 18px;
-    padding: 8px 18px;
-    border-radius: 20px;
-    background-color: rgba(255, 255, 255, 0.5);
-    transition: all 0.3s ease;
-}
-
-.category-buttons a:hover {
-    background-color: #222e38;
-    color: whitesmoke;
-}
-
-.banner {
-    background: #F8E7A5;
-    padding: 0 60px 25px 60px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.search-container {
-    width: 100%;
-    max-width: 800px;
-    margin-bottom: 25px;
-}
-
-.search-container input {
-    width: 100%;
-    padding: 12px 25px;
-    border: 1px solid #e6d59a;
-    border-radius: 50px;
-    font-size: 17px;
-    background-color: #fffaf0;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-}
-
-.banner-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-}
-
-.banner h2 {
-    color: #222e38;
-    text-align: center;
-    font-size: 40px;
-    font-weight: bold;
-    margin: 0;
-    flex: 1;
-}
-
-.banner .btn {
-    border-radius: 25px;
-    padding: 10px 25px;
-    background-color: #222e38;
-    color: white;
-    font-size: 18px;
-}
-
-/* --- PIE DE PÁGINA --- */
-.professional-footer {
-    background: #222e38;
-    color: #adb5bd;
-    padding-top: 50px;
-    margin-top: auto;
-    /* Empuja el footer a la parte inferior */
-}
-
-.professional-footer .container {
-    background-color: transparent;
-    margin: 0 auto;
-    padding: 0;
-    width: 100%;
-    /* Asegura que ocupe el espacio disponible */
-}
-
-.footer-heading {
-    color: #ffffff;
-    margin-bottom: 20px;
-    font-family: "DM Serif Display", serif;
-    font-size: 22px;
-}
-
-.footer-text {
-    font-size: 15px;
-    line-height: 1.6;
-}
-
-.footer-links li {
-    margin-bottom: 10px;
-}
-
-.footer-links a {
-    text-decoration: none;
-    color: #adb5bd;
-    transition: color 0.3s ease;
-}
-
-.footer-links a:hover {
-    color: #f2b705;
-}
-
-.social-icons a {
-    display: inline-block;
-    height: 40px;
-    width: 40px;
-    background-color: #343a40;
-    color: #ffffff;
-    margin-right: 10px;
-    border-radius: 50%;
-    text-align: center;
-    line-height: 40px;
-    font-size: 18px;
-    transition: background-color 0.3s ease;
-}
-
-.social-icons a:hover {
-    background-color: #f2b705;
-    color: #222e38;
-}
-
-.footer-bottom {
-    background-color: #1c252d;
-    text-align: center;
-    padding: 15px 0;
-    margin-top: 40px;
-    font-size: 14px;
-}
-
-.footer-bottom p {
-    margin: 0;
+    .botons .button {
+        padding: 0 10px;
+        /* Ajusta el espaciado entre botones */
+    }
 }

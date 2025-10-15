@@ -1,17 +1,3 @@
 COSAS QUE FALTAN
 
-//Características técnicas de la implementación//
-
-    - Todas las páginas responsive (no sé si ya funciona)
-
     - Código y comentarios en inglés (lo cambia fernán después)
-
-    - ¿Se ha redefinido el aspecto gráfico de bootstrap? (comprobadlo)
-
-    - ¿Se ha hecho un uso adecuado de clases CSS para no repetir estilos? (Punto de la plantilla, comprobadlo)
-
-    - Pasar todo el estilo del HTML al CSS (fernán)
-
-    - Logotipo en la cabecera y en el head (lo pone fernán, ya hizo el logo)
-
-    - Se utilizará Bootstrap. Se permite el uso de una plantilla de Bootstrap, pero será necesario modificarla para cumplir con los objetivos de la práctica. (no sé, por si aca)
