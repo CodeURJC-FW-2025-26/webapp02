@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+
+{{> partials/header}}
+
+<!-- =================================================================
+     MAIN CONTENT - FORM
+     ================================================================== -->
+<main>
+     <h2 class="AddRecipe">Añade la receta</h2>
+     <div class="form-container">
+
+          <!-- Form to add a new recipe -->
+          <form role="form">
+               <!-- Field: Recipe Name -->
+               <div class="form-group">
+                    <label for="RecipeName">Nombre:</label>
+                    <input type="text" class="form-control" id="RecipeName"
+                         placeholder="Introduzca el nombre de la receta" required>
+               </div>
+               <!-- Field: Description -->
+               <div class="form-group">
+                    <label for="description" class="form-label">Descripción:</label>
+                    <textarea class="form-control" id="description" rows="2"
+                         placeholder="Introduzca una breve descripción de la receta" required></textarea>
+               </div>
+               <!-- Field: Ingredients -->
+               <div class="form-group">
+                    <label for="ingredients" class="form-label">Ingredientes:</label>
+                    <textarea class="form-control" id="ingredients" rows="3"
+                         placeholder="Introduzca los ingredientes necesarios, separados por líneas" required></textarea>
+               </div>
+               <!-- Field: Category (Selector) -->
+               <div class="form-group">
+                    <label for="category" class="form-label">Categoría:</label>
+                    <select class="form-select" id="category" required>
+                         <option value="" selected disabled>Seleccione una categoría</option>
+                         <option value="entrante">Entrante</option>
+                         <option value="principal">Plato Principal</option>
+                         <option value="postre">Postre</option>
+                         <option value="vegano">Vegano</option>
+                    </select>
+               </div>
+               <!-- Field: Difficulty (Selector) -->
+               <div class="form-group">
+                    <label for="difficulty" class="form-label">Dificultad:</label>
+                    <select class="form-select" id="difficulty" required>
+                         <option value="" selected disabled>Seleccione una dificultad</option>
+                         <option value="facil">Fácil</option>
+                         <option value="media">Media</option>
+                         <option value="dificil">Difícil</option>
+                    </select>
+               </div>
+               <!-- Field: Preparation Time -->
+               <div class="form-group">
+                    <label for="preparationTime" class="form-label">Tiempo (minutos):</label>
+                    <input type="number" class="form-control" id="preparationTime" placeholder="Ej: 30" min="1"
+                         required>
+               </div>
+               <!-- Field: Image Upload -->
+               <div class="form-group">
+                    <label for="RecipeImage">Imagen:</label>
+                    <input type="file" class="form-control" id="RecipeImage" accept="image/*" required>
+               </div>
+
+               <!-- Form action buttons -->
+               <div class="buttons">
+                    <div class="button">
+                         <button type="submit" class="btn btn-dark">Guardar</button>
+                    </div>
+                    <div class="button">
+                         <a class="btn btn-dark" href="index.html">Cancelar</a>
+                    </div>
+               </div>
+          </form>
+
+          <!-- Decorative images section alongside the form -->
+          <aside class="DecorativeImages">
+               <img src="images/lubina.jpg" alt="Sea Bass dish">
+               <img src="images/entrecot.jpg" alt="Ribeye Steak dish">
+          </aside>
+     </div>
+</main>
+
+{{> partials/footer}}
+
+</html>
