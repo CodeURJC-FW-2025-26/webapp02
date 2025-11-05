@@ -1,0 +1,182 @@
+[
+    {
+        "name": "Pulpo a la Gallega",
+        "description": "Un plato clásico de la gastronomía gallega, perfecto como tapa o plato principal. Su secreto reside en la cocción perfecta del pulpo y la calidad del pimentón.",
+        "category": "entrante",
+        "preparation_time": 50,
+        "difficulty": "media",
+        "image": "pulpo.jpg",
+        "steps": [
+            {
+                "order": 1,
+                "name": "Descongelar",
+                "description": "Descongela el pulpo en la nevera 24 horas antes."
+            },
+            {
+                "order": 2,
+                "name": "Asustar y cocer",
+                "description": "Pon a hervir agua y 'asusta' el pulpo 3 veces antes de cocerlo durante 30-40 minutos."
+            }
+        ]
+    },
+    {
+        "name": "Spagueti a la Boloñesa",
+        "description": "Un favorito de la cocina italiana que gusta a grandes y pequeños. La clave es un sofrito lento y una buena carne.",
+        "category": "principal",
+        "preparation_time": 45,
+        "difficulty": "facil",
+        "image": "spagueti.jpg",
+        "steps": [
+            {
+                "order": 1,
+                "name": "Preparar sofrito",
+                "description": "Picar finamente cebolla, zanahoria y apio y sofreír a fuego lento."
+            },
+            {
+                "order": 2,
+                "name": "Cocinar la carne",
+                "description": "Añadir la carne picada, dorar y luego agregar tomate triturado y vino tinto."
+            }
+        ]
+    },
+    {
+        "name": "Flan de Huevo Casero",
+        "description": "El postre tradicional por excelencia. Suave, cremoso y con un delicioso caramelo líquido. Imposible resistirse.",
+        "category": "postre",
+        "preparation_time": 60,
+        "difficulty": "facil",
+        "image": "flan.jpg",
+        "steps": [
+            {
+                "order": 1,
+                "name": "Hacer el caramelo",
+                "description": "Derretir azúcar en un cazo a fuego bajo hasta obtener un caramelo dorado y verter en el molde."
+            },
+            {
+                "order": 2,
+                "name": "Mezclar y hornear",
+                "description": "Batir huevos, leche y azúcar. Verter en el molde y hornear al baño maría."
+            }
+        ]
+    },
+    {
+        "name": "Crema de Zanahoria",
+        "description": "Una crema suave, saludable y llena de sabor. Ideal para una cena ligera o como primer plato reconfortante.",
+        "category": "entrante",
+        "preparation_time": 30,
+        "difficulty": "facil",
+        "image": "cremaZanahoria.jpg",
+        "steps": [
+            {
+                "order": 1,
+                "name": "Sofreír las verduras",
+                "description": "Pochar cebolla y puerro, luego añadir las zanahorias en rodajas y rehogar."
+            },
+            {
+                "order": 2,
+                "name": "Cocer y triturar",
+                "description": "Cubrir con caldo de verduras, cocer hasta que la zanahoria esté tierna y triturar finamente."
+            }
+        ]
+    },
+    {
+        "name": "Tarta de Queso La Viña",
+        "description": "Famosa por su exterior tostado y su interior increíblemente cremoso. Una tarta de queso diferente y adictiva.",
+        "category": "postre",
+        "preparation_time": 55,
+        "difficulty": "media",
+        "image": "tartaQueso.jpg",
+        "steps": [
+            {
+                "order": 1,
+                "name": "Mezclar ingredientes",
+                "description": "Batir queso crema, nata, azúcar, huevos y una cucharada de harina hasta obtener una mezcla homogénea."
+            },
+            {
+                "order": 2,
+                "name": "Hornear a alta temperatura",
+                "description": "Verter en un molde con papel de horno y hornear a 200°C hasta que esté bien dorada por fuera."
+            }
+        ]
+    },
+    {
+        "name": "Salmón al Horno con Verduras",
+        "description": "Una receta sana, rápida y deliciosa. El salmón queda jugoso y las verduras asadas son el acompañamiento perfecto.",
+        "category": "principal",
+        "preparation_time": 25,
+        "difficulty": "facil",
+        "image": "salmon.jpg",
+        "steps": [
+            {
+                "order": 1,
+                "name": "Preparar la base",
+                "description": "Cortar verduras variadas (pimiento, cebolla, calabacín) y ponerlas en una bandeja de horno con aceite y sal."
+            },
+            {
+                "order": 2,
+                "name": "Hornear el salmón",
+                "description": "Colocar el lomo de salmón sobre las verduras y hornear todo junto durante 15-20 minutos a 180°C."
+            }
+        ]
+    },
+    {
+        "name": "Patatas Bravas",
+        "description": "La tapa más icónica de España. Patatas fritas crujientes por fuera y tiernas por dentro, con una salsa picante irresistible.",
+        "category": "entrante",
+        "preparation_time": 40,
+        "difficulty": "media",
+        "image": "patatasBravas.jpg",
+        "steps": [
+            {
+                "order": 1,
+                "name": "Freír las patatas",
+                "description": "Cortar las patatas en cubos irregulares y freírlas primero a baja temperatura y luego a alta para que queden perfectas."
+            },
+            {
+                "order": 2,
+                "name": "Preparar la salsa brava",
+                "description": "Hacer un sofrito con ajo, añadir pimentón picante, harina y caldo de pollo, y cocinar hasta espesar."
+            }
+        ]
+    },
+    {
+        "name": "Burrito de Frijoles Vegano",
+        "description": "Un burrito lleno de sabor, nutritivo y 100% vegetal. Perfecto para una comida rápida, saludable y contundente.",
+        "category": "vegano",
+        "preparation_time": 20,
+        "difficulty": "facil",
+        "image": "burrito.jpg",
+        "steps": [
+            {
+                "order": 1,
+                "name": "Saltear el relleno",
+                "description": "Saltear pimiento, cebolla y maíz. Añadir frijoles negros, arroz cocido y especias al gusto."
+            },
+            {
+                "order": 2,
+                "name": "Montar y calentar",
+                "description": "Rellenar tortillas de trigo con la mezcla, enrollar y calentar en una sartén por ambos lados."
+            }
+        ]
+    },
+    {
+        "name": "Pollo al Curry",
+        "description": "Un plato exótico y aromático que te transportará a la India. Cremoso, especiado y absolutamente delicioso con arroz basmati.",
+        "category": "principal",
+        "preparation_time": 35,
+        "difficulty": "media",
+        "image": "polloCurry.jpg",
+        "steps": [
+            {
+                "order": 1,
+                "name": "Dorar el pollo",
+                "description": "Cortar el pollo en dados, salpimentar y dorar en una sartén con un poco de aceite."
+            },
+            {
+                "order": 2,
+                "name": "Hacer la salsa",
+                "description": "En la misma sartén, sofreír cebolla, añadir curry en polvo, leche de coco y cocinar hasta que la salsa espese."
+            }
+        ]
+    }
+]

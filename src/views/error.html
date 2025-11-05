@@ -1,0 +1,27 @@
+<!-- Generic page that shows any type of error occurred -->
+
+{{> partials/header}}
+
+<main class="container">
+    <div class="feedback-page">
+
+        <!-- Ícono de Error -->
+        <i class="bi bi-exclamation-triangle-fill feedback-icon feedback-icon--error"></i>
+
+        <!-- Título del Error -->
+        <h1 class="feedback-title feedback-title--error">¡Ha Ocurrido un Error!</h1>
+
+        <!-- Mensaje de error dinámico -->
+        <p class="feedback-text">{{errorMessage}}</p>
+
+        <hr class="my-4" style="width: 50%;">
+
+        <p>Por favor, revisa la información e inténtalo de nuevo.</p>
+
+        <!-- Botón para volver atrás -->
+        <a href="javascript:history.back()" class="btn btn-primary btn-lg mt-3">Volver al Formulario</a>
+
+    </div>
+</main>
+
+{{> partials/footer}}

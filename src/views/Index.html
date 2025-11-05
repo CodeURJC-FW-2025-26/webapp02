@@ -2,81 +2,90 @@
 
 {{> partials/header}}
 
-<!-- =================================================================
-     MAIN CONTENT
-     ================================================================== -->
 <main>
-     <!-- Category buttons section (below the header) -->
-     <section class="category-buttons">
-          <a href="#">Entrantes</a>
-          <a href="#">Platos Principales</a>
-          <a href="#">Postres</a>
-          <a href="#">Veganos</a>
-     </section>
-
      <!-- Banner with search bar and add button -->
      <section class="banner">
-          <!-- Redesigned search bar -->
+          <!-- Search Form -->
           <div class="search-container">
-               <input type="text" placeholder="Buscar una receta...">
+               <form action="/" method="GET" role="search">
+                    <input type="text" name="search" placeholder="Buscar una receta por nombre..."
+                         value="{{searchQuery}}">
+               </form>
           </div>
           <!-- Recipe section title and action button -->
           <div class="banner-content">
                <h2 class="banner-title">RECETAS RECOMENDADAS</h2>
-               <a class="btn btn-dark" href="AñadirReceta.html">Añadir receta</a>
+               <a class="btn btn-dark" href="/receta/nueva">Añadir receta</a>
           </div>
+     </section>
+
+     <!-- Category Filter Buttons -->
+     <section class="category-buttons">
+          <a href="/">Todas</a>
+          <a href="/?category=entrante">Entrantes</a>
+          <a href="/?category=principal">Platos Principales</a>
+          <a href="/?category=postre">Postres</a>
+          <a href="/?category=vegano">Veganos</a>
      </section>
 
      <!-- Recommended recipes grid -->
      <section class="container">
           <div class="row">
-               <!-- Recipe Card 1 -->
+               {{#recipes}}
+               <!-- Loop: This will repeat for each recipe in the 'recipes' array -->
                <div class="col-12 col-sm-6 col-lg-4">
-                    <a href='Pulpo.html'><img src="images/pulpo.jpg" alt="Galician-style Octopus"></a>
-                    <h3>Pulpo a la Gallega</h3>
+                    <a href='/receta/{{_id}}'><img src="{{image}}" alt="{{name}}"></a>
+                    <h3>{{name}}</h3>
                </div>
-               <!-- Recipe Card 2 -->
-               <div class="col-12 col-sm-6 col-lg-4">
-                    <a href='Pulpo.html'><img src="images/spagueti.jpg" alt="Spaghetti Bolognese"></a>
-                    <h3>Spagueti a la Boloñesa</h3>
+               {{/recipes}}
+
+               {{^recipes}}
+               <!-- This is shown if the 'recipes' array is empty -->
+               <div class="col-12 text-center my-5">
+                    <h3>No se encontraron recetas que coincidan con tu búsqueda.</h3>
                </div>
-               <!-- Recipe Card 3 -->
-               <div class="col-12 col-sm-6 col-lg-4">
-                    <a href='Pulpo.html'><img src="images/flan.jpg" alt="Homemade Egg Flan"></a>
-                    <h3>Flan de Huevo</h3>
-               </div>
-               <!-- Recipe Card 4 -->
-               <div class="col-12 col-sm-6 col-lg-4">
-                    <a href='Pulpo.html'><img src="images/cremaZanahoria.jpg" alt="Carrot Cream Soup"></a>
-                    <h3>Crema de Zanahoria</h3>
-               </div>
-               <!-- Recipe Card 5 -->
-               <div class="col-12 col-sm-6 col-lg-4">
-                    <a href='Pulpo.html'><img src="images/TartaQueso.jpg" alt="Cheesecake"></a>
-                    <h3>Tarta de Queso</h3>
-               </div>
-               <!-- Recipe Card 6 -->
-               <div class="col-12 col-sm-6 col-lg-4">
-                    <a href='Pulpo.html'><img src="images/Salmon.jpg" alt="Baked Salmon"></a>
-                    <h3>Salmón al Horno</h3>
-               </div>
-               <!-- Recipe Card 7 -->
-               <div class="col-12 col-sm-6 col-lg-4">
-                    <a href='Pulpo.html'><img src="images/PatatasBravas.jpg" alt="Patatas Bravas"></a>
-                    <h3>Patatas Bravas</h3>
-               </div>
-               <!-- Recipe Card 8 -->
-               <div class="col-12 col-sm-6 col-lg-4">
-                    <a href='Pulpo.html'><img src="images/burrito.jpg" alt="Bean Burrito"></a>
-                    <h3>Burrito de Frijoles</h3>
-               </div>
-               <!-- Recipe Card 9 -->
-               <div class="col-12 col-sm-6 col-lg-4">
-                    <a href='Pulpo.html'><img src="images/PolloCurry.jpg" alt="Chicken Curry"></a>
-                    <h3>Pollo al Curry</h3>
-               </div>
+               {{/recipes}}
           </div>
      </section>
+
+     <!-- Pagination -->
+     <!-- Solo mostramos la paginación si hay recetas -->
+     {{#recipes}}
+     <nav aria-label="Paginación de recetas" class="d-flex justify-content-center mb-5">
+          <ul class="pagination">
+               <!-- Botón "Anterior" -->
+               {{#hasPrevPage}}
+               <li class="page-item">
+                    <a class="page-link"
+                         href="/?page={{prevPage}}&search={{searchQuery}}&category={{categoryQuery}}">Anterior</a>
+               </li>
+               {{/hasPrevPage}}
+               {{^hasPrevPage}}
+               <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Anterior</a>
+               </li>
+               {{/hasPrevPage}}
+
+               <!-- Indicador de página actual -->
+               <li class="page-item active" aria-current="page">
+                    <a class="page-link" href="#">Página {{currentPage}} de {{totalPages}}</a>
+               </li>
+
+               <!-- Botón "Siguiente" -->
+               {{#hasNextPage}}
+               <li class="page-item">
+                    <a class="page-link"
+                         href="/?page={{nextPage}}&search={{searchQuery}}&category={{categoryQuery}}">Siguiente</a>
+               </li>
+               {{/hasNextPage}}
+               {{^hasNextPage}}
+               <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Siguiente</a>
+               </li>
+               {{/hasNextPage}}
+          </ul>
+     </nav>
+     {{/recipes}}
 </main>
 
 {{> partials/footer}}

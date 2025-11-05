@@ -471,3 +471,52 @@ h2 {
 .DecorativeImages img:nth-child(2) {
     transform: translate(225px, 10px);
 }
+
+/* --- 7. PÁGINAS DE ERROR Y CONFIRMACIÓN --- */
+/*
+ * Estilos para las páginas de feedback al usuario, como la página de error.
+ * Se busca consistencia y claridad visual.
+ */
+
+.feedback-page {
+    /* Contenedor principal para la página de error o confirmación */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 3rem 1rem;
+    /* Espaciado interno generoso */
+}
+
+.feedback-icon {
+    font-size: 4rem;
+    /* Tamaño del ícono, movido desde el estilo en línea */
+    margin-bottom: 1rem;
+}
+
+.feedback-title {
+    font-family: "DM Serif Display", serif;
+    /* Mantenemos la consistencia de la fuente */
+    font-weight: bold;
+    font-size: 2.5rem;
+    /* Un tamaño de fuente grande y prominente */
+}
+
+.feedback-text {
+    font-size: 1.25rem;
+    /* Texto principal legible */
+    max-width: 600px;
+    /* Evita que las líneas de texto sean demasiado largas */
+    margin-top: 1rem;
+}
+
+/* Colores específicos para la página de error */
+.feedback-icon--error {
+    color: var(--bs-danger);
+    /* Usa la variable de color de Bootstrap para consistencia */
+}
+
+.feedback-title--error {
+    color: var(--bs-danger);
+}
