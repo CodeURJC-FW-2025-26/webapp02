@@ -1,0 +1,18 @@
+{{> partials/header}}
+<main class="container mt-5">
+    <h2>Editando el Paso {{step.order}} de la receta "{{recipe.name}}"</h2>
+    <form action="/receta/{{recipe._id}}/paso/editar/{{step._id}}" method="POST">
+        <div class="mb-3">
+            <label for="stepName" class="form-label">Título del Paso</label>
+            <input type="text" class="form-control" id="stepName" name="stepName" value="{{step.name}}" required>
+        </div>
+        <div class="mb-3">
+            <label for="stepDescription" class="form-label">Descripción</label>
+            <textarea class="form-control" id="stepDescription" name="stepDescription" rows="4"
+                required>{{step.description}}</textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+        <a href="/receta/{{recipe._id}}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</main>
+{{> partials/footer}}

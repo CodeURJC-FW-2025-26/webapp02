@@ -1,79 +1,93 @@
-<!DOCTYPE html>
-
 {{> partials/header}}
 
-<!-- =================================================================
-     MAIN CONTENT - FORM
-     ================================================================== -->
 <main>
-     <h2 class="AddRecipe">Añade la receta</h2>
+     <h2 class="AddRecipe">{{#editing}}Editar{{/editing}}{{^editing}}Añade la{{/editing}} receta</h2>
      <div class="form-container">
 
-          <!-- Form to add a new recipe -->
-          <form role="form">
+          <form role="form"
+               action="{{#editing}}/receta/editar/{{recipe._id}}{{/editing}}{{^editing}}/receta/nueva{{/editing}}"
+               method="POST" enctype="multipart/form-data">
                <!-- Field: Recipe Name -->
                <div class="form-group">
-                    <label for="RecipeName">Nombre:</label>
-                    <input type="text" class="form-control" id="RecipeName"
-                         placeholder="Introduzca el nombre de la receta" required>
+                    <label for="recipeName">Nombre:</label>
+                    <input type="text" class="form-control" id="recipeName" name="recipeName"
+                         placeholder="Introduzca el nombre de la receta" value="{{recipe.name}}" required>
                </div>
                <!-- Field: Description -->
                <div class="form-group">
                     <label for="description" class="form-label">Descripción:</label>
-                    <textarea class="form-control" id="description" rows="2"
-                         placeholder="Introduzca una breve descripción de la receta" required></textarea>
+                    <textarea class="form-control" id="description" name="description" rows="2"
+                         placeholder="Introduzca una breve descripción de la receta"
+                         required>{{recipe.description}}</textarea>
                </div>
                <!-- Field: Ingredients -->
                <div class="form-group">
                     <label for="ingredients" class="form-label">Ingredientes:</label>
-                    <textarea class="form-control" id="ingredients" rows="3"
-                         placeholder="Introduzca los ingredientes necesarios, separados por líneas" required></textarea>
+                    <textarea class="form-control" id="ingredients" name="ingredients" rows="3"
+                         placeholder="Introduzca los ingredientes necesarios, separados por líneas"
+                         required>{{recipe.ingredients}}</textarea>
                </div>
                <!-- Field: Category (Selector) -->
                <div class="form-group">
                     <label for="category" class="form-label">Categoría:</label>
-                    <select class="form-select" id="category" required>
+                    <select class="form-select" id="category" name="category" required>
                          <option value="" selected disabled>Seleccione una categoría</option>
                          <option value="entrante">Entrante</option>
                          <option value="principal">Plato Principal</option>
                          <option value="postre">Postre</option>
                          <option value="vegano">Vegano</option>
                     </select>
+                    <!-- Nota: El valor seleccionado en 'editing' se muestra para que el usuario pueda volver a seleccionarlo. -->
+                    {{#editing}}<small class="form-text text-muted">Categoría actual:
+                         {{recipe.category}}</small>{{/editing}}
                </div>
                <!-- Field: Difficulty (Selector) -->
                <div class="form-group">
                     <label for="difficulty" class="form-label">Dificultad:</label>
-                    <select class="form-select" id="difficulty" required>
+                    <select class="form-select" id="difficulty" name="difficulty" required>
                          <option value="" selected disabled>Seleccione una dificultad</option>
                          <option value="facil">Fácil</option>
                          <option value="media">Media</option>
                          <option value="dificil">Difícil</option>
                     </select>
+                    {{#editing}}<small class="form-text text-muted">Dificultad actual:
+                         {{recipe.difficulty}}</small>{{/editing}}
                </div>
                <!-- Field: Preparation Time -->
                <div class="form-group">
                     <label for="preparationTime" class="form-label">Tiempo (minutos):</label>
-                    <input type="number" class="form-control" id="preparationTime" placeholder="Ej: 30" min="1"
-                         required>
+                    <input type="number" class="form-control" id="preparationTime" name="preparationTime"
+                         placeholder="Ej: 30" min="1" value="{{recipe.preparation_time}}" required>
                </div>
-               <!-- Field: Image Upload -->
+
+               <!-- Field: Image Upload (AHORA CORREGIDO) -->
                <div class="form-group">
-                    <label for="RecipeImage">Imagen:</label>
-                    <input type="file" class="form-control" id="RecipeImage" accept="image/*" required>
+                    <label for="recipeImage">Imagen:</label>
+                    <input type="file" class="form-control" id="recipeImage" name="recipeImage" accept="image/*">
+
+                    {{#editing}}
+                    {{#recipe.image}}
+                    <div class="mt-2">
+                         <small>Imagen actual:</small><br>
+                         <img src="{{recipe.image}}" width="100" alt="Imagen actual de la receta">
+                    </div>
+                    {{/recipe.image}}
+                    {{/editing}}
                </div>
 
                <!-- Form action buttons -->
                <div class="buttons">
                     <div class="button">
-                         <button type="submit" class="btn btn-dark">Guardar</button>
+                         <button type="submit" class="btn btn-dark">Guardar Cambios</button>
                     </div>
                     <div class="button">
-                         <a class="btn btn-dark" href="index.html">Cancelar</a>
+                         <a class="btn btn-dark"
+                              href="{{#editing}}/receta/{{recipe._id}}{{/editing}}{{^editing}}/{{/editing}}">Cancelar</a>
+
                     </div>
                </div>
           </form>
 
-          <!-- Decorative images section alongside the form -->
           <aside class="DecorativeImages">
                <img src="/images/lubina.jpg" alt="Sea Bass dish">
                <img src="/images/entrecot.jpg" alt="Ribeye Steak dish">
@@ -82,5 +96,3 @@
 </main>
 
 {{> partials/footer}}
-
-</html>

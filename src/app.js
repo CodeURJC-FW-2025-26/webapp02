@@ -1,7 +1,7 @@
 
 import express from 'express';
 import mustacheExpress from 'mustache-express';
-import bodyParser from 'body-parser';
+//import bodyParser from 'body-parser';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 import { connect } from './database.js';
@@ -14,11 +14,16 @@ const app = express();
 
 // 1. Servir archivos estáticos desde la carpeta 'public'
 app.use(express.static(join(__dirname, '../public')));
+app.use('/uploads', express.static(join(__dirname, '../uploads')));
 // Servir archivos de la carpeta 'uploads'
 app.use('/uploads', express.static(join(__dirname, '../uploads')));
 
 // 2. Configurar body-parser para leer datos de formularios POST
-app.use(bodyParser.urlencoded({ extended: true }));
+//app.use(bodyParser.urlencoded({ extended: true }));
+
+// Configuración para parsear datos de formularios (reemplaza a body-parser)
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // 3. Configurar el motor de plantillas Mustache
 app.engine('html', mustacheExpress());

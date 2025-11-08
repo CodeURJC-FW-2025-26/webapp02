@@ -50,7 +50,7 @@
 
      <!-- Pagination -->
      <!-- Solo mostramos la paginación si hay recetas -->
-     {{#recipes}}
+     {{#recipes.length}}
      <nav aria-label="Paginación de recetas" class="d-flex justify-content-center mb-5">
           <ul class="pagination">
                <!-- Botón "Anterior" -->
@@ -85,7 +85,7 @@
                {{/hasNextPage}}
           </ul>
      </nav>
-     {{/recipes}}
+     {{/recipes.length}}
 </main>
 
 {{> partials/footer}}

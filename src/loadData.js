@@ -4,6 +4,7 @@ import { promises as fs } from 'fs';
 import { join } from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import { ObjectId } from 'mongodb';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -28,6 +29,11 @@ export async function seedDatabase() {
                 // Copia la imagen desde 'data/images' a 'uploads'
                 await fs.copyFile(sourceImagePath, destImagePath);
 
+                if (recipe.steps) {
+                    recipe.steps.forEach(step => {
+                        step._id = new ObjectId(); // <-- ¡AÑADIMOS EL ID AL PASO!
+                    });
+                }
                 // Actualiza el objeto de la receta para que la ruta de la imagen apunte a 'uploads'
                 processedRecipes.push({
                     ...recipe,

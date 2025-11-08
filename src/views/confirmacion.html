@@ -1,0 +1,17 @@
+{{> partials/header}}
+<main class="container text-center mt-5 py-5">
+    <div class="feedback-page">
+        <i class="bi bi-check-circle-fill feedback-icon" style="color: var(--bs-success);"></i>
+        <h1 class="feedback-title" style="color: var(--bs-success);">¡Operación Exitosa!</h1>
+        <p class="feedback-text">{{message}}</p>
+
+        <!-- Enlaces dinámicos -->
+        <div class="mt-4">
+            {{#nextLink}}
+            <a href="{{nextLink}}" class="btn btn-success btn-lg">{{nextLinkText}}</a>
+            {{/nextLink}}
+            <a href="/" class="btn btn-primary btn-lg">Volver al Inicio</a>
+        </div>
+    </div>
+</main>
+{{> partials/footer}}
