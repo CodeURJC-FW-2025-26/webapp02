@@ -1,3 +1,15 @@
+PASAR TODO A INGLÉS
+
+Destacar el indicador de la página (1 de 2)
+
+CREAR RECETA: Al volver al formulario después de un error se pierden todos los datos
+
+PARA DESACTIVAR REQUIRED
+document.querySelectorAll('input[required], select[required], textarea[required]').forEach(element => element.removeAttribute('required'));
+
+
+------------------(Va a Parte)------------------------------------------------
+
 Punto 9 falta la ID personalizada
 
 Punto 20: se tiene que mostrar la página de confirmación siempre, en cualquier acción con cualquier elemento:
@@ -15,9 +27,3 @@ En Añadir Receta: cuando añades una receta con éxito, el mensaje de confirmac
 - Se deben incluir validaciones de los formatos de los datos
 - La descripción debe estar entre un mínimo y un máximo de caracteres
 - El servidor deberá hacer todas las validaciones requeridas
-
-PASAR TODO A INGLÉS
-
-
-PARA DESACTIVAR REQUIRED
-document.querySelectorAll('input[required], select[required], textarea[required]').forEach(element => element.removeAttribute('required'));
