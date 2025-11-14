@@ -200,31 +200,33 @@ h2 {
 }
 
 .footer-links a:hover {
-    color: #f2b705;
+    color: #F8E7A5;
     /* Accent color on hover */
 }
 
 /* Style for social media icons */
 .social-icons a {
-    display: inline-block;
+
+    display: inline-flex; 
+
+
+    align-items: center; 
+
+
+    justify-content: center; 
+
     height: 40px;
     width: 40px;
     background-color: #343a40;
-    /* Dark gray background */
     color: #ffffff;
-    /* Icon in white */
     margin-right: 10px;
     border-radius: 50%;
-    /* Circular shape */
-    text-align: center;
-    line-height: 40px;
-    /* Vertically centers the icon */
     font-size: 18px;
     transition: background-color 0.3s ease;
 }
 
 .social-icons a:hover {
-    background-color: #f2b705;
+    background-color: #F8E7A5;
     /* Accent color on hover */
     color: #222e38;
     /* Icon color changes for contrast */
@@ -295,6 +297,7 @@ h2 {
     width: 100%;
     max-width: 800px;
     /* Max width for the search bar */
+    margin-top: 25px;
     margin-bottom: 25px;
 }
 
@@ -416,6 +419,23 @@ h2 {
 }
 
 
+/* Change submit button style to match the other buttons */
+.btn-success {
+    background-color: #222e38;
+    border-radius: 25px;
+}
+
+.btn-success:hover {
+    background-color: #303e49
+}
+
+.btn-success:active { /* Change color when clicking the button */
+    background-color: #303e49;
+    border-color: #222e38;
+    color: white;
+}
+
+
 /* --- 6. ADD RECIPE PAGE (AÑADIRRECETA.HTML) --- */
 /* DESKTOP STYLES */
 
@@ -447,6 +467,10 @@ h2 {
 
 .buttons .button {
     padding-right: 50px;
+}
+
+.btn-dark {
+    border-radius: 25px;
 }
 
 .DecorativeImages {
@@ -519,4 +543,60 @@ h2 {
 
 .feedback-title--error {
     color: var(--bs-danger);
+}
+
+/* --- 8. PAGINATION STYLES --- */
+
+/* Main container (ul list) */
+.pagination {
+    margin-top: 40px;
+}
+
+/* Base style for every <a> in the pagination */
+.page-link {
+    font-family: sans-serif;
+    font-weight: bold;
+    color: #222e38;
+    background-color: rgba(255, 255, 255, 0.5);
+    border: none;
+    
+    /* Space and shape */
+    margin: 0 8px;
+    border-radius: 30px;
+    padding: 10px 20px;
+    
+    /* Shadow and transition */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease; /* Hover transtition */
+}
+
+/* Style while hovering */
+/* Only if not disabled */
+.page-item:not(.active):not(.disabled) .page-link:hover {
+    background-color: #222e38;
+    color: whitesmoke;
+    
+    /* "go up" animation */
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* Page indicator style */
+.page-item.active .page-link {
+    background-color: #222e38;
+    color: whitesmoke;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Disabled button style */
+.page-item.disabled .page-link {
+    background-color: rgba(255, 255, 255, 0.7);
+    color: #72797f;
+    box-shadow: none;
+}
+
+/* Highlight style when using TAB */
+.page-link:focus {
+    box-shadow: 0 0 0 0.25rem #222e38;
+    color: #222e38;
 }
