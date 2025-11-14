@@ -6,6 +6,7 @@
         "preparation_time": 50,
         "difficulty": "media",
         "image": "pulpo.jpg",
+        "ingredients": "1 pulpo de 2 kg \n 4 patatas gallegas grandes (cachelos)\n Pimenton de la Vera (dulce y picante)\n Sal gorda (al gusto).",
         "steps": [
             {
                 "order": 1,
@@ -16,6 +17,16 @@
                 "order": 2,
                 "name": "Asustar y cocer",
                 "description": "Pon a hervir agua y 'asusta' el pulpo 3 veces antes de cocerlo durante 30-40 minutos."
+            },
+            { 
+                "order":3,
+                "name": "Cortar",
+                "description": "Pela y corta las patatas en rodajas. Corta el pulpo con tijeras."
+            },
+            { 
+                "order":4,
+                "name": "Emplatar",
+                "description": "Monta el plato: base de patatas, pulpo, aceite, sal gorda y pimentón."
             }
         ]
     },
@@ -26,6 +37,7 @@
         "preparation_time": 45,
         "difficulty": "facil",
         "image": "spagueti.jpg",
+        "ingredients": "400 g de Espaguetis\n500 g de Carne picada\n800 g de Tomate triturado \n1 Cebolla mediana\n2 Zanahorias\n1 rama de Apio\nQueso Parmesano\nPimienta negra (al gusto)",
         "steps": [
             {
                 "order": 1,
@@ -36,6 +48,21 @@
                 "order": 2,
                 "name": "Cocinar la carne",
                 "description": "Añadir la carne picada, dorar y luego agregar tomate triturado y vino tinto."
+            },
+            {
+                "order": 3,
+                "name": "Cocinar la salsa",
+                "description": "Salpimentar al gusto. Bajar el fuego al mínimo, tapar parcialmente y dejar cocer la salsa lentamente (chup-chup) durante al menos 20-30 minutos para que espese y se concentren los sabores."
+            },
+            {
+                "order": 4,
+                "name": "Cocer los espaguetis",
+                "description": "Mientras la salsa termina de hacerse, cocer los espaguetis en abundante agua con sal. Seguir el tiempo del paquete para que queden 'al dente'."
+            },
+            {
+                "order": 5,
+                "name": "Emplatar",
+                "description": "Escurrir bien la pasta. Servir una cama de espaguetis, cubrir con la salsa boloñesa y espolvorear generosamente con queso Parmesano rallado."
             }
         ]
     },
@@ -46,6 +73,7 @@
         "preparation_time": 60,
         "difficulty": "facil",
         "image": "flan.jpg",
+        "ingredients": "6 Huevos \n1 Litro de Leche entera\n150 g de Azúcar\n100 g de Azúcar (para el caramelo)\n1 cucharadita de extracto de Vainilla (opcional)",
         "steps": [
             {
                 "order": 1,
@@ -56,6 +84,16 @@
                 "order": 2,
                 "name": "Mezclar y hornear",
                 "description": "Batir huevos, leche y azúcar. Verter en el molde y hornear al baño maría."
+            },
+            {
+                "order": 3,
+                "name": "Enfriar",
+                "description": "Una vez horneado (al pinchar con un palillo, sale limpio), sacar el molde del baño maría y dejar enfriar a temperatura ambiente."
+            },
+            {
+                "order": 4,
+                "name": "Refrigerar y desenmoldar",
+                "description": "Cuando esté frío, meter el flan en la nevera (refrigerador) un mínimo de 4 horas, o mejor toda la noche. Para desmoldar, pasar un cuchillo fino por los bordes y voltear sobre un plato."
             }
         ]
     },
@@ -66,6 +104,7 @@
         "preparation_time": 30,
         "difficulty": "facil",
         "image": "cremaZanahoria.jpg",
+        "ingredients": "500 g de Zanahorias\n1 Puerro \n1 Cebolla mediana\n750 ml - 1 Litro de Caldo de verduras\n100 ml de Nata para cocinar(opcional)\nPimienta negra (al gusto)",
         "steps": [
             {
                 "order": 1,
@@ -76,6 +115,16 @@
                 "order": 2,
                 "name": "Cocer y triturar",
                 "description": "Cubrir con caldo de verduras, cocer hasta que la zanahoria esté tierna y triturar finamente."
+            },
+            {
+                "order": 3,
+                "name": "Afinar la textura",
+                "description": "Devolver la crema a la olla. Añadir un chorrito de nata (crema de leche) o leche evaporada al gusto para darle cremosidad."
+            },
+            {
+                "order": 4,
+                "name": "Rectificar y servir",
+                "description": "Probar la crema y ajustar de sal y pimienta negra al gusto. Servir caliente, opcionalmente con un chorrito de aceite de oliva."
             }
         ]
     },
@@ -86,6 +135,7 @@
         "preparation_time": 55,
         "difficulty": "media",
         "image": "tartaQueso.jpg",
+        "ingredients": "1 kg de Queso crema (tipo Philadelphia)\n500 ml de Nata para montar\n400 g de Azúcar\n5 Huevos \n1 cucharada sopera de Harina de trigo",
         "steps": [
             {
                 "order": 1,
@@ -96,7 +146,17 @@
                 "order": 2,
                 "name": "Hornear a alta temperatura",
                 "description": "Verter en un molde con papel de horno y hornear a 200°C hasta que esté bien dorada por fuera."
-            }
+            },
+            {
+                "order": 3,
+                "name": "Reposo en el horno",
+                "description": "Apagar el horno y dejar la tarta dentro con la puerta entreabierta durante 10-15 minutos. Sacar y dejar enfriar completamente a temperatura ambiente."
+            },
+            {         
+                "order": 4,
+                "name": "Refrigerar y servir",
+                "description": "Una vez fría, refrigerar en la nevera al menos 4 horas (idealmente de un día para otro). Desmoldar y servir. Está mejor a temperatura ambiente."
+         }
         ]
     },
     {
@@ -106,6 +166,7 @@
         "preparation_time": 25,
         "difficulty": "facil",
         "image": "salmon.jpg",
+        "ingredients": "2 lomos de Salmón (unos 150g cada uno)\n1 Pimiento rojo\n1 Pimiento verde (o amarillo)\n1 Cebolla morada (o blanca)\n1 Calabacín\nPimienta negra (al gusto)",
         "steps": [
             {
                 "order": 1,
@@ -116,6 +177,11 @@
                 "order": 2,
                 "name": "Hornear el salmón",
                 "description": "Colocar el lomo de salmón sobre las verduras y hornear todo junto durante 15-20 minutos a 180°C."
+            },
+            {
+                "order": 3,
+                "name": "Servir",
+                "description": "Comprobar que el salmón está en su punto (jugoso por dentro). Servir inmediatamente el lomo de salmón sobre su cama de verduras asadas."
             }
         ]
     },
@@ -126,6 +192,7 @@
         "preparation_time": 40,
         "difficulty": "media",
         "image": "patatasBravas.jpg",
+        "ingredients": "500 g de Patatas\nAceite de oliva (para freír)\n2 dientes de Ajo\n1 cucharada de Pimentón de la Vera (picante)\n1 cucharadita de Pimentón dulce (opcional)\n1 cucharada de Harina de trigo\n200 ml de Caldo de verduras (o pollo)",
         "steps": [
             {
                 "order": 1,
@@ -136,7 +203,12 @@
                 "order": 2,
                 "name": "Preparar la salsa brava",
                 "description": "Hacer un sofrito con ajo, añadir pimentón picante, harina y caldo de pollo, y cocinar hasta espesar."
-            }
+            },
+            {
+                "order": 3,
+                "name": "Montaje y Servir",
+                "description": "Escurrir bien las patatas fritas, colocarlas en un plato o cazuelita y salsear generosamente con la salsa brava bien caliente."
+         }
         ]
     },
     {
@@ -146,6 +218,7 @@
         "preparation_time": 20,
         "difficulty": "facil",
         "image": "burrito.jpg",
+        "ingredients": "4 Tortillas de trigo grandes\n400 g de Frijoles negros (cocidos)\n200 g de Arroz cocido\n1 Pimiento rojo\n1 Cebolla morada\n150 g de Maíz dulce \n1 cucharadita de Comino en polvo\n1 cucharadita de Pimentón dulce\nSal y Pimienta al gusto",
         "steps": [
             {
                 "order": 1,
@@ -156,6 +229,11 @@
                 "order": 2,
                 "name": "Montar y calentar",
                 "description": "Rellenar tortillas de trigo con la mezcla, enrollar y calentar en una sartén por ambos lados."
+            },
+            {
+                "order": 3,
+                "name": "Servir",
+                "description": "Servir el burrito inmediatamente mientras está caliente. Opcional: acompañar con guacamole o salsa picante."
             }
         ]
     },
@@ -166,6 +244,7 @@
         "preparation_time": 35,
         "difficulty": "media",
         "image": "polloCurry.jpg",
+        "ingredients":"500 g de Pechuga de pollo \n1 Cebolla grande\n400 ml de Leche de coco \n2-3 cucharadas de Curry en polvo (al gusto)\nPimienta negra (al gusto)\nOpcional: Arroz basmati (para acompañar)",
         "steps": [
             {
                 "order": 1,
@@ -176,6 +255,16 @@
                 "order": 2,
                 "name": "Hacer la salsa",
                 "description": "En la misma sartén, sofreír cebolla, añadir curry en polvo, leche de coco y cocinar hasta que la salsa espese."
+            },
+            {
+                "order": 3,
+                "name": "Combinar y Cocinar",
+                "description": "Incorporar los dados de pollo dorado a la salsa. Dejar que todo cocine junto  a fuego bajo durante 5-10 minutos para que el pollo se impregne bien."
+            },
+            {
+                "order": 4,
+                "name": "Servir",
+                "description": "Rectificar de sal si es necesario. Servir el pollo al curry bien caliente, acompañado de arroz basmati."
             }
         ]
     }
