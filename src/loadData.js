@@ -16,7 +16,7 @@ export async function seedDatabase() {
         if (count === 0) {
             console.log("ℹ️ Base de datos vacía. Cargando datos iniciales...");
 
-            // 1. Leer los datos del archivo JSON
+            // 1. Read the data from the JSON file
             const dataPath = join(__dirname, '../data/recipes.json');
             const recipesData = JSON.parse(await fs.readFile(dataPath, 'utf-8'));
 
@@ -33,22 +33,22 @@ export async function seedDatabase() {
                 const sourceImagePath = join(__dirname, '../data/images', recipe.image);
                 const destImagePath = join(__dirname, '../uploads', recipe.image);
 
-                // Copia la imagen desde 'data/images' a 'uploads'
+                // Copy the image from 'data/images' to 'uploads'
                 await fs.copyFile(sourceImagePath, destImagePath);
 
                 if (recipe.steps) {
                     recipe.steps.forEach(step => {
-                        step._id = new ObjectId(); // <-- ¡AÑADIMOS EL ID AL PASO!
+                        step._id = new ObjectId(); // <-- ADDED THE ID TO THE STEP
                     });
                 }
-                // Actualiza el objeto de la receta para que la ruta de la imagen apunte a 'uploads'
+                // Update the recipe object so that the image path points to 'uploads'
                 processedRecipes.push({
                     ...recipe,
-                    image: recipe.image // La ruta que usará el HTML,  Guardamos solo el nombre del archivo, ej: "pulpo.jpg" 
+                    image: recipe.image // The route that the HTML will use,  Guardamos solo el nombre del archivo, ej: "pulpo.jpg"  will use
                 });
             }
 
-            // 3. Insertar en la base de datos
+            // 3. Insert into the database
             await recipesCollection.insertMany(processedRecipes);
             console.log(`✅ ${processedRecipes.length} recetas insertadas y sus imágenes copiadas.`);
         } else {

@@ -6,8 +6,8 @@ import upload from '../multerConfig.js';
 
 const router = express.Router();
 
-// Middleware para validar los datos de una receta
-// Acepta un booleano 'isEditing' para adaptar la validación del nombre
+// Middleware for validating recipe data
+// Accepts a boolean 'isEditing' to adapt name validation
 const validateRecipe = (isEditing = false) => {
     return async (req, res, next) => {
         try {
@@ -22,29 +22,29 @@ const validateRecipe = (isEditing = false) => {
                 res.redirect('/error'); // Redirigimos a una ruta de error genérica
             };
 
-            // --- INICIO DE VALIDACIONES CENTRALIZADAS ---
+            // --- START OF CENTRALIZED VALIDATIONS ---
 
-            // Validación 1: Todos los campos obligatorios deben estar presentes.
+            // Validation 1: All required fields must be present.
             if (!recipeName || !description || !ingredients || !category || !difficulty || !preparationTime) {
                 return handleError('Todos los campos son obligatorios.');
             }
 
-            // Validación 2: El nombre de la receta debe empezar con mayúscula.
+            // Validation 2: The recipe name must start with a capital letter.
             if (recipeName.trim()[0] !== recipeName.trim()[0].toUpperCase()) {
                 return handleError('El nombre de la receta debe empezar con mayúscula.');
             }
 
-            // 4. Formato: Descripción entre 20 y 500 caracteres
+            // 4. Format: Description between 20 and 500 characters
             if (description.trim().length < 20 || description.trim().length > 500) {
                 return handleError('La descripción debe tener entre 20 y 500 caracteres.');
             }
 
-            // Validación 5: El tiempo de preparación debe ser un número positivo.
+            // Validation 5: The preparation time must be a positive number.
             if (isNaN(preparationTime) || parseInt(preparationTime) <= 0) {
                 return handleError('El tiempo de preparación debe ser un número válido y positivo.');
             }
 
-            // Validación de nombre único (adaptativa)
+            // Unique name validation (adaptive)
             const query = { name: { $regex: `^${recipeName.trim()}$`, $options: 'i' } };
             if (isEditing) {
                 query._id = { $ne: new ObjectId(req.params.id) };
@@ -54,9 +54,9 @@ const validateRecipe = (isEditing = false) => {
                 return handleError(`Ya existe una receta con el nombre "${recipeName}".`);
             }
 
-            // --- FIN DE VALIDACIONES ---
+            // --- END OF VALIDATIONS ---
 
-            // Si todas las validaciones pasan, continuamos al siguiente manejador de la ruta.
+            // If all validations pass, we continue to the next route handler.
             next();
 
         } catch (error) {
@@ -66,21 +66,21 @@ const validateRecipe = (isEditing = false) => {
     };
 };
 
-// Ruta para la página principal con paginación, búsqueda y filtro
+// Route to the homepage with pagination, search, and filter
 router.get('/', async (req, res) => {
     try {
-        // 1. Configuración de la Paginación
-        const page = parseInt(req.query.page) || 1; // Página actual, por defecto 1
-        const pageSize = 6; // Número de recetas por página (requisito rúbrica)
+        // 1. Pagination Settings
+        const page = parseInt(req.query.page) || 1; // Current page, default 1
+        const pageSize = 6; // Number of recipes per page (rubric requirement)
         const skip = (page - 1) * pageSize;
 
-        // 2. Configuración de Filtros (Búsqueda y Categoría)
+        // 2. Filter Settings (Search and Category)
         const filter = {};
         const searchQuery = req.query.search;
         const categoryQuery = req.query.category;
 
         if (searchQuery) {
-            // Búsqueda por nombre no sensible a mayúsculas/minúsculas
+            // Case-insensitive name search
             filter.name = { $regex: searchQuery, $options: 'i' };
         }
         if (categoryQuery) {
@@ -90,17 +90,17 @@ router.get('/', async (req, res) => {
         // 3. Consultas a la Base de Datos
         const recipesCollection = db.connection.collection('recipes');
 
-        // Obtenemos las recetas para la página actual aplicando filtros y paginación
+        // We obtain the recipes for the current page by applying filters and pagination.
         const recipes = await recipesCollection.find(filter)
             .skip(skip)
             .limit(pageSize)
             .toArray();
 
-        // Obtenemos el número total de recetas que coinciden con el filtro para calcular las páginas
+        // We obtain the total number of recipes that match the filter to calculate the pages
         const totalRecipes = await recipesCollection.countDocuments(filter);
         const totalPages = Math.ceil(totalRecipes / pageSize);
 
-        // 4. Renderizar la vista pasando todos los datos necesarios
+        // 4. Render the view, passing all the necessary data.
         res.render('index', {
             recipes: recipes,
             currentPage: page,
@@ -109,8 +109,8 @@ router.get('/', async (req, res) => {
             hasNextPage: page < totalPages,
             prevPage: page - 1,
             nextPage: page + 1,
-            searchQuery: searchQuery, // Para mantener el valor en el buscador
-            categoryQuery: categoryQuery // Para saber qué categoría está activa
+            searchQuery: searchQuery, // To maintain the value in the search engine
+            categoryQuery: categoryQuery // To find out which category is active
         });
 
     } catch (error) {
@@ -173,7 +173,7 @@ router.get('/receta/nueva', (req, res) => {
     res.render('AñadirReceta', { recipe: recipe });
 });
 
-// PROCESA EL ENVÍO DEL FORMULARIO PARA CREAR UNA NUEVA RECETA
+// PROCESS THE SUBMISSION OF THE FORM TO CREATE A NEW RECIPE
 router.post('/receta/nueva', upload.single('recipeImage'), validateRecipe(false), async (req, res) => {
     try {
         const { recipeName, description, ingredients, category, difficulty, preparationTime } = req.body;
@@ -209,23 +209,23 @@ router.post('/receta/nueva', upload.single('recipeImage'), validateRecipe(false)
 
 router.get('/receta/:id', async (req, res) => {
     try {
-        const recipeId = req.params.id; // Obtenemos el ID de la URL
+        const recipeId = req.params.id; // Obtain the URL ID
 
-        // Buscamos la receta en la base de datos usando su ID
+        // We searched for the recipe in the database using its ID
         const recipesCollection = db.connection.collection('recipes');
         const recipe = await recipesCollection.findOne({ _id: new ObjectId(recipeId) });
 
         if (recipe) {
-            // Añadimos el ID de la receta a cada paso para que sea fácil de acceder en la plantilla
+            // We added the recipe ID to each step to make it easy to access in the template.
             if (recipe.steps) {
                 recipe.steps.forEach(step => {
                     step.recipe_id = recipe._id;
                 });
             }
-            // Si la receta se encuentra, renderizamos la vista de detalle
+            // If the recipe is found, we render the detail view
             res.render('detalleReceta', { recipe: recipe });
         } else {
-            // Si no se encuentra una receta con ese ID, mostramos un error 404
+            // If a recipe with that ID is not found, we display a 404 error.
             res.status(404).render('error', { errorMessage: 'Receta no encontrada.' });
         }
     } catch (error) {
@@ -238,8 +238,8 @@ router.get('/receta/:id', async (req, res) => {
     }
 });
 
-// --- EDICIÓN DE RECETAS ---
-// MUESTRA EL FORMULARIO PARA EDITAR
+// --- RECIPE EDITING ---
+// DISPLAY THE FORM FOR EDITING
 router.get('/receta/editar/:id', async (req, res) => {
     try {
         const formData = req.session.formData;
@@ -284,7 +284,7 @@ router.get('/receta/editar/:id', async (req, res) => {
     }
 });
 
-// PROCESA EL ENVÍO DEL FORMULARIO PARA EDITAR UNA RECETA
+// PROCESS THE SUBMISSION OF THE FORM TO EDIT A RECIPE
 router.post('/receta/editar/:id', upload.single('recipeImage'), validateRecipe(true), async (req, res) => {
     try {
         const recipeId = req.params.id;
@@ -317,13 +317,13 @@ router.post('/receta/editar/:id', upload.single('recipeImage'), validateRecipe(t
         console.error("❌ Error al editar la receta:", error);
         res.status(500).render('error', {
             errorMessage: 'Error interno del servidor al actualizar la receta.',
-            backUrl: `/receta/${recipeId}`, // Devolver a la página de detalle si hay un error grave
+            backUrl: `/receta/${recipeId}`, // Return to the details page if there is a serious error
             backUrlText: 'Volver a la receta'
         });
     }
 });
 
-// PROCESA LA ELIMINACIÓN DE UNA RECETA
+// PROCESS THE DELETION OF A RECIPE
 router.post('/receta/borrar/:id', async (req, res) => {
     try {
         const recipeId = req.params.id;
@@ -340,10 +340,10 @@ router.post('/receta/borrar/:id', async (req, res) => {
         const result = await recipesCollection.deleteOne({ _id: new ObjectId(recipeId) });
 
         if (result.deletedCount === 1) {
-            // Si se borró 1 documento, mostramos confirmación
+            // If 1 document was deleted, we show confirmation
             res.render('confirmacion', { message: 'Receta eliminada correctamente.' });
         } else {
-            // Si no se borró nada (quizás ya no existía), mostramos error
+            // If nothing was deleted (perhaps it no longer existed), we display an error.
             res.status(404).render('error', {
                 errorMessage: 'No se encontró la receta para eliminar.',
                 backUrl: '/',
@@ -354,19 +354,19 @@ router.post('/receta/borrar/:id', async (req, res) => {
         console.error("❌ Error al borrar la receta:", error);
         res.status(500).render('error', {
             errorMessage: 'Error interno del servidor al eliminar la receta.',
-            backUrl: `/receta/${recipeId}`, // Devolver a la página de detalle si hay un error grave
+            backUrl: `/receta/${recipeId}`, // Return to the details page if there is a serious error
             backUrlText: 'Volver a la receta'
         });
     }
 });
 
-// PROCESA LA CREACIÓN DE UN NUEVO PASO PARA UNA RECETA
+// PROCESS THE CREATION OF A NEW STEP FOR A RECIPE
 router.post('/receta/:id/paso/nuevo', async (req, res) => {
     const recipeId = req.params.id;
     try {
         const { stepName, stepDescription } = req.body;
 
-        // Validación simple del servidor
+        // Simple server validation
         if (!stepName || !stepDescription) {
             return res.status(400).render('error', {
                 errorMessage: 'El título y la descripción del paso son obligatorios.',
@@ -377,25 +377,25 @@ router.post('/receta/:id/paso/nuevo', async (req, res) => {
 
         const recipesCollection = db.connection.collection('recipes');
 
-        // Creamos el objeto del nuevo paso. Le asignamos un ID propio para poder borrarlo/editarlo después.
+        // We created the object for the new step. We assigned it a unique ID so we could delete/edit it later.
         const newStep = {
-            _id: new ObjectId(), // ID único para el sub-documento
+            _id: new ObjectId(), // Unique ID for the sub-document
             name: stepName.trim(),
             description: stepDescription.trim()
         };
 
-        // Obtenemos el número actual de pasos para asignar el 'order'
+        // We obtain the current number of steps to assign the 'order'
         const recipe = await recipesCollection.findOne({ _id: new ObjectId(recipeId) }, { projection: { steps: 1 } });
         newStep.order = (recipe.steps || []).length + 1;
 
 
-        // Usamos $push para añadir el nuevo paso al array 'steps' de la receta correcta
+        // We use $push to add the new step to the 'steps' array of the correct recipe
         await recipesCollection.updateOne(
             { _id: new ObjectId(recipeId) },
             { $push: { steps: newStep } }
         );
 
-        // Redirigimos al usuario de vuelta a la misma página para que vea el paso añadido
+        // We redirect the user back to the same page so they can see the added step
         // res.redirect(`/receta/${recipeId}`);
         res.render('confirmacion', {
             message: 'El nuevo paso ha sido añadido con éxito.',
@@ -413,12 +413,12 @@ router.post('/receta/:id/paso/nuevo', async (req, res) => {
     }
 });
 
-// PROCESA LA ELIMINACIÓN DE UN PASO DE UNA RECETA
+// PROCESS THE ELIMINATION OF A STEP FROM A RECIPE
 router.post('/receta/:id/paso/borrar/:stepId', async (req, res) => {
     const recipeId = req.params.id;
     const stepId = req.params.stepId;
     try {
-        // Validamos ambos IDs
+        // We validated both IDs
         if (!ObjectId.isValid(recipeId) || !ObjectId.isValid(stepId)) {
             return res.status(400).render('error', {
                 errorMessage: 'ID de receta o de paso no válido.',
@@ -429,10 +429,10 @@ router.post('/receta/:id/paso/borrar/:stepId', async (req, res) => {
 
         const recipesCollection = db.connection.collection('recipes');
 
-        // Usamos $pull para eliminar un elemento del array 'steps' que coincida con un criterio
+        // We use $pull to remove an element from the 'steps' array that matches a criterion
         await recipesCollection.updateOne(
-            { _id: new ObjectId(recipeId) }, // Filtro: encuentra la receta correcta
-            { $pull: { steps: { _id: new ObjectId(stepId) } } } // Operación: quita del array 'steps' el objeto cuyo '_id' coincida
+            { _id: new ObjectId(recipeId) }, // Filter: Find the right recipe
+            { $pull: { steps: { _id: new ObjectId(stepId) } } } // Operation: removes from the 'steps' array the object whose '_id' matches
         );
 
         // res.redirect(`/receta/${recipeId}`);
@@ -453,7 +453,7 @@ router.post('/receta/:id/paso/borrar/:stepId', async (req, res) => {
     }
 });
 
-// MUESTRA EL FORMULARIO PARA EDITAR UN PASO
+// DISPLAYS THE FORM TO EDIT A STEP
 router.get('/receta/:id/paso/editar/:stepId', async (req, res) => {
     try {
         const { id, stepId } = req.params;
@@ -462,40 +462,40 @@ router.get('/receta/:id/paso/editar/:stepId', async (req, res) => {
             return res.status(400).render('error', { errorMessage: 'ID de receta o de paso no válido.' });
         }
 
-        // Buscamos la receta que contiene el paso
+        // We are looking for the recipe that contains the step
         const recipe = await db.connection.collection('recipes').findOne({ _id: new ObjectId(id) });
 
         if (!recipe) {
             return res.status(404).render('error', { errorMessage: 'Receta no encontrada.' });
         }
 
-        // Buscamos el paso específico dentro del array de pasos de la receta
+        // We look for the specific step within the recipe's array of steps.
         const step = recipe.steps.find(s => s._id.toString() === stepId);
 
         if (!step) {
             return res.status(404).render('error', { errorMessage: 'Paso no encontrado.' });
         }
 
-        // Renderizamos una nueva vista para editar el paso
+        // We rendered a new view to edit the step
         res.render('editarPaso', { recipe, step });
 
     } catch (error) {
         console.error("Error al obtener el paso para editar:", error);
         res.status(500).render('error', {
             errorMessage: 'Error interno del servidor al obtener el paso.',
-            backUrl: `/receta/${req.params.id}`, // Usamos el ID original
+            backUrl: `/receta/${req.params.id}`, // Used the original ID
             backUrlText: 'Volver a la receta'
         });
     }
 });
 
-// PROCESA LA EDICIÓN DE UN PASO
+// PROCESS ONE-STEP EDITING
 router.post('/receta/:id/paso/editar/:stepId', async (req, res) => {
     try {
         const { id, stepId } = req.params;
         const { stepName, stepDescription } = req.body;
 
-        // Validaciones del servidor
+        // Server validations
         if (!stepName || !stepDescription) {
             return res.status(400).render('error', {
                 errorMessage: 'El título y la descripción no pueden estar vacíos.',

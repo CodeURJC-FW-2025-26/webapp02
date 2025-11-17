@@ -4,25 +4,25 @@ import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-// 1. Configuración de almacenamiento (dónde y cómo guardar los archivos)
+// 1. Storage settings (where and how to save files)
 const storage = multer.diskStorage({
-    // destination: Define la carpeta donde se guardarán los archivos
+    // destination: Defines the folder where the files will be saved
     destination: function (req, file, cb) {
-        // Usamos path.join para crear una ruta segura a la carpeta 'uploads'
-        // La carpeta 'uploads' debe existir en la raíz del proyecto.
+        // We used path.join to create a safe path to the 'uploads' folder
+        // The 'uploads' folder must exist in the project root.
         cb(null, join(__dirname, '../uploads'));
     },
-    // filename: Define cómo se nombrará el archivo dentro de la carpeta
+    // filename: Defines how the file will be named within the folder
     filename: function (req, file, cb) {
-        // Para evitar que dos archivos con el mismo nombre se sobreescriban,
-        // creamos un nombre único añadiendo la fecha actual y un número aleatorio.
+        // To prevent two files with the same name from overwriting each other,
+        // Create a unique name by adding the current date and a random number.
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
         cb(null, uniqueSuffix + '-' + file.originalname);
     }
 });
 
-// 2. Creamos la instancia de multer con la configuración de almacenamiento
+// 2. We created the multer instance with the storage configuration
 const upload = multer({ storage: storage });
 
-// 3. Exportamos la instancia para usarla en nuestras rutas
+// 3. We exported the instance to use in our routes
 export default upload;

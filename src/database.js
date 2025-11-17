@@ -1,26 +1,26 @@
 
 import { MongoClient } from 'mongodb';
 
-// Cadena de conexión a tu base de datos local
+// Connection string to your local database
 const uri = "mongodb://localhost:27017";
 const client = new MongoClient(uri);
 
-// Objeto para exportar. Contendrá la conexión y el nombre de la BD.
+// Object to export. It will contain the connection and the database name.
 const db = {};
 
 async function connect() {
     try {
-        // Conecta el cliente al servidor
+        // Connect the client to the server
         await client.connect();
 
-        // Asigna la conexión a la base de datos específica
-        db.connection = client.db('secretosDeCocina'); // Puedes nombrar tu BD como quieras
+        // Assign the connection to the specific database
+        db.connection = client.db('secretosDeCocina'); // You can name your database whatever you want
 
         console.log("✅ Conectado exitosamente a la base de datos MongoDB.");
 
     } catch (error) {
         console.error("❌ No se pudo conectar a la base de datos:", error);
-        // Si la conexión falla, la aplicación no puede continuar.
+        // If the connection fails, the application cannot continue.
         process.exit(1);
     }
 }
