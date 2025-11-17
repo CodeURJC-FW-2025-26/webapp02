@@ -2,26 +2,9 @@ PASAR TODO A INGLÉS
 
 Destacar el indicador de la página (1 de 2)
 
+Preguntar si al añadir un paso nuevo hay que verificar que el nombre sea único
+
+
+
 PARA DESACTIVAR REQUIRED
 document.querySelectorAll('input[required], select[required], textarea[required]').forEach(element => element.removeAttribute('required'));
-
-
-------------------(Va a Parte)------------------------------------------------
-
-Punto 9 falta la ID personalizada
-
-Punto 20: se tiene que mostrar la página de confirmación siempre, en cualquier acción con cualquier elemento:
-        - Al Editar elemento de la entidad principal: mostrar el elemento ha sido actualizado con éxito antes de volver a la Página de detalle
-        - Al eliminar entidad principal: mostrar el elemento ha sido eliminado y permitirá ir a la página principal
-        - Crear elemento de la entidad secundaria (paso nuevo): Los datos de la entidad sencundaria también deberán validarse correctamente 
-        tanto en el navegador como en el servidor (título no repetido, campos obligatorios, etc.). 
-        Al crear el elemento se enviará al usuario a una página con un mensaje de confirmación antes de volver a la Página de detalle
-        - Al borrar un paso también se mostrará un mensaje de confirmación
-        - Al editar un paso también se validan los datos en el servidor y se muestra la página del mensaje de éxito
-
-La página de error debe contener un botón que redireccione a la página adecuada en función del error.
-
-En Añadir Receta: cuando añades una receta con éxito, el mensaje de confirmación deberá permitir ir a la página de detalle de ese elemento
-- Se deben incluir validaciones de los formatos de los datos
-- La descripción debe estar entre un mínimo y un máximo de caracteres
-- El servidor deberá hacer todas las validaciones requeridas

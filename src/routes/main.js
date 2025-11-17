@@ -111,6 +111,33 @@ router.get('/', async (req, res) => {
         const totalRecipes = await recipesCollection.countDocuments(filter);
         const totalPages = Math.ceil(totalRecipes / pageSize);
 
+        const pagesForTemplate = [];
+        const window = 2; // Número de páginas a mostrar alrededor de la página actual
+
+        if (totalPages > 1) {
+            // Siempre mostramos la primera página y la última, y un "contexto" de páginas alrededor de la actual.
+            for (let i = 1; i <= totalPages; i++) {
+                // Condición para mostrar el botón:
+                // 1. Es la primera página.
+                // 2. Es la última página.
+                // 3. Está dentro de la "ventana" alrededor de la página actual.
+                if (i === 1 || i === totalPages || (i >= page - window && i <= page + window)) {
+                    pagesForTemplate.push({
+                        page: i,
+                        isCurrent: i === page, // Marcar si es la página actual
+                        isEllipsis: false
+                    });
+                }
+                // Añadir puntos suspensivos si hay un salto
+                else if (pagesForTemplate[pagesForTemplate.length - 1].page < i - 1) {
+                    // Evita añadir puntos suspensivos duplicados
+                    if (!pagesForTemplate[pagesForTemplate.length - 1].isEllipsis) {
+                        pagesForTemplate.push({ isEllipsis: true });
+                    }
+                }
+            }
+        }
+
         // 4. Render the view, passing all the necessary data.
         res.render('index', {
             recipes: recipes,
@@ -121,7 +148,8 @@ router.get('/', async (req, res) => {
             prevPage: page - 1,
             nextPage: page + 1,
             searchQuery: searchQuery, // To maintain the value in the search engine
-            categoryQuery: categoryQuery // To find out which category is active
+            categoryQuery: categoryQuery, // To find out which category is active
+            pagesForTemplate: pagesForTemplate // <--- Añadimos el nuevo array al render
         });
 
     } catch (error) {
