@@ -1,8 +1,10 @@
+.
+
+
 PASAR TODO A INGLÉS
 
-Destacar el indicador de la página (1 de 2)
 
-Preguntar si al añadir un paso nuevo hay que verificar que el nombre sea único
+PROFE: Preguntar si al añadir un paso nuevo hay que verificar que el nombre sea único
 
 
 
