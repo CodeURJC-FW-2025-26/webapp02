@@ -139,3 +139,90 @@ The 5 files I have worked on the most are:
   3. Cocina.css (https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/Cocina.css)
   4. AñadirReceta.html (https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/A%C3%B1adirReceta.html)
   5. PatatasBravas.html (https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/PatatasBravas.html)
+
+## Practice 2
+
+### Execution Instructions
+
+If you want to run the application first of all you will have to download Node.js, if its possible the latest version 24.7.0 also you will need to have downloaded MongoDB server version 5 or higher.
+  1-After downloading these two important tools you will have to go to GitHub and download the release with the name of "practica2" and unzip into a folder.
+  2-Now you will have to acces to this new folder, move into this newly created directory using "cd" until you reach the project.
+  3-Write the command "npm install" which will read the package.json file and install all necessary libraries for the project.
+  4-Finally you will start the application with the command "npm start" this command will execute app.js.The script will automatically load the data into the database, if it does not exist, and start the server.
+
+
+### File Description
+
+Inside the folder of data we have the recipes.json, this file is the static database of the page.Its function is to store all the information about the recipes.
+
+Another folder we have is the public one, inside this one we have the css and the public images such as the logo of the webapp.
+
+Then inside the folder of src and inside of routes, we have the main.js.This is probably the most important file of this project this file acts as a router for Express.js, it defines all the URLs for the recipes,validates form data and communicates with the MongoDB database to manage all the information for the recipes and their steps.
+
+Inside the src folder we have another folder called views where we have all the HTMLs including the partials such as the footer and the header
+
+Also inside of the src folder we have four more files:
+    -First of all we have the app.js,this is the main entry point for the application.It configures and starts the Express server, sets up the Mustache template engine and serves static files.Also it is the one who connects the database, importing the main.js and launching the server.
+    -Secondly is the database.js this file handles the MongoDB connection.It exports a conect function that initialize the connection and a shared db object for other files to access the active database.
+    -In third place is the loadData.js, this file seeds the database by loading initial recipes from recipes.json and copying their images when the database is empty.
+    -Lastly we have the multerConfig.js this file configures the Multer middleware.It specifies that uploaded files should be saved to the uploads folder and given a unique name.
+
+### Demostration video
+
+The video of how everything works is: 
+
+### Members Participation
+
+#### Fernán Rama Hombreiro
+
+
+
+5 most important commits:
+
+  1. 
+  2. 
+  3. 
+  4. 
+  5. 
+
+The 5 files I have worked on the most are:
+  1. 
+  2. 
+  3. 
+  4. 
+  5. 
+
+#### Rubén Torres Rivero
+
+
+5 most important commits:
+
+  1. 
+  2. 
+  3. 
+  4. 
+  5. 
+
+The 5 files I have worked on the most are:
+  1. 
+  2. 
+  3. 
+  4. 
+  5. 
+
+### Izan Calle Feijoo
+
+5 most important commits:
+
+  1. 
+  2. 
+  3. 
+  4. 
+  5. 
+
+The 5 files I have worked on the most are:
+  1. 
+  2. 
+  3. 
+  4. 
+  5.
