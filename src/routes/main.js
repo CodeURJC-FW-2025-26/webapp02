@@ -12,30 +12,36 @@ const validateRecipe = (isEditing = false) => {
     return async (req, res, next) => {
         try {
             const { recipeName, description, ingredients, category, difficulty, preparationTime } = req.body;
-            const recipesCollection = db.connection.collection('recipes');
             const backUrl = isEditing ? `/receta/editar/${req.params.id}` : '/receta/nueva';
-            const backUrlText = isEditing ? 'Volver a editar' : 'Volver al formulario';
+
+            // Función para manejar el error
+            const handleError = (errorMessage) => {
+                req.session.formData = req.body; // Guarda TODOS los datos del formulario
+                req.session.errorMessage = errorMessage;
+                req.session.backUrl = backUrl; // Guardamos la URL para el botón "Volver"
+                res.redirect('/error'); // Redirigimos a una ruta de error genérica
+            };
 
             // --- INICIO DE VALIDACIONES CENTRALIZADAS ---
 
             // Validación 1: Todos los campos obligatorios deben estar presentes.
             if (!recipeName || !description || !ingredients || !category || !difficulty || !preparationTime) {
-                return res.status(400).render('error', { errorMessage: 'Todos los campos son obligatorios.', backUrl, backUrlText });
+                return handleError('Todos los campos son obligatorios.');
             }
 
             // Validación 2: El nombre de la receta debe empezar con mayúscula.
             if (recipeName.trim()[0] !== recipeName.trim()[0].toUpperCase()) {
-                return res.status(400).render('error', { errorMessage: 'El nombre de la receta debe empezar con mayúscula.', backUrl, backUrlText });
+                return handleError('El nombre de la receta debe empezar con mayúscula.');
             }
 
             // 4. Formato: Descripción entre 20 y 500 caracteres
             if (description.trim().length < 20 || description.trim().length > 500) {
-                return res.status(400).render('error', { errorMessage: 'La descripción debe tener entre 20 y 500 caracteres.', backUrl, backUrlText });
+                return handleError('La descripción debe tener entre 20 y 500 caracteres.');
             }
 
             // Validación 5: El tiempo de preparación debe ser un número positivo.
             if (isNaN(preparationTime) || parseInt(preparationTime) <= 0) {
-                return res.status(400).render('error', { errorMessage: 'El tiempo de preparación debe ser un número válido y positivo.', backUrl, backUrlText });
+                return handleError('El tiempo de preparación debe ser un número válido y positivo.');
             }
 
             // Validación de nombre único (adaptativa)
@@ -45,10 +51,7 @@ const validateRecipe = (isEditing = false) => {
             }
             const existingRecipe = await recipesCollection.findOne(query);
             if (existingRecipe) {
-                const errorMessage = isEditing
-                    ? `Ya existe otra receta con el nombre "${recipeName}".`
-                    : `Ya existe una receta con el nombre "${recipeName}". Por favor, elige otro nombre.`;
-                return res.status(400).render('error', { errorMessage, backUrl, backUrlText });
+                return handleError(`Ya existe una receta con el nombre "${recipeName}".`);
             }
 
             // --- FIN DE VALIDACIONES ---
@@ -120,12 +123,54 @@ router.get('/', async (req, res) => {
     }
 });
 
+// Ruta para mostrar la página de error después de una redirección
+router.get('/error', (req, res) => {
+    const errorMessage = req.session.errorMessage;
+    const backUrl = req.session.backUrl;
+
+    // Limpiamos los datos de error de la sesión para que no se muestren de nuevo
+    delete req.session.errorMessage;
+    delete req.session.backUrl;
+    // ¡Ojo! NO borramos req.session.formData todavía. Lo necesitaremos en el siguiente paso.
+
+    if (!errorMessage) {
+        // Si alguien accede a /error directamente, lo mandamos al inicio
+        return res.redirect('/');
+    }
+
+    res.render('error', {
+        errorMessage: errorMessage,
+        backUrl: backUrl || '/', // Si no hay URL de vuelta, va al inicio
+        backUrlText: 'Volver al formulario'
+    });
+});
+
 // MUESTRA EL FORMULARIO PARA CREAR UNA NUEVA RECETA
 router.get('/receta/nueva', (req, res) => {
-    // Pasamos un objeto 'recipe' vacío para que la plantilla no falle
-    // al intentar acceder a propiedades como 'recipe.name'.
-    // También nos aseguramos de que 'editing' no se pase o sea 'false'.
-    res.render('AñadirReceta', { recipe: {} });
+    // Comprueba si hay datos de formulario guardados en la sesión (por un error previo)
+    const formData = req.session.formData;
+    delete req.session.formData; // Limpia los datos después de usarlos (flash message)
+
+    const recipeData = formData ? formData : {}; // Usa los datos de la sesión o un objeto vacío
+
+    // Preparamos los helpers para los <select>
+    if (recipeData.category) {
+        recipeData[`isCategory${recipeData.category.charAt(0).toUpperCase() + recipeData.category.slice(1)}`] = true;
+    }
+    if (recipeData.difficulty) {
+        recipeData[`isDifficulty${recipeData.difficulty.charAt(0).toUpperCase() + recipeData.difficulty.slice(1)}`] = true;
+    }
+
+    // Renombramos las propiedades para que coincidan con la plantilla (ej. recipeName -> name)
+    const recipe = {
+        name: recipeData.recipeName,
+        description: recipeData.description,
+        ingredients: recipeData.ingredients,
+        preparation_time: recipeData.preparationTime,
+        ...recipeData // Incluye los helpers
+    };
+
+    res.render('AñadirReceta', { recipe: recipe });
 });
 
 // PROCESA EL ENVÍO DEL FORMULARIO PARA CREAR UNA NUEVA RECETA
@@ -140,7 +185,7 @@ router.post('/receta/nueva', upload.single('recipeImage'), validateRecipe(false)
             category: category,
             difficulty: difficulty,
             preparation_time: parseInt(preparationTime),
-            image: req.file ? `/uploads/${req.file.filename}` : '/images/logo.jpg',
+            image: req.file ? req.file.filename : 'logo.jpg', // Guardamos solo el nombre del archivo
             steps: []
         };
 
@@ -197,16 +242,34 @@ router.get('/receta/:id', async (req, res) => {
 // MUESTRA EL FORMULARIO PARA EDITAR
 router.get('/receta/editar/:id', async (req, res) => {
     try {
-        const recipeId = req.params.id;
-        if (!ObjectId.isValid(recipeId)) {
-            return res.status(400).render('error', {
-                errorMessage: 'El ID de la receta no es válido.',
-                backUrl: '/',
-                backUrlText: 'Volver a la página principal'
-            });
+        const formData = req.session.formData;
+        delete req.session.formData;
+
+        let recipe;
+        if (formData) {
+            // Si venimos de un error, usamos los datos de la sesión
+            recipe = {
+                name: formData.recipeName,
+                description: formData.description,
+                ingredients: formData.ingredients,
+                category: formData.category,
+                difficulty: formData.difficulty,
+                preparation_time: formData.preparationTime,
+                _id: req.params.id
+            };
+        } else {
+            // Si es la primera visita, cargamos los datos de la BD
+            recipe = await db.connection.collection('recipes').findOne({ _id: new ObjectId(req.params.id) });
         }
-        const recipe = await db.connection.collection('recipes').findOne({ _id: new ObjectId(recipeId) });
+
         if (recipe) {
+            // Añadimos helpers para los <select>
+            if (recipe.category) {
+                recipe[`isCategory${recipe.category.charAt(0).toUpperCase() + recipe.category.slice(1)}`] = true;
+            }
+            if (recipe.difficulty) {
+                recipe[`isDifficulty${recipe.difficulty.charAt(0).toUpperCase() + recipe.difficulty.slice(1)}`] = true;
+            }
             res.render('AñadirReceta', { recipe: recipe, editing: true });
         } else {
             res.status(404).render('error', { errorMessage: 'Receta no encontrada para editar.' });
@@ -236,7 +299,7 @@ router.post('/receta/editar/:id', upload.single('recipeImage'), validateRecipe(t
             preparation_time: parseInt(preparationTime)
         };
         if (req.file) {
-            updateData.image = `/uploads/${req.file.filename}`;
+            updateData.image = req.file.filename; // Guardamos solo el nombre del archivo
         }
 
         await db.connection.collection('recipes').updateOne(

@@ -4,7 +4,7 @@
     <section class="row">
         <!-- Columna Izquierda: Imagen y Botones -->
         <div class="col-md-5">
-            <img src="{{recipe.image}}" class="img-fluid rounded mb-3 recipe-image" alt="{{recipe.name}}">
+            <img src="/uploads/{{recipe.image}}" class="img-fluid rounded mb-3 recipe-image" alt="{{recipe.name}}">
             <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-3">
                 <a href="/receta/editar/{{recipe._id}}" class="btn btn-primary">Editar Receta</a>
                 <form action="/receta/borrar/{{recipe._id}}" method="POST" style="display: inline;">

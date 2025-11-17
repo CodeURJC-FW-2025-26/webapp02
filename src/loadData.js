@@ -20,6 +20,13 @@ export async function seedDatabase() {
             const dataPath = join(__dirname, '../data/recipes.json');
             const recipesData = JSON.parse(await fs.readFile(dataPath, 'utf-8'));
 
+            // Definimos la ruta a la carpeta de subidas
+            const uploadsDir = join(__dirname, '../uploads');
+
+            // Nos aseguramos de que la carpeta de destino exista. 
+            // { recursive: true } evita errores si la carpeta ya existe.
+            await fs.mkdir(uploadsDir, { recursive: true });
+
             // 2. Copiar imágenes y ajustar rutas
             const processedRecipes = [];
             for (const recipe of recipesData) {
@@ -37,7 +44,7 @@ export async function seedDatabase() {
                 // Actualiza el objeto de la receta para que la ruta de la imagen apunte a 'uploads'
                 processedRecipes.push({
                     ...recipe,
-                    image: `/uploads/${recipe.image}` // La ruta que usará el HTML
+                    image: recipe.image // La ruta que usará el HTML,  Guardamos solo el nombre del archivo, ej: "pulpo.jpg" 
                 });
             }
 

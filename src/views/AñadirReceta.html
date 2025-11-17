@@ -3,7 +3,11 @@
 <main>
      <h2 class="AddRecipe">{{#editing}}Editar{{/editing}}{{^editing}}Añade la{{/editing}} receta</h2>
      <div class="form-container">
-
+          {{#errorMessage}}
+          <div class="alert alert-danger" role="alert">
+               {{errorMessage}}
+          </div>
+          {{/errorMessage}}
           <form role="form"
                action="{{#editing}}/receta/editar/{{recipe._id}}{{/editing}}{{^editing}}/receta/nueva{{/editing}}"
                method="POST" enctype="multipart/form-data">
@@ -31,11 +35,18 @@
                <div class="form-group">
                     <label for="category" class="form-label">Categoría:</label>
                     <select class="form-select" id="category" name="category" required>
-                         <option value="" selected disabled>Seleccione una categoría</option>
-                         <option value="entrante">Entrante</option>
-                         <option value="principal">Plato Principal</option>
-                         <option value="postre">Postre</option>
-                         <option value="vegano">Vegano</option>
+                         <option value="" disabled {{^recipe.category}}selected{{/recipe.category}}>Seleccione una
+                              categoría</option>
+                         <option value="entrante" {{#recipe.isCategoryEntrante}}selected{{/recipe.isCategoryEntrante}}>
+                              Entrante
+                         </option>
+                         <option value="principal"
+                              {{#recipe.isCategoryPrincipal}}selected{{/recipe.isCategoryPrincipal}}>Plato
+                              Principal</option>
+                         <option value="postre" {{#recipe.isCategoryPostre}}selected{{/recipe.isCategoryPostre}}>Postre
+                         </option>
+                         <option value="vegano" {{#recipe.isCategoryVegano}}selected{{/recipe.isCategoryVegano}}>Vegano
+                         </option>
                     </select>
                     <!-- Nota: El valor seleccionado en 'editing' se muestra para que el usuario pueda volver a seleccionarlo. -->
                     {{#editing}}<small class="form-text text-muted">Categoría actual:
@@ -45,10 +56,16 @@
                <div class="form-group">
                     <label for="difficulty" class="form-label">Dificultad:</label>
                     <select class="form-select" id="difficulty" name="difficulty" required>
-                         <option value="" selected disabled>Seleccione una dificultad</option>
-                         <option value="facil">Fácil</option>
-                         <option value="media">Media</option>
-                         <option value="dificil">Difícil</option>
+                         <option value="" disabled {{^recipe.difficulty}}selected{{/recipe.difficulty}}>Seleccione una
+                              dificultad
+                         </option>
+                         <option value="facil" {{#recipe.isDifficultyFacil}}selected{{/recipe.isDifficultyFacil}}>Fácil
+                         </option>
+                         <option value="media" {{#recipe.isDifficultyMedia}}selected{{/recipe.isDifficultyMedia}}>Media
+                         </option>
+                         <option value="dificil" {{#recipe.isDifficultyDificil}}selected{{/recipe.isDifficultyDificil}}>
+                              Difícil
+                         </option>
                     </select>
                     {{#editing}}<small class="form-text text-muted">Dificultad actual:
                          {{recipe.difficulty}}</small>{{/editing}}
@@ -69,7 +86,7 @@
                     {{#recipe.image}}
                     <div class="mt-2">
                          <small>Imagen actual:</small><br>
-                         <img src="{{recipe.image}}" width="100" alt="Imagen actual de la receta">
+                         <img src="/uploads/{{recipe.image}}" width="100" alt="Imagen actual de la receta">
                     </div>
                     {{/recipe.image}}
                     {{/editing}}

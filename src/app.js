@@ -1,5 +1,6 @@
 
 import express from 'express';
+import session from 'express-session';
 import mustacheExpress from 'mustache-express';
 //import bodyParser from 'body-parser';
 import { dirname, join } from 'path';
@@ -24,6 +25,13 @@ app.use('/uploads', express.static(join(__dirname, '../uploads')));
 // Configuración para parsear datos de formularios (reemplaza a body-parser)
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(session({
+    secret: 'cadena-aleatoria-secreta-webb', // Cambia esto por una cadena aleatoria
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false } // Poner a 'true' si usas HTTPS
+}));
 
 // 3. Configurar el motor de plantillas Mustache
 app.engine('html', mustacheExpress());

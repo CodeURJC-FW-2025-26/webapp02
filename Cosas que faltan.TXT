@@ -2,8 +2,6 @@ PASAR TODO A INGLÉS
 
 Destacar el indicador de la página (1 de 2)
 
-En la base de datos no puede aparecer el /uploads/ de las imagenes
-
 CREAR RECETA: Al volver al formulario después de un error se pierden todos los datos
 
 PARA DESACTIVAR REQUIRED
