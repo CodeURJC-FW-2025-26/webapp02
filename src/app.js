@@ -12,36 +12,36 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const app = express();
 
-// 1. Servir archivos estáticos desde la carpeta 'public'
+// 1. Serve static files from the 'public' folder
 app.use(express.static(join(__dirname, '../public')));
 app.use('/uploads', express.static(join(__dirname, '../uploads')));
-// Servir archivos de la carpeta 'uploads'
+// Serve files from the 'uploads' folder
 app.use('/uploads', express.static(join(__dirname, '../uploads')));
 
-// 2. Configurar body-parser para leer datos de formularios POST
+// 2. Configure body-parser to read data from POST forms
 //app.use(bodyParser.urlencoded({ extended: true }));
 
-// Configuración para parsear datos de formularios (reemplaza a body-parser)
+// Configuration for parsing form data (replaces body-parser)
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// 3. Configurar el motor de plantillas Mustache
+// 3. Configure the Mustache template engine
 app.engine('html', mustacheExpress());
 app.set('views', join(__dirname, 'views'));
 app.set('view engine', 'html');
 
-// 4. Conectar los routers
+// 4. Connect the routers
 app.use('/', mainRouter);
 
-// 5. Función principal para arrancar la aplicación
+// 5. Main function to start the application
 async function startServer() {
-    await connect();      // Primero, nos conectamos a la BD
-    await seedDatabase();   // Luego, cargamos los datos si es necesario
+    await connect();      // First, we connect to the database
+    await seedDatabase();   // Then, we load the data if necessary
 
     const PORT = 3000;
-    app.listen(PORT, () => { // Finalmente, iniciamos el servidor web
+    app.listen(PORT, () => { // Finally, we started the web server.
         console.log(`🚀 Servidor web funcionando en http://localhost:${PORT}`);
     });
 }
 
-startServer(); // Llamamos a la función para que todo empiece
+startServer(); // Call the function to get everything started

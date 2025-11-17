@@ -14,6 +14,8 @@
     - Form Container
     - Form & Buttons
     - Decorative Images
+7. ERROR AND CONFIRMATION PAGES
+8. PAGINATION STYLES
 
 
 /* --- 1. GENERAL STYLES & TYPOGRAPHY --- */
@@ -496,49 +498,49 @@ h2 {
     transform: translate(225px, 10px);
 }
 
-/* --- 7. PÁGINAS DE ERROR Y CONFIRMACIÓN --- */
+/* --- 7. ERROR AND CONFIRMATION PAGES --- */
 /*
- * Estilos para las páginas de feedback al usuario, como la página de error.
- * Se busca consistencia y claridad visual.
+ * Styles for user feedback pages, such as the error page.
+ * Consistency and visual clarity are sought.
  */
 
 .feedback-page {
-    /* Contenedor principal para la página de error o confirmación */
+    /* Main container for the error or confirmation page */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
     padding: 3rem 1rem;
-    /* Espaciado interno generoso */
+    /* Internal spacing */
 }
 
 .feedback-icon {
     font-size: 4rem;
-    /* Tamaño del ícono, movido desde el estilo en línea */
+    /* Icon size, moved from inline style */
     margin-bottom: 1rem;
 }
 
 .feedback-title {
     font-family: "DM Serif Display", serif;
-    /* Mantenemos la consistencia de la fuente */
+    /* Maintain the consistency of the text font */
     font-weight: bold;
     font-size: 2.5rem;
-    /* Un tamaño de fuente grande y prominente */
+    /* A large and prominent font size */
 }
 
 .feedback-text {
     font-size: 1.25rem;
-    /* Texto principal legible */
+    /* Readable main text */
     max-width: 600px;
-    /* Evita que las líneas de texto sean demasiado largas */
+    /* Avoid making lines of text too long */
     margin-top: 1rem;
 }
 
-/* Colores específicos para la página de error */
+/* Specific colors for the error page */
 .feedback-icon--error {
     color: var(--bs-danger);
-    /* Usa la variable de color de Bootstrap para consistencia */
+    /* Use Bootstrap's color variable for consistency */
 }
 
 .feedback-title--error {
