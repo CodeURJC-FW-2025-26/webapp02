@@ -6,6 +6,20 @@ import upload from '../multerConfig.js';
 
 const router = express.Router();
 
+// 1. Declara la variable aquí, pero no la inicialices.
+let recipesCollection;
+
+// 2. Añade este middleware. Se ejecutará antes que cualquier otra ruta en este fichero.
+//    Garantiza que 'recipesCollection' esté disponible para todas las rutas.
+router.use((req, res, next) => {
+    // Si la variable recipesCollection aún no está definida, la inicializa.
+    // Esto solo ocurrirá una vez, en la primera petición que reciba el servidor.
+    if (!recipesCollection) {
+        recipesCollection = db.connection.collection('recipes');
+    }
+    next(); // Continúa hacia la ruta solicitada (ej. GET '/', POST '/receta/nueva', etc.)
+});
+
 // Middleware for validating recipe data
 // Accepts a boolean 'isEditing' to adapt name validation
 const validateRecipe = (isEditing = false) => {
@@ -86,9 +100,6 @@ router.get('/', async (req, res) => {
         if (categoryQuery) {
             filter.category = categoryQuery;
         }
-
-        // 3. Consultas a la Base de Datos
-        const recipesCollection = db.connection.collection('recipes');
 
         // We obtain the recipes for the current page by applying filters and pagination.
         const recipes = await recipesCollection.find(filter)
@@ -211,9 +222,15 @@ router.get('/receta/:id', async (req, res) => {
     try {
         const recipeId = req.params.id; // Obtain the URL ID
 
-        // We searched for the recipe in the database using its ID
-        const recipesCollection = db.connection.collection('recipes');
         const recipe = await recipesCollection.findOne({ _id: new ObjectId(recipeId) });
+
+        // Recuperamos los datos del formulario y el error de la sesión (si existen)
+        const stepFormData = req.session.stepFormData;
+        const stepErrorMessage = req.session.stepErrorMessage;
+
+        // Limpiamos la sesión para que el error no se muestre de nuevo en la siguiente recarga
+        delete req.session.stepFormData;
+        delete req.session.stepErrorMessage;
 
         if (recipe) {
             // We added the recipe ID to each step to make it easy to access in the template.
@@ -223,7 +240,11 @@ router.get('/receta/:id', async (req, res) => {
                 });
             }
             // If the recipe is found, we render the detail view
-            res.render('detalleReceta', { recipe: recipe });
+            res.render('detalleReceta', {
+                recipe: recipe,
+                stepFormData: stepFormData,       // Los datos para "rellenar" el formulario
+                stepErrorMessage: stepErrorMessage // El mensaje de error a mostrar
+            });
         } else {
             // If a recipe with that ID is not found, we display a 404 error.
             res.status(404).render('error', { errorMessage: 'Receta no encontrada.' });
@@ -336,7 +357,6 @@ router.post('/receta/borrar/:id', async (req, res) => {
             });
         }
 
-        const recipesCollection = db.connection.collection('recipes');
         const result = await recipesCollection.deleteOne({ _id: new ObjectId(recipeId) });
 
         if (result.deletedCount === 1) {
@@ -367,15 +387,14 @@ router.post('/receta/:id/paso/nuevo', async (req, res) => {
         const { stepName, stepDescription } = req.body;
 
         // Simple server validation
-        if (!stepName || !stepDescription) {
-            return res.status(400).render('error', {
-                errorMessage: 'El título y la descripción del paso son obligatorios.',
-                backUrl: `/receta/${recipeId}`,
-                backUrlText: 'Volver a la receta'
-            });
+        if (!stepName || !stepDescription || stepName.trim() === '' || stepDescription.trim() === '') {
+            // 1. Guardar los datos del formulario en la sesión
+            req.session.stepFormData = { name: stepName, description: stepDescription };
+            // 2. Guardar el mensaje de error en la sesión
+            req.session.stepErrorMessage = 'El título y la descripción del paso son obligatorios.';
+            // 3. Redirigir de vuelta a la página de la receta
+            return res.redirect(`/receta/${recipeId}`);
         }
-
-        const recipesCollection = db.connection.collection('recipes');
 
         // We created the object for the new step. We assigned it a unique ID so we could delete/edit it later.
         const newStep = {
@@ -427,8 +446,6 @@ router.post('/receta/:id/paso/borrar/:stepId', async (req, res) => {
             });
         }
 
-        const recipesCollection = db.connection.collection('recipes');
-
         // We use $pull to remove an element from the 'steps' array that matches a criterion
         await recipesCollection.updateOne(
             { _id: new ObjectId(recipeId) }, // Filter: Find the right recipe
@@ -458,26 +475,36 @@ router.get('/receta/:id/paso/editar/:stepId', async (req, res) => {
     try {
         const { id, stepId } = req.params;
 
-        if (!ObjectId.isValid(id) || !ObjectId.isValid(stepId)) {
-            return res.status(400).render('error', { errorMessage: 'ID de receta o de paso no válido.' });
-        }
+        const stepFormData = req.session.stepFormData;
+        const stepErrorMessage = req.session.stepErrorMessage;
+        delete req.session.stepFormData;
+        delete req.session.stepErrorMessage;
 
-        // We are looking for the recipe that contains the step
+        // Buscamos la receta para tener su contexto (nombre, etc.)
         const recipe = await db.connection.collection('recipes').findOne({ _id: new ObjectId(id) });
-
         if (!recipe) {
             return res.status(404).render('error', { errorMessage: 'Receta no encontrada.' });
         }
 
-        // We look for the specific step within the recipe's array of steps.
-        const step = recipe.steps.find(s => s._id.toString() === stepId);
+        let step;
+        // Si hay datos en la sesión por un error, los usamos
+        if (stepFormData) {
+            step = stepFormData;
+        } else {
+            // Si no, buscamos los datos en la base de datos
+            step = recipe.steps.find(s => s._id.toString() === stepId);
+        }
 
         if (!step) {
             return res.status(404).render('error', { errorMessage: 'Paso no encontrado.' });
         }
 
-        // We rendered a new view to edit the step
-        res.render('editarPaso', { recipe, step });
+        // Renderizamos la vista con los datos correctos y el mensaje de error
+        res.render('editarPaso', {
+            recipe,
+            step,
+            errorMessage: stepErrorMessage
+        });
 
     } catch (error) {
         console.error("Error al obtener el paso para editar:", error);
@@ -489,22 +516,22 @@ router.get('/receta/:id/paso/editar/:stepId', async (req, res) => {
     }
 });
 
-// PROCESS ONE-STEP EDITING
+// PROCESS THE EDITING OF A STEP
 router.post('/receta/:id/paso/editar/:stepId', async (req, res) => {
     try {
         const { id, stepId } = req.params;
         const { stepName, stepDescription } = req.body;
 
         // Server validations
-        if (!stepName || !stepDescription) {
-            return res.status(400).render('error', {
-                errorMessage: 'El título y la descripción no pueden estar vacíos.',
-                backUrl: '/',
-                backUrlText: 'Volver a la página principal'
-            });
+        if (!stepName || !stepDescription || stepName.trim() === '' || stepDescription.trim() === '') {
+            // 1. Guardamos los datos del formulario en la sesión
+            req.session.stepFormData = { name: stepName, description: stepDescription, _id: stepId };
+            // 2. Guardamos el mensaje de error
+            req.session.stepErrorMessage = 'El título y la descripción no pueden estar vacíos.';
+            // 3. Redirigimos de vuelta AL MISMO FORMULARIO DE EDICIÓN
+            return res.redirect(`/receta/${id}/paso/editar/${stepId}`);
         }
 
-        const recipesCollection = db.connection.collection('recipes');
         await recipesCollection.updateOne(
             { _id: new ObjectId(id), "steps._id": new ObjectId(stepId) },
             {

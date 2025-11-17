@@ -63,16 +63,24 @@
         <div class="col-12">
             <div class="add-step-form">
                 <h3 class="dish-subtitle">Añadir Nuevo Paso</h3>
+                <!-- MOSTRAR EL MENSAJE DE ERROR SI EXISTE -->
+                {{#stepErrorMessage}}
+                <div class="alert alert-danger" role="alert">
+                    {{stepErrorMessage}}
+                </div>
+                {{/stepErrorMessage}}
                 <form action="/receta/{{recipe._id}}/paso/nuevo" method="POST">
                     <div class="form-group mb-3">
                         <label for="stepName" class="form-label">Título del Paso:</label>
+                        <!-- USAR LOS DATOS DE LA SESIÓN PARA RELLENAR EL CAMPO -->
                         <input type="text" class="form-control" id="stepName" name="stepName"
-                            placeholder="Ej: Preparar el sofrito" required>
+                            placeholder="Ej: Preparar el sofrito" value="{{stepFormData.name}}" required>
                     </div>
                     <div class="form-group mb-3">
                         <label for="stepDescription" class="form-label">Descripción del Paso:</label>
+                        <!-- USAR LOS DATOS DE LA SESIÓN PARA RELLENAR EL CAMPO -->
                         <textarea class="form-control" id="stepDescription" name="stepDescription" rows="3"
-                            placeholder="Describe brevemente el paso" required></textarea>
+                            placeholder="Describe brevemente el paso" required>{{stepFormData.description}}</textarea>
                     </div>
                     <button type="submit" class="btn btn-success">Añadir Paso</button>
                 </form>

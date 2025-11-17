@@ -1,6 +1,14 @@
 {{> partials/header}}
 <main class="container mt-5">
     <h2>Editando el Paso {{step.order}} de la receta "{{recipe.name}}"</h2>
+
+    <!-- MOSTRAR EL MENSAJE DE ERROR SI EXISTE -->
+    {{#errorMessage}}
+    <div class="alert alert-danger" role="alert">
+        {{errorMessage}}
+    </div>
+    {{/errorMessage}}
+
     <form action="/receta/{{recipe._id}}/paso/editar/{{step._id}}" method="POST">
         <div class="mb-3">
             <label for="stepName" class="form-label">Título del Paso</label>
