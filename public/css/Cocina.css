@@ -437,6 +437,28 @@ h2 {
     color: white;
 }
 
+/* --- FIX DEFINITIVO ALINEACIÓN BOTONES DETALLE --- */
+
+/* 1. El contenedor padre de los botones */
+.recipe-container .d-md-flex {
+    align-items: stretch; /* Obliga a todos los hijos directos (links y form) a tener la misma altura */
+}
+
+/* 2. El formulario (que envuelve al botón rojo) */
+.recipe-container .d-md-flex form {
+    display: flex; /* Convierte el form en un contenedor flexible */
+    margin: 0;     /* Elimina márgenes extraños */
+}
+
+/* 3. Los botones en sí (tanto <a> como <button>) */
+.recipe-container .d-md-flex .btn {
+    display: flex;           /* Usamos flexbox dentro del botón */
+    align-items: center;     /* Centrado vertical perfecto del texto */
+    justify-content: center; /* Centrado horizontal */
+    height: 100%;            /* ¡CLAVE! Ocupar el 100% de la altura del vecino más alto */
+    min-height: 60px;        /* Altura mínima base para que no se vean aplastados */
+    width: 100%;             /* Opcional: si quieres que todos tengan ancho similar, o quítalo para ancho automático */
+}
 
 
 /* --- 6. ADD RECIPE PAGE (AÑADIRRECETA.HTML) --- */

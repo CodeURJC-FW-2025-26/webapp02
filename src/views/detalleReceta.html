@@ -7,8 +7,8 @@
             <img src="/uploads/{{recipe.image}}" class="img-fluid rounded mb-3 recipe-image" alt="{{recipe.name}}">
             <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-3">
                 <a href="/receta/editar/{{recipe._id}}" class="btn btn-success">Editar Receta</a>
-                <form action="/receta/borrar/{{recipe._id}}" method="POST" style="display: inline;">
-                    <button type="submit" class="btn btn-danger">Borrar Receta</button>
+                <form action="/receta/borrar/{{recipe._id}}" method="POST">
+                    <button type="submit" class="btn btn-danger">Borrar</button>
                 </form>
                 <a href="/" class="btn btn-info">Volver a página principal</a>
             </div>
