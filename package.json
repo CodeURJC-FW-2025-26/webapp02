@@ -18,12 +18,5 @@
     "url": "https://github.com/CodeURJC-FW-2025-26/webapp02/issues"
   },
   "homepage": "https://github.com/CodeURJC-FW-2025-26/webapp02#readme",
-  "dependencies": {
-    "express": "^5.1.0",
-    "express-session": "^1.18.2",
-    "mongodb": "^6.20.0",
-    "multer": "^2.0.2",
-    "mustache-express": "^1.3.2",
-    "session": "^0.1.0"
-  }
+  "dependencies": {}
 }
