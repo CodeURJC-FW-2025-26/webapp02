@@ -63,12 +63,6 @@
         <div class="col-12">
             <div class="add-step-form">
                 <h3 class="dish-subtitle">Añadir Nuevo Paso</h3>
-                <!-- MOSTRAR EL MENSAJE DE ERROR SI EXISTE -->
-                {{#stepErrorMessage}}
-                <div class="alert alert-danger" role="alert">
-                    {{stepErrorMessage}}
-                </div>
-                {{/stepErrorMessage}}
                 <form action="/receta/{{recipe._id}}/paso/nuevo" method="POST">
                     <div class="form-group mb-3">
                         <label for="stepName" class="form-label">Título del Paso:</label>

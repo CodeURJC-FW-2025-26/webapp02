@@ -6,8 +6,5 @@ PASAR TODO A INGLÉS
 
 Los estilos de los botones (página de confirmación y error, por ejemplo) deben ser todos iguales
 
-Para añadir un paso si hay algo en blanco pagina de errror, no mensaje.
-
-
 PARA DESACTIVAR REQUIRED
 document.querySelectorAll('input[required], select[required], textarea[required]').forEach(element => element.removeAttribute('required'));
