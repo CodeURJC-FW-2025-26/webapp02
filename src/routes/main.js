@@ -138,6 +138,15 @@ router.get('/', async (req, res) => {
             }
         }
 
+        // Objeto para determinar qué botón de categoría está activo
+        const categoryStates = {
+            all: !categoryQuery, // El botón "Todas" está activo si no hay ninguna categoría en la URL
+            entrante: categoryQuery === 'entrante',
+            principal: categoryQuery === 'principal',
+            postre: categoryQuery === 'postre',
+            vegano: categoryQuery === 'vegano'
+        };
+
         // 4. Render the view, passing all the necessary data.
         res.render('index', {
             recipes: recipes,
@@ -149,7 +158,8 @@ router.get('/', async (req, res) => {
             nextPage: page + 1,
             searchQuery: searchQuery, // To maintain the value in the search engine
             categoryQuery: categoryQuery, // To find out which category is active
-            pagesForTemplate: pagesForTemplate // <--- Añadimos el nuevo array al render
+            pagesForTemplate: pagesForTemplate, // <--- Añadimos el nuevo array al render
+            categoryStates: categoryStates // <-- Pasa el nuevo objeto a la plantilla
         });
 
     } catch (error) {
