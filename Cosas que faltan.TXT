@@ -1,14 +1,13 @@
 .
 
+FALTA
+1. PASAR TODO A INGLÉS: traducir variables y funciones | traducir nombres de ficheros | traducir comentarios
 
-PASAR TODO A INGLÉS
+2. COMPLETAR EL README
 
 
 Los estilos de los botones (página de confirmación y error, por ejemplo) deben ser todos iguales
 
-Documentación:
-
- - Preparar los 15 commits
 
 
 
