@@ -21,11 +21,13 @@
 
      <!-- Category Filter Buttons -->
      <section class="category-buttons">
-          <a href="/">Todas</a>
-          <a href="/?category=entrante">Entrantes</a>
-          <a href="/?category=principal">Platos Principales</a>
-          <a href="/?category=postre">Postres</a>
-          <a href="/?category=vegano">Veganos</a>
+          <a href="/" class="{{#categoryStates.all}}active{{/categoryStates.all}}">Todas</a>
+          <a href="/?category=entrante"
+               class="{{#categoryStates.entrante}}active{{/categoryStates.entrante}}">Entrantes</a>
+          <a href="/?category=principal" class="{{#categoryStates.principal}}active{{/categoryStates.principal}}">Platos
+               Principales</a>
+          <a href="/?category=postre" class="{{#categoryStates.postre}}active{{/categoryStates.postre}}">Postres</a>
+          <a href="/?category=vegano" class="{{#categoryStates.vegano}}active{{/categoryStates.vegano}}">Veganos</a>
      </section>
 
      <!-- Recommended recipes grid -->

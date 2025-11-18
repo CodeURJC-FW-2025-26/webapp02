@@ -209,13 +209,13 @@ h2 {
 /* Style for social media icons */
 .social-icons a {
 
-    display: inline-flex; 
+    display: inline-flex;
 
 
-    align-items: center; 
+    align-items: center;
 
 
-    justify-content: center; 
+    justify-content: center;
 
     height: 40px;
     width: 40px;
@@ -277,9 +277,10 @@ h2 {
     /* Smooth transition */
 }
 
-.category-buttons a:hover {
+.category-buttons a:hover,
+.category-buttons a.active {
     background-color: #222e38;
-    /* Inverts colors on hover */
+    /* Inverts colors on hover or if active */
     color: whitesmoke;
 }
 
@@ -431,7 +432,8 @@ h2 {
     background-color: #303e49
 }
 
-.btn-success:active { /* Change color when clicking the button */
+.btn-success:active {
+    /* Change color when clicking the button */
     background-color: #303e49;
     border-color: #222e38;
     color: white;
@@ -446,7 +448,8 @@ h2 {
     background-color: #303e49
 }
 
-.btn-primary:active { /* Change color when clicking the button */
+.btn-primary:active {
+    /* Change color when clicking the button */
     background-color: #303e49;
     border-color: #222e38;
     color: white;
@@ -577,15 +580,16 @@ h2 {
     color: #222e38;
     background-color: rgba(255, 255, 255, 0.5);
     border: none;
-    
+
     /* Space and shape */
     margin: 0 8px;
     border-radius: 30px;
     padding: 10px 20px;
-    
+
     /* Shadow and transition */
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-    transition: all 0.3s ease; /* Hover transtition */
+    transition: all 0.3s ease;
+    /* Hover transtition */
 }
 
 /* Style while hovering */
@@ -593,7 +597,7 @@ h2 {
 .page-item:not(.active):not(.disabled) .page-link:hover {
     background-color: #222e38;
     color: whitesmoke;
-    
+
     /* "go up" animation */
     transform: translateY(-3px);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
