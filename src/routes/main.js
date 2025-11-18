@@ -20,7 +20,65 @@ router.use((req, res, next) => {
     next(); // Continúa hacia la ruta solicitada (ej. GET '/', POST '/receta/nueva', etc.)
 });
 
+// Middleware for validating recipe data
+// Accepts a boolean 'isEditing' to adapt name validation
+const validateRecipe = (isEditing = false) => {
+    return async (req, res, next) => {
+        try {
+            const { recipeName, description, ingredients, category, difficulty, preparationTime } = req.body;
+            const backUrl = isEditing ? `/receta/editar/${req.params.id}` : '/receta/nueva';
 
+            // Función para manejar el error
+            const handleError = (errorMessage) => {
+                req.session.formData = req.body; // Guarda TODOS los datos del formulario
+                req.session.errorMessage = errorMessage;
+                req.session.backUrl = backUrl; // Guardamos la URL para el botón "Volver"
+                res.redirect('/error'); // Redirigimos a una ruta de error genérica
+            };
+
+            // --- START OF CENTRALIZED VALIDATIONS ---
+
+            // Validation 1: All required fields must be present.
+            if (!recipeName || !description || !ingredients || !category || !difficulty || !preparationTime) {
+                return handleError('Todos los campos son obligatorios.');
+            }
+
+            // Validation 2: The recipe name must start with a capital letter.
+            if (recipeName.trim()[0] !== recipeName.trim()[0].toUpperCase()) {
+                return handleError('El nombre de la receta debe empezar con mayúscula.');
+            }
+
+            // 4. Format: Description between 20 and 500 characters
+            if (description.trim().length < 20 || description.trim().length > 500) {
+                return handleError('La descripción debe tener entre 20 y 500 caracteres.');
+            }
+
+            // Validation 5: The preparation time must be a positive number.
+            if (isNaN(preparationTime) || parseInt(preparationTime) <= 0) {
+                return handleError('El tiempo de preparación debe ser un número válido y positivo.');
+            }
+
+            // Unique name validation (adaptive)
+            const query = { name: { $regex: `^${recipeName.trim()}$`, $options: 'i' } };
+            if (isEditing) {
+                query._id = { $ne: new ObjectId(req.params.id) };
+            }
+            const existingRecipe = await recipesCollection.findOne(query);
+            if (existingRecipe) {
+                return handleError(`Ya existe una receta con el nombre "${recipeName}".`);
+            }
+
+            // --- END OF VALIDATIONS ---
+
+            // If all validations pass, we continue to the next route handler.
+            next();
+
+        } catch (error) {
+            console.error("Error en el middleware de validación:", error);
+            res.status(500).render('error', { errorMessage: 'Error interno del servidor durante la validación.' });
+        }
+    };
+};
 
 // Route to the homepage with pagination, search, and filter
 router.get('/', async (req, res) => {
