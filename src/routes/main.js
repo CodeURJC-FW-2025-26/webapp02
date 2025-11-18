@@ -194,7 +194,67 @@ router.get('/error', (req, res) => {
     });
 });
 
+// MUESTRA EL FORMULARIO PARA CREAR UNA NUEVA RECETA
+router.get('/receta/nueva', (req, res) => {
+    // Comprueba si hay datos de formulario guardados en la sesión (por un error previo)
+    const formData = req.session.formData;
+    delete req.session.formData; // Limpia los datos después de usarlos (flash message)
 
+    const recipeData = formData ? formData : {}; // Usa los datos de la sesión o un objeto vacío
+
+    // Preparamos los helpers para los <select>
+    if (recipeData.category) {
+        recipeData[`isCategory${recipeData.category.charAt(0).toUpperCase() + recipeData.category.slice(1)}`] = true;
+    }
+    if (recipeData.difficulty) {
+        recipeData[`isDifficulty${recipeData.difficulty.charAt(0).toUpperCase() + recipeData.difficulty.slice(1)}`] = true;
+    }
+
+    // Renombramos las propiedades para que coincidan con la plantilla (ej. recipeName -> name)
+    const recipe = {
+        name: recipeData.recipeName,
+        description: recipeData.description,
+        ingredients: recipeData.ingredients,
+        preparation_time: recipeData.preparationTime,
+        ...recipeData // Incluye los helpers
+    };
+
+    res.render('AñadirReceta', { recipe: recipe });
+});
+
+// PROCESS THE SUBMISSION OF THE FORM TO CREATE A NEW RECIPE
+router.post('/receta/nueva', upload.single('recipeImage'), validateRecipe(false), async (req, res) => {
+    try {
+        const { recipeName, description, ingredients, category, difficulty, preparationTime } = req.body;
+
+        const newRecipe = {
+            name: recipeName.trim(),
+            description: description.trim(),
+            ingredients: ingredients,
+            category: category,
+            difficulty: difficulty,
+            preparation_time: parseInt(preparationTime),
+            image: req.file ? req.file.filename : 'logo.jpg', // Guardamos solo el nombre del archivo
+            steps: []
+        };
+
+        const result = await db.connection.collection('recipes').insertOne(newRecipe);
+
+        res.render('confirmacion', {
+            message: `La receta "${newRecipe.name}" ha sido creada con éxito.`,
+            nextLink: `/receta/${result.insertedId}`,
+            nextLinkText: 'Ver la nueva receta'
+        });
+
+    } catch (error) {
+        console.error("❌ Error al crear la receta:", error);
+        res.status(500).render('error', {
+            errorMessage: 'Error interno del servidor. No se pudo guardar la receta.',
+            backUrl: '/',
+            backUrlText: 'Volver a la página principal'
+        });
+    }
+});
 
 router.get('/receta/:id', async (req, res) => {
     try {
