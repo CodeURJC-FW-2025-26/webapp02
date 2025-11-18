@@ -4,12 +4,7 @@
 PASAR TODO A INGLÉS
 
 
-PROFE: Preguntar si al añadir un paso nuevo hay que verificar que el nombre sea único
-
-Boton pagina confirmar ambos iguales
-
-Para añadir un paso si hay algo en blanco pagina de errror directamente.
-
+Los estilos de los botones (página de confirmación y error, por ejemplo) deben ser todos iguales
 
 PARA DESACTIVAR REQUIRED
 document.querySelectorAll('input[required], select[required], textarea[required]').forEach(element => element.removeAttribute('required'));

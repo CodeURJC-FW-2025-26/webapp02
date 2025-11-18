@@ -414,14 +414,14 @@ router.post('/receta/:id/paso/nuevo', async (req, res) => {
     try {
         const { stepName, stepDescription } = req.body;
 
-        // Simple server validation
+        // Server validation consistent with the recipe form
         if (!stepName || !stepDescription || stepName.trim() === '' || stepDescription.trim() === '') {
-            // 1. Guardar los datos del formulario en la sesión
-            req.session.stepFormData = { name: stepName, description: stepDescription };
-            // 2. Guardar el mensaje de error en la sesión
-            req.session.stepErrorMessage = 'El título y la descripción del paso son obligatorios.';
-            // 3. Redirigir de vuelta a la página de la receta
-            return res.redirect(`/receta/${recipeId}`);
+            // 1. Save the error message in the session.
+            req.session.errorMessage = 'El título y la descripción del paso son obligatorios.';
+            // 2. Save the URL to which the user should return.
+            req.session.backUrl = `/receta/${recipeId}`;
+            // 3. Redirect to the generic error page.
+            return res.redirect('/error');
         }
 
         // We created the object for the new step. We assigned it a unique ID so we could delete/edit it later.
