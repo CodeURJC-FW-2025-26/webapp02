@@ -492,6 +492,20 @@ h2 {
 
 .btn-dark {
     border-radius: 25px;
+    background-color: #222e38;
+}
+
+.btn-danger {
+    border-radius: 25px;
+}
+
+.btn-info {
+    border-radius: 25px;
+    color: white;
+}
+
+.btn-success {
+    border-radius: 25px;
 }
 
 .DecorativeImages {
