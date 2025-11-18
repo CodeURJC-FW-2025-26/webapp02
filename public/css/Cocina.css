@@ -437,6 +437,22 @@ h2 {
     color: white;
 }
 
+.btn-primary {
+    background-color: #222e38;
+    border-radius: 25px;
+}
+
+.btn-primary:hover {
+    background-color: #303e49
+}
+
+.btn-primary:active { /* Change color when clicking the button */
+    background-color: #303e49;
+    border-color: #222e38;
+    color: white;
+}
+
+
 
 /* --- 6. ADD RECIPE PAGE (AÑADIRRECETA.HTML) --- */
 /* DESKTOP STYLES */
