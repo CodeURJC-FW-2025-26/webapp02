@@ -173,7 +173,7 @@ The project is structured following a professional, modular approach:
 
 ### Demonstration video
 
-The video demonstrating the functionality is available at: [** Enlace vídeo **]
+The video demonstrating the functionality is available at: https://youtu.be/g-BBM9ncu94
 ### Members Participation
 
 #### Fernán Rama Hombreiro
@@ -200,22 +200,23 @@ For Practice 2, my primary role was the architecture and implementation of the a
 
 #### Rubén Torres Rivero
 
+In practice 2 my main work was on code quality and UX, adding advanced search features and essential security validations. I executed a key refactor to unify forms, improving project efficiency and stability. The result is a more robust application.
 
 5 most important commits:
 
-  1. 
-  2. 
-  3. 
-  4. 
-  5. 
+  1. [Retaining form data after error](https://github.com/CodeURJC-FW-2025-26/webapp02/commit/64b12a32257884121adc92cb9621639298d4a21a)
+  2. [Add robust search and category filtering](https://github.com/CodeURJC-FW-2025-26/webapp02/commit/0401b948edc0eac6e60c014852d81636c09f1c18)
+  3. [Recipe creation and editing complete](https://github.com/CodeURJC-FW-2025-26/webapp02/commit/7ae190e4132b8a9e3157a2b12c29acefc1b7e379)
+  4. [Prevent crash from invalid ID](https://github.com/CodeURJC-FW-2025-26/webapp02/commit/6dfb4f73f5ee96e36acce3420df66fe565bd52e8)
+  5. [Enhance recipe detail page layout](https://github.com/CodeURJC-FW-2025-26/webapp02/commit/621cb68368f0ec1c6f9b2bda34d267c2297c4203)
 
 The 5 files I have worked on the most are:
 
-  1. 
-  2. 
-  3. 
-  4. 
-  5. 
+  1. [src/routes/main.js](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/routes/main.js)
+  2. [src/views/AñadirReceta.html](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/views/A%C3%B1adirReceta.html)
+  3. [src/views/detalleReceta.html](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/views/detalleReceta.html)
+  4. [src/views/index.html](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/views/Index.html)
+  5. [README.md](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/README.md)
 
 ### Izan Calle Feijoo
 
