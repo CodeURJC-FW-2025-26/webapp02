@@ -30,6 +30,7 @@ const validateRecipe = (isEditing = false) => {
 
             // Función para manejar el error
             const handleError = (errorMessage) => {
+                req.session.formData = req.body; // Guarda TODOS los datos del formulario
                 req.session.errorMessage = errorMessage;
                 req.session.backUrl = backUrl; // Guardamos la URL para el botón "Volver"
                 res.redirect('/error'); // Redirigimos a una ruta de error genérica
@@ -195,7 +196,12 @@ router.get('/error', (req, res) => {
 
 // DISPLAYS THE FORM TO CREATE A NEW RECIPE
 router.get('/receta/nueva', (req, res) => {
-    const recipeData = {};
+    // Checks if there is form data saved in the session (due to a previous error)
+    const formData = req.session.formData;
+    delete req.session.formData; // Clears the data after using it (flash message)
+
+    const recipeData = formData ? formData : {}; // Uses session data or an empty object
+
     // We prepare helpers for the <select>
     if (recipeData.category) {
         recipeData[`isCategory${recipeData.category.charAt(0).toUpperCase() + recipeData.category.slice(1)}`] = true;
