@@ -88,6 +88,18 @@ router.get('/', async (req, res) => {
         const pageSize = 6; // Number of recipes per page (rubric requirement)
         const skip = (page - 1) * pageSize;
 
+        // 2. Filter Settings (Search and Category)
+        const filter = {};
+        const searchQuery = req.query.search;
+        const categoryQuery = req.query.category;
+
+        if (searchQuery) {
+            // Case-insensitive name search
+            filter.name = { $regex: searchQuery, $options: 'i' };
+        }
+        if (categoryQuery) {
+            filter.category = categoryQuery;
+        }
 
         // We obtain the recipes for the current page by applying filters and pagination.
         const recipes = await recipesCollection.find(filter)
@@ -96,7 +108,7 @@ router.get('/', async (req, res) => {
             .toArray();
 
         // We obtain the total number of recipes that match the filter to calculate the pages
-        const recipes = await recipesCollection.find({})
+        const totalRecipes = await recipesCollection.countDocuments(filter);
         const totalPages = Math.ceil(totalRecipes / pageSize);
 
         const pagesForTemplate = [];
