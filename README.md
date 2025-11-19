@@ -222,11 +222,11 @@ The 5 files I have worked on the most are:
 
 5 most important commits:
 
-  1. [feat: Implement recipe deletion functionality](https://github.com/CodeURJC-FW-2025-26/webapp02/commit/633655841faa7a2fe73f0b09e010cf854a160620)
-  2. [feat: Create dynamic confirmation and error pages](https://github.com/CodeURJC-FW-2025-26/webapp02/commit/34cd1aff950a89521981c093bf1eaa9a5aad55e1)
-  3. [feat: Correctly handle image updates when editing a recipe](https://github.com/CodeURJC-FW-2025-26/webapp02/commit/03fc43fdc53b2a5d4d50a33194a0b7ebbf4043be)
-  4. [feat: Improve pagination UI with ellipsis and active states](https://github.com/CodeURJC-FW-2025-26/webapp02/commit/c2936a0252215bd339bfe7e12e2d4a819ec5ceed)
-  5. [feat: arreglar estilo de botones de la pagina de detalle](https://github.com/CodeURJC-FW-2025-26/webapp02/commit/41bb17c77c88155b3b243489ce5f5530302eca33)
+  1. [Implement recipe deletion functionality](https://github.com/CodeURJC-FW-2025-26/webapp02/commit/633655841faa7a2fe73f0b09e010cf854a160620)
+  2. [Create dynamic confirmation and error pages](https://github.com/CodeURJC-FW-2025-26/webapp02/commit/34cd1aff950a89521981c093bf1eaa9a5aad55e1)
+  3. [Correctly handle image updates when editing a recipe](https://github.com/CodeURJC-FW-2025-26/webapp02/commit/03fc43fdc53b2a5d4d50a33194a0b7ebbf4043be)
+  4. [Improve pagination UI with ellipsis and active states](https://github.com/CodeURJC-FW-2025-26/webapp02/commit/c2936a0252215bd339bfe7e12e2d4a819ec5ceed)
+  5. [arreglar estilo de botones de la pagina de detalle](https://github.com/CodeURJC-FW-2025-26/webapp02/commit/41bb17c77c88155b3b243489ce5f5530302eca33)
 
 The 5 files I have worked on the most are:
 
