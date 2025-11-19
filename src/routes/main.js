@@ -114,27 +114,7 @@ router.get('/', async (req, res) => {
         const pagesForTemplate = [];
         const window = 2; // Número de páginas a mostrar alrededor de la página actual
 
-        if (totalPages > 1) {
-            // Siempre mostramos la primera página y la última, y un "contexto" de páginas alrededor de la actual.
-            for (let i = 1; i <= totalPages; i++) {
-                // Condición para mostrar el botón:
-                // 1. Es la primera página.
-                // 2. Es la última página.
-                // 3. Está dentro de la "ventana" alrededor de la página actual.
-                if (i === 1 || i === totalPages || (i >= page - window && i <= page + window)) {
-                    pagesForTemplate.push({
-                        page: i,
-                        isCurrent: i === page, // Marcar si es la página actual
-                        isEllipsis: false
-                    });
-                }
-                // Añadir puntos suspensivos si hay un salto
-                else if (pagesForTemplate[pagesForTemplate.length - 1].page < i - 1) {
-                    // Evita añadir puntos suspensivos duplicados
-                    if (!pagesForTemplate[pagesForTemplate.length - 1].isEllipsis) {
-                        pagesForTemplate.push({ isEllipsis: true });
-                    }
-                }
+        
             }
         }
 
@@ -357,7 +337,7 @@ router.post('/receta/editar/:id', upload.single('recipeImage'), validateRecipe(t
             difficulty: difficulty,
             preparation_time: parseInt(preparationTime)
         };
-        
+
         if (req.file) {
             updateData.image = req.file.filename; // We just save the file name
         }
