@@ -220,6 +220,8 @@ The 5 files I have worked on the most are:
 
 #### Izan Calle Feijoo
 
+In practice 2 my mainwork was to add functionalities that weren't added previously, such as deletin recipies. I added a feedback system to improve the user experience, fixed minor bugs and finished the style of the webpage to match the rest of the aesthetics of the webpage.
+
 5 most important commits:
 
   1. [Implement recipe deletion functionality](https://github.com/CodeURJC-FW-2025-26/webapp02/commit/633655841faa7a2fe73f0b09e010cf854a160620)
@@ -231,7 +233,7 @@ The 5 files I have worked on the most are:
 The 5 files I have worked on the most are:
 
   1. [src/routes/main.js](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/routes/main.js)
-  2. [src/views/confirmation.html](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/views/confirmacion.html)
+  2. [src/views/confirmacion.html](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/views/confirmacion.html)
   3. [src/views/error.html](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/views/error.html)
   4. [src/views/Index.html](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/views/Index.html)
   5. [public/css/Cocina.css](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/public/css/Cocina.css)  
