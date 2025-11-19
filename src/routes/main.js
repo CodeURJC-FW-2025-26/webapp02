@@ -387,6 +387,14 @@ router.post('/receta/borrar/:id', async (req, res) => {
     try {
         const recipeId = req.params.id;
 
+        if (!ObjectId.isValid(recipeId)) {
+            return res.status(400).render('error', {
+                errorMessage: 'El ID de la receta no es válido.',
+                backUrl: '/',
+                backUrlText: 'Volver a la página principal'
+            });
+        }
+
         const result = await recipesCollection.deleteOne({ _id: new ObjectId(recipeId) });
 
         if (result.deletedCount === 1) {
