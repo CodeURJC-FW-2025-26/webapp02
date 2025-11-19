@@ -382,41 +382,7 @@ router.post('/receta/editar/:id', upload.single('recipeImage'), validateRecipe(t
     }
 });
 
-// PROCESS THE DELETION OF A RECIPE
-router.post('/receta/borrar/:id', async (req, res) => {
-    try {
-        const recipeId = req.params.id;
 
-        if (!ObjectId.isValid(recipeId)) {
-            return res.status(400).render('error', {
-                errorMessage: 'El ID de la receta no es válido.',
-                backUrl: '/',
-                backUrlText: 'Volver a la página principal'
-            });
-        }
-
-        const result = await recipesCollection.deleteOne({ _id: new ObjectId(recipeId) });
-
-        if (result.deletedCount === 1) {
-            // If 1 document was deleted, we show confirmation
-            res.render('confirmacion', { message: 'Receta eliminada correctamente.' });
-        } else {
-            // If nothing was deleted (perhaps it no longer existed), we display an error.
-            res.status(404).render('error', {
-                errorMessage: 'No se encontró la receta para eliminar.',
-                backUrl: '/',
-                backUrlText: 'Volver a la página principal'
-            });
-        }
-    } catch (error) {
-        console.error("❌ Error al borrar la receta:", error);
-        res.status(500).render('error', {
-            errorMessage: 'Error interno del servidor al eliminar la receta.',
-            backUrl: `/receta/${recipeId}`, // Return to the details page if there is a serious error
-            backUrlText: 'Volver a la receta'
-        });
-    }
-});
 
 // PROCESS THE CREATION OF A NEW STEP FOR A RECIPE
 router.post('/receta/:id/paso/nuevo', async (req, res) => {
