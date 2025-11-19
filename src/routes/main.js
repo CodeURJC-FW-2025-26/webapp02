@@ -357,7 +357,7 @@ router.post('/receta/editar/:id', upload.single('recipeImage'), validateRecipe(t
             difficulty: difficulty,
             preparation_time: parseInt(preparationTime)
         };
-        
+
         if (req.file) {
             updateData.image = req.file.filename; // We just save the file name
         }
@@ -511,38 +511,37 @@ router.post('/receta/:id/paso/borrar/:stepId', async (req, res) => {
 
 // DISPLAYS THE FORM TO EDIT A STEP
 router.get('/receta/:id/paso/editar/:stepId', async (req, res) => {
+    const { id, stepId } = req.params; // 1. We get the IDs
     try {
-        const { id, stepId } = req.params;
-
-        const stepFormData = req.session.stepFormData;
-        const stepErrorMessage = req.session.stepErrorMessage;
-        delete req.session.stepFormData;
-        delete req.session.stepErrorMessage;
-
-        // We search for the recipe to have its context (name, etc.)
+        // 2. We get the context (the parent recipe)
         const recipe = await db.connection.collection('recipes').findOne({ _id: new ObjectId(id) });
         if (!recipe) {
-            return res.status(404).render('error', { errorMessage: 'Recipe not found.' });
+            return res.status(404).render('error', { errorMessage: 'Receta no encontrada.' });
         }
 
-        let step;
-        // If there is data in the session due to an error, we use it
-        if (stepFormData) {
-            step = stepFormData;
+        // 3. We check if there are "leftover" data from a failed submission
+        const formData = req.session.formData;
+        delete req.session.formData; // 4. Limpiamos la sesión (¡muy importante!)
+
+        let step; // 5. We declare the variable that will contain the step data
+
+        if (formData && formData._id.toString() === stepId) {
+            // 6. CASE A: We come from an error, we use the session data
+            step = formData;
         } else {
-            // If not, we search for the data in the database
+            // 7. CASE B: It's the first time loading, we use the DB data
             step = recipe.steps.find(s => s._id.toString() === stepId);
         }
 
+        // 8. Final verification that the step exists
         if (!step) {
-            return res.status(404).render('error', { errorMessage: 'Step not found.' });
+            return res.status(404).render('error', { errorMessage: 'Paso no encontrado.' });
         }
 
-        // We render the view with the correct data and the error message
+        // 9. We render the view, now much cleaner
         res.render('editarPaso', {
-            recipe,
-            step,
-            errorMessage: stepErrorMessage
+            recipe, // The context
+            step    // The step data (from the session or from the DB)
         });
 
     } catch (error) {
@@ -563,12 +562,18 @@ router.post('/receta/:id/paso/editar/:stepId', async (req, res) => {
 
         // Server validations
         if (!stepName || !stepDescription || stepName.trim() === '' || stepDescription.trim() === '') {
-            // 1. We save the form data to the session
-            req.session.stepFormData = { name: stepName, description: stepDescription, _id: stepId };
-            // 2. We save the error message
-            req.session.stepErrorMessage = 'El título y la descripción no pueden estar vacíos.';
-            // 3. We redirect back TO THE SAME EDIT FORM
-            return res.redirect(`/receta/${id}/paso/editar/${stepId}`);
+            // 1. We save the standard error message for the generic page.
+            req.session.errorMessage = 'El título y la descripción del paso no pueden estar vacíos.';
+
+            // 2. We save the URL to which the user must go back (the edit page)
+            req.session.backUrl = `/receta/${id}/paso/editar/${stepId}`;
+
+            // Important! We also save the form data to be able to refill all of the fields
+            // when the user comes back. GET route will manage it
+            req.session.formData = { name: stepName, description: stepDescription, _id: stepId };
+
+            // 3. We will redirect to the generic error page
+            return res.redirect('/error');
         }
 
         await recipesCollection.updateOne(
