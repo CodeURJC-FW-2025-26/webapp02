@@ -171,9 +171,9 @@ The project is structured following a professional, modular approach:
     -   `loadData.js`: This script seeds the database. It loads initial recipes from `recipes.json` and copies their images to the `uploads` folder if the database is detected as empty on startup.
     -   `multerConfig.js`: Configures the Multer middleware, specifying that uploaded files should be saved to the `uploads/` folder with a unique name to prevent collisions.
 
-### Demostration video
+### Demonstration video
 
-The video demonstrating the functionality is available at: [**<-- INSERTA AQUÍ EL ENLACE A TU VÍDEO DE YOUTUBE**]
+The video demonstrating the functionality is available at: [** Enlace vídeo **]
 ### Members Participation
 
 #### Fernán Rama Hombreiro

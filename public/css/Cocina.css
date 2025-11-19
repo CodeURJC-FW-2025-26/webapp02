@@ -455,27 +455,36 @@ h2 {
     color: white;
 }
 
-/* --- FIX DEFINITIVO ALINEACIÓN BOTONES DETALLE --- */
+/* --- FINAL FIX DETAIL BUTTON ALIGN --- */
 
-/* 1. El contenedor padre de los botones */
+/* 1. The father container of the buttons */
 .recipe-container .d-md-flex {
-    align-items: stretch; /* Obliga a todos los hijos directos (links y form) a tener la misma altura */
+    align-items: stretch;
+    /* It forces all direct children (links and forms) to have the same height */
 }
 
-/* 2. El formulario (que envuelve al botón rojo) */
+/* 2. The form (which surrounds the red button) */
 .recipe-container .d-md-flex form {
-    display: flex; /* Convierte el form en un contenedor flexible */
-    margin: 0;     /* Elimina márgenes extraños */
+    display: flex;
+    /* Turn the form into a flexible container */
+    margin: 0;
+    /* Remove extraneous margins */
 }
 
-/* 3. Los botones en sí (tanto <a> como <button>) */
+/* 3. The buttons themselves (both <a> and <button>) */
 .recipe-container .d-md-flex .btn {
-    display: flex;           /* Usamos flexbox dentro del botón */
-    align-items: center;     /* Centrado vertical perfecto del texto */
-    justify-content: center; /* Centrado horizontal */
-    height: 100%;            /* ¡CLAVE! Ocupar el 100% de la altura del vecino más alto */
-    min-height: 60px;        /* Altura mínima base para que no se vean aplastados */
-    width: 100%;             /* Opcional: si quieres que todos tengan ancho similar, o quítalo para ancho automático */
+    display: flex;
+    /* We use flexbox inside the button */
+    align-items: center;
+    /* Perfect vertical centering of the text */
+    justify-content: center;
+    /* Horizontal centering */
+    height: 100%;
+    /* KEY! Occupy 100% of the height of the tallest neighbor */
+    min-height: 60px;
+    /* Base minimum height so they don't look squashed */
+    width: 100%;
+    /* Optional: if you want them all to have similar width, or remove it for automatic width */
 }
 
 

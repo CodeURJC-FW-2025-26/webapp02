@@ -6,18 +6,18 @@ import upload from '../multerConfig.js';
 
 const router = express.Router();
 
-// 1. Declara la variable aquí, pero no la inicialices.
+// 1. Declare the variable here, but do not initialize it.
 let recipesCollection;
 
-// 2. Añade este middleware. Se ejecutará antes que cualquier otra ruta en este fichero.
-//    Garantiza que 'recipesCollection' esté disponible para todas las rutas.
+// 2. Add this middleware. It will execute before any other route in this file.
+//    It ensures that 'recipesCollection' is available for all routes.
 router.use((req, res, next) => {
-    // Si la variable recipesCollection aún no está definida, la inicializa.
-    // Esto solo ocurrirá una vez, en la primera petición que reciba el servidor.
+    // If the recipesCollection variable is not yet defined, initialize it.
+    // This will only happen once, on the first request the server receives.
     if (!recipesCollection) {
         recipesCollection = db.connection.collection('recipes');
     }
-    next(); // Continúa hacia la ruta solicitada (ej. GET '/', POST '/receta/nueva', etc.)
+    next(); // Continue to the requested route (e.g., GET '/', POST '/receta/nueva', etc.)
 });
 
 // Middleware for validating recipe data
@@ -112,25 +112,25 @@ router.get('/', async (req, res) => {
         const totalPages = Math.ceil(totalRecipes / pageSize);
 
         const pagesForTemplate = [];
-        const window = 2; // Número de páginas a mostrar alrededor de la página actual
+        const window = 2; // Number of pages to show around the current page
 
         if (totalPages > 1) {
-            // Siempre mostramos la primera página y la última, y un "contexto" de páginas alrededor de la actual.
+            // We always show the first and last page, and a "context" of pages around the current one.
             for (let i = 1; i <= totalPages; i++) {
-                // Condición para mostrar el botón:
-                // 1. Es la primera página.
-                // 2. Es la última página.
-                // 3. Está dentro de la "ventana" alrededor de la página actual.
+                // Condition to show the button:
+                // 1. It is the first page.
+                // 2. It is the last page.
+                // 3. It is within the "window" around the current page.
                 if (i === 1 || i === totalPages || (i >= page - window && i <= page + window)) {
                     pagesForTemplate.push({
                         page: i,
-                        isCurrent: i === page, // Marcar si es la página actual
+                        isCurrent: i === page, // Mark if it is the current page
                         isEllipsis: false
                     });
                 }
-                // Añadir puntos suspensivos si hay un salto
+                // Add ellipsis if there is a jump
                 else if (pagesForTemplate[pagesForTemplate.length - 1].page < i - 1) {
-                    // Evita añadir puntos suspensivos duplicados
+                    // Prevents adding duplicate ellipses
                     if (!pagesForTemplate[pagesForTemplate.length - 1].isEllipsis) {
                         pagesForTemplate.push({ isEllipsis: true });
                     }
@@ -138,9 +138,9 @@ router.get('/', async (req, res) => {
             }
         }
 
-        // Objeto para determinar qué botón de categoría está activo
+        // Object to determine which category button is active
         const categoryStates = {
-            all: !categoryQuery, // El botón "Todas" está activo si no hay ninguna categoría en la URL
+            all: !categoryQuery, // The "All" button is active if there is no category in the URL
             entrante: categoryQuery === 'entrante',
             principal: categoryQuery === 'principal',
             postre: categoryQuery === 'postre',
@@ -158,8 +158,8 @@ router.get('/', async (req, res) => {
             nextPage: page + 1,
             searchQuery: searchQuery, // To maintain the value in the search engine
             categoryQuery: categoryQuery, // To find out which category is active
-            pagesForTemplate: pagesForTemplate, // <--- Añadimos el nuevo array al render
-            categoryStates: categoryStates // <-- Pasa el nuevo objeto a la plantilla
+            pagesForTemplate: pagesForTemplate, // <--- We add the new array to the render
+            categoryStates: categoryStates // <-- Pass the new object to the template
         });
 
     } catch (error) {
@@ -172,37 +172,37 @@ router.get('/', async (req, res) => {
     }
 });
 
-// Ruta para mostrar la página de error después de una redirección
+// Route to display the error page after a redirection
 router.get('/error', (req, res) => {
     const errorMessage = req.session.errorMessage;
     const backUrl = req.session.backUrl;
 
-    // Limpiamos los datos de error de la sesión para que no se muestren de nuevo
+    // We clear the error data from the session so it is not displayed again
     delete req.session.errorMessage;
     delete req.session.backUrl;
-    // ¡Ojo! NO borramos req.session.formData todavía. Lo necesitaremos en el siguiente paso.
+    // Careful! We DO NOT delete req.session.formData yet. We will need it in the next step.
 
     if (!errorMessage) {
-        // Si alguien accede a /error directamente, lo mandamos al inicio
+        // If someone accesses /error directly, we send them to the home page
         return res.redirect('/');
     }
 
     res.render('error', {
         errorMessage: errorMessage,
-        backUrl: backUrl || '/', // Si no hay URL de vuelta, va al inicio
+        backUrl: backUrl || '/', // If there is no back URL, go to the home page
         backUrlText: 'Volver al formulario'
     });
 });
 
-// MUESTRA EL FORMULARIO PARA CREAR UNA NUEVA RECETA
+// DISPLAYS THE FORM TO CREATE A NEW RECIPE
 router.get('/receta/nueva', (req, res) => {
-    // Comprueba si hay datos de formulario guardados en la sesión (por un error previo)
+    // Checks if there is form data saved in the session (due to a previous error)
     const formData = req.session.formData;
-    delete req.session.formData; // Limpia los datos después de usarlos (flash message)
+    delete req.session.formData; // Clears the data after using it (flash message)
 
-    const recipeData = formData ? formData : {}; // Usa los datos de la sesión o un objeto vacío
+    const recipeData = formData ? formData : {}; // Uses session data or an empty object
 
-    // Preparamos los helpers para los <select>
+    // We prepare helpers for the <select>
     if (recipeData.category) {
         recipeData[`isCategory${recipeData.category.charAt(0).toUpperCase() + recipeData.category.slice(1)}`] = true;
     }
@@ -210,13 +210,13 @@ router.get('/receta/nueva', (req, res) => {
         recipeData[`isDifficulty${recipeData.difficulty.charAt(0).toUpperCase() + recipeData.difficulty.slice(1)}`] = true;
     }
 
-    // Renombramos las propiedades para que coincidan con la plantilla (ej. recipeName -> name)
+    // We rename the properties to match the template (e.g., recipeName -> name)
     const recipe = {
         name: recipeData.recipeName,
         description: recipeData.description,
         ingredients: recipeData.ingredients,
         preparation_time: recipeData.preparationTime,
-        ...recipeData // Incluye los helpers
+        ...recipeData // Includes the helpers
     };
 
     res.render('AñadirReceta', { recipe: recipe });
@@ -234,7 +234,7 @@ router.post('/receta/nueva', upload.single('recipeImage'), validateRecipe(false)
             category: category,
             difficulty: difficulty,
             preparation_time: parseInt(preparationTime),
-            image: req.file ? req.file.filename : 'logo.jpg', // Guardamos solo el nombre del archivo
+            image: req.file ? req.file.filename : 'logo.jpg', // We just save the file name
             steps: []
         };
 
@@ -262,11 +262,11 @@ router.get('/receta/:id', async (req, res) => {
 
         const recipe = await recipesCollection.findOne({ _id: new ObjectId(recipeId) });
 
-        // Recuperamos los datos del formulario y el error de la sesión (si existen)
+        // We retrieve the form data and the error from the session (if they exist)
         const stepFormData = req.session.stepFormData;
         const stepErrorMessage = req.session.stepErrorMessage;
 
-        // Limpiamos la sesión para que el error no se muestre de nuevo en la siguiente recarga
+        // We clear the session so that the error is not displayed again on the next reload
         delete req.session.stepFormData;
         delete req.session.stepErrorMessage;
 
@@ -280,8 +280,8 @@ router.get('/receta/:id', async (req, res) => {
             // If the recipe is found, we render the detail view
             res.render('detalleReceta', {
                 recipe: recipe,
-                stepFormData: stepFormData,       // Los datos para "rellenar" el formulario
-                stepErrorMessage: stepErrorMessage // El mensaje de error a mostrar
+                stepFormData: stepFormData,       // The data to "repopulate" the form
+                stepErrorMessage: stepErrorMessage // The error message to display
             });
         } else {
             // If a recipe with that ID is not found, we display a 404 error.
@@ -306,7 +306,7 @@ router.get('/receta/editar/:id', async (req, res) => {
 
         let recipe;
         if (formData) {
-            // Si venimos de un error, usamos los datos de la sesión
+            // If we are coming from an error, we use the session data
             recipe = {
                 name: formData.recipeName,
                 description: formData.description,
@@ -317,12 +317,12 @@ router.get('/receta/editar/:id', async (req, res) => {
                 _id: req.params.id
             };
         } else {
-            // Si es la primera visita, cargamos los datos de la BD
+            // If it's the first visit, we load the data from the DB
             recipe = await db.connection.collection('recipes').findOne({ _id: new ObjectId(req.params.id) });
         }
 
         if (recipe) {
-            // Añadimos helpers para los <select>
+            // We add helpers for the <select>
             if (recipe.category) {
                 recipe[`isCategory${recipe.category.charAt(0).toUpperCase() + recipe.category.slice(1)}`] = true;
             }
@@ -331,7 +331,7 @@ router.get('/receta/editar/:id', async (req, res) => {
             }
             res.render('AñadirReceta', { recipe: recipe, editing: true });
         } else {
-            res.status(404).render('error', { errorMessage: 'Receta no encontrada para editar.' });
+            res.status(404).render('error', { errorMessage: 'Recipe not found for editing.' });
         }
     } catch (error) {
         console.error("❌ Error al obtener receta para editar:", error);
@@ -358,7 +358,7 @@ router.post('/receta/editar/:id', upload.single('recipeImage'), validateRecipe(t
             preparation_time: parseInt(preparationTime)
         };
         if (req.file) {
-            updateData.image = req.file.filename; // Guardamos solo el nombre del archivo
+            updateData.image = req.file.filename; // We just save the file name
         }
 
         await db.connection.collection('recipes').updateOne(
@@ -518,26 +518,26 @@ router.get('/receta/:id/paso/editar/:stepId', async (req, res) => {
         delete req.session.stepFormData;
         delete req.session.stepErrorMessage;
 
-        // Buscamos la receta para tener su contexto (nombre, etc.)
+        // We search for the recipe to have its context (name, etc.)
         const recipe = await db.connection.collection('recipes').findOne({ _id: new ObjectId(id) });
         if (!recipe) {
-            return res.status(404).render('error', { errorMessage: 'Receta no encontrada.' });
+            return res.status(404).render('error', { errorMessage: 'Recipe not found.' });
         }
 
         let step;
-        // Si hay datos en la sesión por un error, los usamos
+        // If there is data in the session due to an error, we use it
         if (stepFormData) {
             step = stepFormData;
         } else {
-            // Si no, buscamos los datos en la base de datos
+            // If not, we search for the data in the database
             step = recipe.steps.find(s => s._id.toString() === stepId);
         }
 
         if (!step) {
-            return res.status(404).render('error', { errorMessage: 'Paso no encontrado.' });
+            return res.status(404).render('error', { errorMessage: 'Step not found.' });
         }
 
-        // Renderizamos la vista con los datos correctos y el mensaje de error
+        // We render the view with the correct data and the error message
         res.render('editarPaso', {
             recipe,
             step,
@@ -562,11 +562,11 @@ router.post('/receta/:id/paso/editar/:stepId', async (req, res) => {
 
         // Server validations
         if (!stepName || !stepDescription || stepName.trim() === '' || stepDescription.trim() === '') {
-            // 1. Guardamos los datos del formulario en la sesión
+            // 1. We save the form data to the session
             req.session.stepFormData = { name: stepName, description: stepDescription, _id: stepId };
-            // 2. Guardamos el mensaje de error
+            // 2. We save the error message
             req.session.stepErrorMessage = 'El título y la descripción no pueden estar vacíos.';
-            // 3. Redirigimos de vuelta AL MISMO FORMULARIO DE EDICIÓN
+            // 3. We redirect back TO THE SAME EDIT FORM
             return res.redirect(`/receta/${id}/paso/editar/${stepId}`);
         }
 

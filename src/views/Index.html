@@ -51,12 +51,12 @@
      </section>
 
      <!-- Pagination -->
-     <!-- Solo mostramos la paginación si hay recetas -->
+     <!-- We only show pagination if there are recipes -->
      {{#recipes.length}} {{! Solo mostramos la paginación si el array de recetas no está vacío }}
      <nav aria-label="Paginación de recetas" class="d-flex justify-content-center mb-5">
           <ul class="pagination">
 
-               <!-- Botón "Anterior" -->
+               <!-- "Anterior" Button -->
                {{#hasPrevPage}}
                <li class="page-item">
                     <a class="page-link" href="/?page={{prevPage}}&search={{searchQuery}}&category={{categoryQuery}}"
@@ -73,7 +73,7 @@
                </li>
                {{/hasPrevPage}}
 
-               <!-- Botones de Páginas Numéricas (generados dinámicamente) -->
+               <!-- Numeric Page Buttons (dynamically generated) -->
                {{#pagesForTemplate}}
                {{^isEllipsis}}
                <li class="page-item {{#isCurrent}}active{{/isCurrent}}">
@@ -87,7 +87,7 @@
                {{/pagesForTemplate}}
 
 
-               <!-- Botón "Siguiente" -->
+               <!-- "Siguiente" Button -->
                {{#hasNextPage}}
                <li class="page-item">
                     <a class="page-link" href="/?page={{nextPage}}&search={{searchQuery}}&category={{categoryQuery}}"

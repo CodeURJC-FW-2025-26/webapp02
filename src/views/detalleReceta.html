@@ -2,7 +2,7 @@
 
 <main class="recipe-container">
     <section class="row">
-        <!-- Columna Izquierda: Imagen y Botones -->
+        <!-- Left Column: Image and Buttons -->
         <div class="col-md-5">
             <img src="/uploads/{{recipe.image}}" class="img-fluid rounded mb-3 recipe-image" alt="{{recipe.name}}">
             <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-3">
@@ -14,7 +14,7 @@
             </div>
         </div>
 
-        <!-- Columna Derecha: Detalles de la Receta -->
+        <!-- Right Column: Recipe Details -->
         <div class="col-md-7">
             <h2 class="dish-title">{{recipe.name}}</h2>
             <div class="mb-3">
@@ -29,7 +29,7 @@
         </div>
     </section>
 
-    <!-- Fila 2: Pasos de Preparación -->
+    <!-- Row 2: Preparation Steps -->
     <section class="row mt-5">
         <div class="col-12">
             <h3 class="dish-subtitle">Pasos de Preparación</h3>
@@ -58,7 +58,7 @@
         </div>
     </section>
 
-    <!-- Fila 3: Formulario para añadir un nuevo paso -->
+    <!-- Row 3: Form to add a new step -->
     <section class="row mt-5">
         <div class="col-12">
             <div class="add-step-form">
@@ -66,13 +66,13 @@
                 <form action="/receta/{{recipe._id}}/paso/nuevo" method="POST">
                     <div class="form-group mb-3">
                         <label for="stepName" class="form-label">Título del Paso:</label>
-                        <!-- USAR LOS DATOS DE LA SESIÓN PARA RELLENAR EL CAMPO -->
+                        <!-- USE THE SESSION DATA TO REPOPULATE THE FIELD -->
                         <input type="text" class="form-control" id="stepName" name="stepName"
                             placeholder="Ej: Preparar el sofrito" value="{{stepFormData.name}}" required>
                     </div>
                     <div class="form-group mb-3">
                         <label for="stepDescription" class="form-label">Descripción del Paso:</label>
-                        <!-- USAR LOS DATOS DE LA SESIÓN PARA RELLENAR EL CAMPO -->
+                        <!-- USE THE SESSION DATA TO REPOPULATE THE FIELD -->
                         <textarea class="form-control" id="stepDescription" name="stepDescription" rows="3"
                             placeholder="Describe brevemente el paso" required>{{stepFormData.description}}</textarea>
                     </div>
