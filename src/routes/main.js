@@ -349,7 +349,17 @@ router.post('/receta/editar/:id', upload.single('recipeImage'), validateRecipe(t
         const recipeId = req.params.id;
         const { recipeName, description, ingredients, category, difficulty, preparationTime } = req.body;
 
-
+        const updateData = {
+            name: recipeName.trim(),
+            description: description.trim(),
+            ingredients: ingredients,
+            category: category,
+            difficulty: difficulty,
+            preparation_time: parseInt(preparationTime)
+        };
+        if (req.file) {
+            updateData.image = req.file.filename; // Guardamos solo el nombre del archivo
+        }
 
         await db.connection.collection('recipes').updateOne(
             { _id: new ObjectId(recipeId) },
