@@ -357,9 +357,7 @@ router.post('/receta/editar/:id', upload.single('recipeImage'), validateRecipe(t
             difficulty: difficulty,
             preparation_time: parseInt(preparationTime)
         };
-        if (req.file) {
-            updateData.image = req.file.filename; // We just save the file name
-        }
+
 
         await db.connection.collection('recipes').updateOne(
             { _id: new ObjectId(recipeId) },
