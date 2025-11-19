@@ -28,12 +28,12 @@ const validateRecipe = (isEditing = false) => {
             const { recipeName, description, ingredients, category, difficulty, preparationTime } = req.body;
             const backUrl = isEditing ? `/receta/editar/${req.params.id}` : '/receta/nueva';
 
-            // Función para manejar el error
+            // Function to handle the error
             const handleError = (errorMessage) => {
-                req.session.formData = req.body; // Guarda TODOS los datos del formulario
+                req.session.formData = req.body; //Save ALL form data
                 req.session.errorMessage = errorMessage;
-                req.session.backUrl = backUrl; // Guardamos la URL para el botón "Volver"
-                res.redirect('/error'); // Redirigimos a una ruta de error genérica
+                req.session.backUrl = backUrl; // We save the URL for the "Back" button
+                res.redirect('/error'); // We redirect to a generic error route
             };
 
             // --- START OF CENTRALIZED VALIDATIONS ---
