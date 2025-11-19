@@ -218,6 +218,8 @@ The 5 files I have worked on the most are:
   4. [src/views/index.html](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/views/Index.html)
   5. [README.md](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/README.md)
 
+---
+
 #### Izan Calle Feijoo
 
 In practice 2 my mainwork was to add functionalities that weren't added previously, such as deleting recipes. I added a feedback system to improve the user experience, fixed minor bugs and finished the style of the webpage to match the rest of the aesthetics of the webpage.
