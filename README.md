@@ -222,16 +222,16 @@ The 5 files I have worked on the most are:
 
 5 most important commits:
 
-  1. 
-  2. 
+  1. [feat: Implement recipe deletion functionality]()
+  2. [feat: Create dynamic confirmation and error pages](https://github.com/CodeURJC-FW-2025-26/webapp02/commit/34cd1aff950a89521981c093bf1eaa9a5aad55e1)
   3. 
   4. 
   5. 
 
 The 5 files I have worked on the most are:
 
-  1. 
-  2. 
-  3. 
-  4. 
-  5.
+  1. [src/routes/main.js](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/routes/main.js)
+  2. [src/views/confirmation.html]([URL_TO_FILE_confirmation.html](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/views/confirmacion.html)
+  3. [src/views/error.html](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/views/error.html)
+  4. [src/views/Index.html](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/views/Index.html)
+  5. [public/css/Cocina.css](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/public/css/Cocina.css)  
