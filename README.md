@@ -220,7 +220,7 @@ The 5 files I have worked on the most are:
 
 #### Izan Calle Feijoo
 
-In practice 2 my mainwork was to add functionalities that weren't added previously, such as deletin recipies. I added a feedback system to improve the user experience, fixed minor bugs and finished the style of the webpage to match the rest of the aesthetics of the webpage.
+In practice 2 my mainwork was to add functionalities that weren't added previously, such as deleting recipies. I added a feedback system to improve the user experience, fixed minor bugs and finished the style of the webpage to match the rest of the aesthetics of the webpage.
 
 5 most important commits:
 
