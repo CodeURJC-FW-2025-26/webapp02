@@ -112,25 +112,25 @@ router.get('/', async (req, res) => {
         const totalPages = Math.ceil(totalRecipes / pageSize);
 
         const pagesForTemplate = [];
-        const window = 2; // Número de páginas a mostrar alrededor de la página actual
+        const window = 2; // Pages to show around current page
 
         if (totalPages > 1) {
-            // Siempre mostramos la primera página y la última, y un "contexto" de páginas alrededor de la actual.
+            // Always show the first and last page, and a "context" of pages surrounding the current one.
             for (let i = 1; i <= totalPages; i++) {
-                // Condición para mostrar el botón:
-                // 1. Es la primera página.
-                // 2. Es la última página.
-                // 3. Está dentro de la "ventana" alrededor de la página actual.
+                // Condition to show first button
+                // 1. First page
+                // 2. Last page
+                // 3. It is within the "window" around the current page.
                 if (i === 1 || i === totalPages || (i >= page - window && i <= page + window)) {
                     pagesForTemplate.push({
                         page: i,
-                        isCurrent: i === page, // Marcar si es la página actual
+                        isCurrent: i === page, // Indicate if this is the current page.
                         isEllipsis: false
                     });
                 }
-                // Añadir puntos suspensivos si hay un salto
+                // Add ellipses if there is a jump
                 else if (pagesForTemplate[pagesForTemplate.length - 1].page < i - 1) {
-                    // Evita añadir puntos suspensivos duplicados
+                    // Avoid adding duplicate ellipses
                     if (!pagesForTemplate[pagesForTemplate.length - 1].isEllipsis) {
                         pagesForTemplate.push({ isEllipsis: true });
                     }
@@ -138,9 +138,9 @@ router.get('/', async (req, res) => {
             }
         }
 
-        // Objeto para determinar qué botón de categoría está activo
+        // Object to determine which category button is active
         const categoryStates = {
-            all: !categoryQuery, // El botón "Todas" está activo si no hay ninguna categoría en la URL
+            all: !categoryQuery, // The "all" button is active if there are no categories in the URL
             entrante: categoryQuery === 'entrante',
             principal: categoryQuery === 'principal',
             postre: categoryQuery === 'postre',
