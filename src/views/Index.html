@@ -73,6 +73,18 @@
                </li>
                {{/hasPrevPage}}
 
+               <!-- Numeric Page Buttons (dynamically generated) -->
+               {{#pagesForTemplate}}
+               {{^isEllipsis}}
+               <li class="page-item {{#isCurrent}}active{{/isCurrent}}">
+                    <a class="page-link"
+                         href="/?page={{page}}&search={{searchQuery}}&category={{categoryQuery}}">{{page}}</a>
+               </li>
+               {{/isEllipsis}}
+               {{#isEllipsis}}
+               <li class="page-item disabled"><span class="page-link">...</span></li>
+               {{/isEllipsis}}
+               {{/pagesForTemplate}}
 
 
                <!-- "Siguiente" Button -->
