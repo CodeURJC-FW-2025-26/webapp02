@@ -231,7 +231,7 @@ The 5 files I have worked on the most are:
 The 5 files I have worked on the most are:
 
   1. [src/routes/main.js](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/routes/main.js)
-  2. [src/views/confirmation.html]([URL_TO_FILE_confirmation.html](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/views/confirmacion.html)
+  2. [src/views/confirmation.html](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/views/confirmacion.html)
   3. [src/views/error.html](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/views/error.html)
   4. [src/views/Index.html](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/views/Index.html)
   5. [public/css/Cocina.css](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/public/css/Cocina.css)  
