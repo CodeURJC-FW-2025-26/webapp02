@@ -175,23 +175,25 @@ The video of how everything works is:
 
 #### Fernán Rama Hombreiro
 
+For Practice 2, my primary role was the architecture and implementation of the application's backend. I was responsible for setting up the Express server, establishing the database connection, and developing all the core API routes in `main.js`. This included the full CRUD (Create, Read, Update, Delete) logic for both the main entity (recipes) and the secondary entity (steps), implementing the server-side validation middleware, and configuring the image upload functionality with Multer.
 
+**5 most important commits:**
 
-5 most important commits:
+  1. [Initialise Express server and database connection](https://github.com/CodeURJC-FW-2025-26/webapp02/commit/a3dc8ea9a19c4275c08fecf95a78fb3ee170a807)
+  2. [Implement main recipe listing with pagination](https://github.com/CodeURJC-FW-2025-26/webapp02/commit/a52d6dcd225d52f4961f87e2d207425e8950e692)
+  3. [Add server-side validation middleware](https://github.com/CodeURJC-FW-2025-26/webapp02/commit/0cbe890cf9352f49727bae8cb9413b5b5320efc2)
+  4. [Implement recipe creation and image upload](https://github.com/CodeURJC-FW-2025-26/webapp02/commit/c2343aa7cff4c74fb2120a69b0b971fd4ed7c260)
+  5. [Implement full CRUD for secondary entity (steps)](https://github.com/CodeURJC-FW-2025-26/webapp02/commit/b26cbe19f18463b7a22800ce3a8491cfc0b226e1)
 
-  1. 
-  2. 
-  3. 
-  4. 
-  5. 
+**The 5 files I have worked on the most are:**
 
-The 5 files I have worked on the most are:
+  1. [src/routes/main.js](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/routes/main.js)
+  2. [src/app.js](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/app.js)
+  3. [src/database.js](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/database.js)
+  4. [src/multerConfig.js](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/multerConfig.js)
+  5. [src/views/detalleReceta.html](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/views/detalleReceta.html) 
 
-  1. 
-  2. 
-  3. 
-  4. 
-  5. 
+---
 
 #### Rubén Torres Rivero
 
