@@ -20,14 +20,14 @@ export async function seedDatabase() {
             const dataPath = join(__dirname, '../data/recipes.json');
             const recipesData = JSON.parse(await fs.readFile(dataPath, 'utf-8'));
 
-            // Definimos la ruta a la carpeta de subidas
+            // We define the path to the uploads folder
             const uploadsDir = join(__dirname, '../uploads');
 
-            // Nos aseguramos de que la carpeta de destino exista. 
-            // { recursive: true } evita errores si la carpeta ya existe.
+            // We ensure that the destination folder exists. 
+            // { recursive: true } prevents errors if the folder already exists.
             await fs.mkdir(uploadsDir, { recursive: true });
 
-            // 2. Copiar imágenes y ajustar rutas
+            // 2. Copy images and adjust paths
             const processedRecipes = [];
             for (const recipe of recipesData) {
                 const sourceImagePath = join(__dirname, '../data/images', recipe.image);

@@ -27,13 +27,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(session({
-    secret: 'cadena-aleatoria-secreta-webb', // Cambia esto por una cadena aleatoria
+    secret: 'cadena-aleatoria-secreta-webb',
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false } // Poner a 'true' si usas HTTPS
+    cookie: { secure: false } // Change into 'true' if using https
 }));
 
-// 3. Configurar el motor de plantillas Mustache
+// 3. Configure the Mustache template engine
 app.engine('html', mustacheExpress());
 app.set('views', join(__dirname, 'views'));
 app.set('view engine', 'html');

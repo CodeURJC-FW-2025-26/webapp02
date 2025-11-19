@@ -144,88 +144,94 @@ The 5 files I have worked on the most are:
 
 ### Execution Instructions
 
-If you want to run the application first of all you will have to download Node.js, if its possible the latest version 24.7.0 also you will need to have downloaded MongoDB server version 5 or higher.
-  1-After downloading these two important tools you will have to go to GitHub and download the release with the name of "practica2" and unzip into a folder.
-  2-Now you will have to acces to this new folder, move into this newly created directory using "cd" until you reach the project.
-  3-Write the command "npm install" which will read the package.json file and install all necessary libraries for the project.
-  4-Finally you will start the application with the command "npm start" this command will execute app.js.The script will automatically load the data into the database, if it does not exist, and start the server.
+To run this application, you will need Node.js (version 18 or higher) and MongoDB Server (version 5 or higher) installed on your system.
 
+1.  Clone the repository or download the "practica2" release ZIP file and unzip it.
+2.  Navigate to the project's root directory in your terminal.
+3.  Run the command `npm install` to install all the necessary dependencies listed in `package.json`.
+4.  Ensure your MongoDB server is running.
+5.  Start the application with the command `npm start`. This will execute `src/app.js`. The script will automatically connect to the database, seed it with initial data if it's empty, and start the web server.
+6.  Open your web browser and go to `http://localhost:3000`.
 
 ### File Description
 
-Inside the folder of data we have the recipes.json, this file is the static database of the page.Its function is to store all the information about the recipes.
+The project is structured following a professional, modular approach:
 
-Another folder we have is the public one, inside this one we have the css and the public images such as the logo of the webapp.
+-   `data/`: Contains the initial static data, including `recipes.json` and the source images.
+-   `public/`: Holds all static assets served to the client, like the `Cocina.css` stylesheet and public images (e.g., the logo).
+-   `src/`: The main source code for the application.
+    -   `routes/`: Contains the routing logic.
+        -   `main.js`: The application's main router. It defines all URL endpoints, handles requests (GET, POST), validates form data, and interacts with the MongoDB database to manage recipes and their steps.
+    -   `views/`: Contains all the Mustache HTML templates.
+        -   `partials/`: Reusable components like `header.html` and `footer.html`.
+        -   Other `.html` files are the different pages of the application (index, recipe detail, form, etc.).
+    -   `uploads/`: This folder is where user-uploaded images are stored. It is created automatically if it doesn't exist.
+    -   `app.js`: The main entry point of the application. It configures and starts the Express server, sets up the Mustache template engine, serves static files, connects to the database, and imports the main router.
+    -   `database.js`: Handles the MongoDB connection. It exports a `connect` function and the `db` object for other modules to access the active database connection.
+    -   `loadData.js`: This script seeds the database. It loads initial recipes from `recipes.json` and copies their images to the `uploads` folder if the database is detected as empty on startup.
+    -   `multerConfig.js`: Configures the Multer middleware, specifying that uploaded files should be saved to the `uploads/` folder with a unique name to prevent collisions.
 
-Then inside the folder of src and inside of routes, we have the main.js.This is probably the most important file of this project this file acts as a router for Express.js, it defines all the URLs for the recipes,validates form data and communicates with the MongoDB database to manage all the information for the recipes and their steps.
+### Demonstration video
 
-Inside the src folder we have another folder called views where we have all the HTMLs including the partials such as the footer and the header
-
-Also inside of the src folder we have four more files:
-    -First of all we have the app.js,this is the main entry point for the application.It configures and starts the Express server, sets up the Mustache template engine and serves static files.Also it is the one who connects the database, importing the main.js and launching the server.
-    -Secondly is the database.js this file handles the MongoDB connection.It exports a conect function that initialize the connection and a shared db object for other files to access the active database.
-    -In third place is the loadData.js, this file seeds the database by loading initial recipes from recipes.json and copying their images when the database is empty.
-    -Lastly we have the multerConfig.js this file configures the Multer middleware.It specifies that uploaded files should be saved to the uploads folder and given a unique name.
-
-### Demostration video
-
-The video of how everything works is: 
-
+The video demonstrating the functionality is available at: https://youtu.be/g-BBM9ncu94
 ### Members Participation
 
 #### Fernán Rama Hombreiro
 
+For Practice 2, my primary role was the architecture and implementation of the application's backend. I was responsible for setting up the Express server, establishing the database connection, and developing all the core API routes in `main.js`. This included the full CRUD (Create, Read, Update, Delete) logic for both the main entity (recipes) and the secondary entity (steps), implementing the server-side validation middleware, and configuring the image upload functionality with Multer.
 
+**5 most important commits:**
 
-5 most important commits:
+  1. [Initialise Express server and database connection](https://github.com/CodeURJC-FW-2025-26/webapp02/commit/a3dc8ea9a19c4275c08fecf95a78fb3ee170a807)
+  2. [Implement main recipe listing with pagination](https://github.com/CodeURJC-FW-2025-26/webapp02/commit/a52d6dcd225d52f4961f87e2d207425e8950e692)
+  3. [Add server-side validation middleware](https://github.com/CodeURJC-FW-2025-26/webapp02/commit/0cbe890cf9352f49727bae8cb9413b5b5320efc2)
+  4. [Implement recipe creation and image upload](https://github.com/CodeURJC-FW-2025-26/webapp02/commit/c2343aa7cff4c74fb2120a69b0b971fd4ed7c260)
+  5. [Implement full CRUD for secondary entity (steps)](https://github.com/CodeURJC-FW-2025-26/webapp02/commit/b26cbe19f18463b7a22800ce3a8491cfc0b226e1)
 
-  1. 
-  2. 
-  3. 
-  4. 
-  5. 
+**The 5 files I have worked on the most are:**
 
-The 5 files I have worked on the most are:
+  1. [src/routes/main.js](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/routes/main.js)
+  2. [src/app.js](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/app.js)
+  3. [src/database.js](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/database.js)
+  4. [src/multerConfig.js](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/multerConfig.js)
+  5. [src/views/detalleReceta.html](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/views/detalleReceta.html) 
 
-  1. 
-  2. 
-  3. 
-  4. 
-  5. 
+---
 
 #### Rubén Torres Rivero
 
+In practice 2 my main work was on code quality and UX, adding advanced search features and essential security validations. I executed a key refactor to unify forms, improving project efficiency and stability. The result is a more robust application.
 
 5 most important commits:
 
-  1. 
-  2. 
-  3. 
-  4. 
-  5. 
+  1. [Retaining form data after error](https://github.com/CodeURJC-FW-2025-26/webapp02/commit/64b12a32257884121adc92cb9621639298d4a21a)
+  2. [Add robust search and category filtering](https://github.com/CodeURJC-FW-2025-26/webapp02/commit/0401b948edc0eac6e60c014852d81636c09f1c18)
+  3. [Recipe creation and editing complete](https://github.com/CodeURJC-FW-2025-26/webapp02/commit/7ae190e4132b8a9e3157a2b12c29acefc1b7e379)
+  4. [Prevent crash from invalid ID](https://github.com/CodeURJC-FW-2025-26/webapp02/commit/6dfb4f73f5ee96e36acce3420df66fe565bd52e8)
+  5. [Enhance recipe detail page layout](https://github.com/CodeURJC-FW-2025-26/webapp02/commit/621cb68368f0ec1c6f9b2bda34d267c2297c4203)
 
 The 5 files I have worked on the most are:
 
-  1. 
-  2. 
-  3. 
-  4. 
-  5. 
+  1. [src/routes/main.js](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/routes/main.js)
+  2. [src/views/AñadirReceta.html](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/views/A%C3%B1adirReceta.html)
+  3. [src/views/detalleReceta.html](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/views/detalleReceta.html)
+  4. [src/views/index.html](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/views/Index.html)
+  5. [README.md](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/README.md)
 
 ### Izan Calle Feijoo
 
 5 most important commits:
 
-  1. 
-  2. 
+  1. [feat: Implement recipe deletion functionality]()
+  2. [feat: Create dynamic confirmation and error pages](https://github.com/CodeURJC-FW-2025-26/webapp02/commit/34cd1aff950a89521981c093bf1eaa9a5aad55e1)
   3. 
   4. 
   5. 
 
 The 5 files I have worked on the most are:
 
-  1. 
-  2. 
-  3. 
-  4. 
-  5.
+  1. [src/routes/main.js](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/routes/main.js)
+  2. [src/views/confirmation.html]([URL_TO_FILE_confirmation.html](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/views/confirmacion.html)
+  3. [src/views/error.html](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/views/error.html)
+  4. [src/views/Index.html](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/views/Index.html)
+  5. [public/css/Cocina.css](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/public/css/Cocina.css)  
