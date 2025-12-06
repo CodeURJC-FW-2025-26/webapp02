@@ -109,54 +109,60 @@ router.get('/api/check-title', async (req, res) => {
 // Route to the homepage with pagination, search, and filter
 router.get('/', async (req, res) => {
     try {
-        // 1. Pagination Settings
-        const page = parseInt(req.query.page) || 1; // Current page, default 1
-        const pageSize = 6; // Number of recipes per page (rubric requirement)
+        // 1. Configuración de Paginación
+        const page = parseInt(req.query.page) || 1; // Página actual, por defecto 1
+        const pageSize = 6; // Número de recetas por página (requisito rúbrica)
         const skip = (page - 1) * pageSize;
 
-        // 2. Filter Settings (Search and Category)
+        // 2. Configuración de Filtros (Búsqueda y Categoría)
         const filter = {};
         const searchQuery = req.query.search;
         const categoryQuery = req.query.category;
 
         if (searchQuery) {
-            // Case-insensitive name search
+            // Búsqueda insensible a mayúsculas/minúsculas
             filter.name = { $regex: searchQuery, $options: 'i' };
         }
         if (categoryQuery) {
             filter.category = categoryQuery;
         }
 
-        // We obtain the recipes for the current page by applying filters and pagination.
+        // Obtenemos las recetas para la página actual aplicando filtros y paginación
         const recipes = await recipesCollection.find(filter)
             .skip(skip)
             .limit(pageSize)
             .toArray();
 
-        // We obtain the total number of recipes that match the filter to calculate the pages
+        // Obtenemos el número total de recetas que coinciden con el filtro
         const totalRecipes = await recipesCollection.countDocuments(filter);
         const totalPages = Math.ceil(totalRecipes / pageSize);
 
+        // --- LÓGICA DE SCROLL INFINITO (JSON) ---
+        // Si el cliente (client.js) pide formato JSON, devolvemos solo datos crudos
+        if (req.query.format === 'json') {
+            return res.json({
+                recipes: recipes,
+                // Calculamos si hay siguiente página
+                nextPage: page < totalPages ? page + 1 : null
+            });
+        }
+
+        // --- LÓGICA DE RENDERIZADO HTML (Carga normal) ---
+
+        // Generación de botones de paginación (Se mantiene por si falla JS o para SEO)
         const pagesForTemplate = [];
-        const window = 2; // Número de páginas a mostrar alrededor de la página actual
+        const window = 2;
 
         if (totalPages > 1) {
-            // Siempre mostramos la primera página y la última, y un "contexto" de páginas alrededor de la actual.
             for (let i = 1; i <= totalPages; i++) {
-                // Condición para mostrar el botón:
-                // 1. Es la primera página.
-                // 2. Es la última página.
-                // 3. Está dentro de la "ventana" alrededor de la página actual.
                 if (i === 1 || i === totalPages || (i >= page - window && i <= page + window)) {
                     pagesForTemplate.push({
                         page: i,
-                        isCurrent: i === page, // Marcar si es la página actual
+                        isCurrent: i === page,
                         isEllipsis: false
                     });
                 }
-                // Añadir puntos suspensivos si hay un salto
                 else if (pagesForTemplate[pagesForTemplate.length - 1].page < i - 1) {
-                    // Evita añadir puntos suspensivos duplicados
                     if (!pagesForTemplate[pagesForTemplate.length - 1].isEllipsis) {
                         pagesForTemplate.push({ isEllipsis: true });
                     }
@@ -164,16 +170,16 @@ router.get('/', async (req, res) => {
             }
         }
 
-        // Object to determine which category button is active
+        // Objeto para determinar qué botón de categoría está activo
         const categoryStates = {
-            all: !categoryQuery, // El botón "Todas" está activo si no hay ninguna categoría en la URL
+            all: !categoryQuery,
             entrante: categoryQuery === 'entrante',
             principal: categoryQuery === 'principal',
             postre: categoryQuery === 'postre',
             vegano: categoryQuery === 'vegano'
         };
 
-        // 4. Render the view, passing all the necessary data.
+        // Renderizamos la vista completa
         res.render('index', {
             recipes: recipes,
             currentPage: page,
@@ -182,14 +188,21 @@ router.get('/', async (req, res) => {
             hasNextPage: page < totalPages,
             prevPage: page - 1,
             nextPage: page + 1,
-            searchQuery: searchQuery, // To maintain the value in the search engine
-            categoryQuery: categoryQuery, // To find out which category is active
-            pagesForTemplate: pagesForTemplate, // <--- We add the new array to the render
-            categoryStates: categoryStates // <-- Pass the new object to the template
+            searchQuery: searchQuery,
+            categoryQuery: categoryQuery,
+            pagesForTemplate: pagesForTemplate,
+            categoryStates: categoryStates,
+            // VARIABLE NUEVA: Indica al cliente (JS) cuál es la siguiente página inicial
+            initialNextPage: page < totalPages ? page + 1 : null
         });
 
     } catch (error) {
         console.error("❌ Error al obtener las recetas:", error);
+        // Si es una petición JSON (AJAX) devolvemos error JSON
+        if (req.query.format === 'json') {
+            return res.status(500).json({ error: "Error interno al cargar recetas" });
+        }
+        // Si es carga normal, mostramos la página de error
         res.status(500).render('error', {
             errorMessage: "No se pudieron cargar las recetas del servidor.",
             backUrl: '/',

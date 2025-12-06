@@ -32,10 +32,12 @@
 
      <!-- Recommended recipes grid -->
      <section class="container">
-          <div class="row">
+          <!-- Modified: Added ID 'recipe-grid' for Infinite Scroll JS targeting -->
+          <div class="row" id="recipe-grid">
                {{#recipes}}
                <!-- Loop: This will repeat for each recipe in the 'recipes' array -->
-               <div class="col-12 col-sm-6 col-lg-4">
+               <!-- Modified: Added class 'recipe-card-container' for consistency with dynamically created cards -->
+               <div class="col-12 col-sm-6 col-lg-4 recipe-card-container">
                     <a href='/receta/{{_id}}'><img src="/uploads/{{image}}" alt="{{name}}"></a>
                     <h3>{{name}}</h3>
                </div>
@@ -48,12 +50,20 @@
                </div>
                {{/recipes}}
           </div>
+
+          <!-- NEW: Spinner for Infinite Scroll (Hidden by default with d-none) -->
+          <div id="scroll-spinner" class="text-center my-4 d-none">
+               <div class="spinner-border text-dark" role="status">
+                    <span class="visually-hidden">Cargando más recetas...</span>
+               </div>
+          </div>
      </section>
 
      <!-- Pagination -->
      <!-- We only show pagination if there are recipes -->
      {{#recipes.length}} {{! Solo mostramos la paginación si el array de recetas no está vacío }}
-     <nav aria-label="Paginación de recetas" class="d-flex justify-content-center mb-5">
+     <!-- Modified: Added 'd-none' class to hide manual pagination as we are using Infinite Scroll -->
+     <nav aria-label="Paginación de recetas" class="d-flex justify-content-center mb-5 d-none">
           <ul class="pagination">
 
                <!-- "Anterior" Button -->
@@ -106,6 +116,12 @@
           </ul>
      </nav>
      {{/recipes.length}}
+
+     <!-- NEW: Hidden inputs to store state for Infinite Scroll JS -->
+     <input type="hidden" id="initial-search" value="{{searchQuery}}">
+     <input type="hidden" id="initial-category" value="{{categoryQuery}}">
+     <input type="hidden" id="next-page" value="{{initialNextPage}}">
+
 </main>
 
 {{> partials/footer}}
