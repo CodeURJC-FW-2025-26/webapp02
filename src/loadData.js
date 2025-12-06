@@ -55,7 +55,7 @@ export async function seedDatabase() {
             await recipesCollection.insertMany(processedRecipes);
             console.log(`${processedRecipes.length} recipes inserted successfully.`);
         } else {
-            console.log("ℹDatabase already contains data.");
+            console.log("Database already contains data.");
         }
     } catch (error) {
         console.error("Error seeding database:", error);
