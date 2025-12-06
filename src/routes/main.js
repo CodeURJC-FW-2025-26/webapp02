@@ -41,8 +41,8 @@ router.get('/api/check-title', async (req, res) => {
 
         res.json({ exists: !!existingRecipe });
     } catch (error) {
-        console.error("Title validation error:", error);
-        res.status(500).json({ error: 'Server error' });
+        console.error("Error de validación del título:", error);
+        res.status(500).json({ error: 'Error interno del servidor' });
     }
 });
 
@@ -125,14 +125,14 @@ router.get('/', async (req, res) => {
         });
 
     } catch (error) {
-        console.error("❌ Error fetching recipes:", error);
+        console.error("❌ Error al obtener las recetas:", error);
         if (req.query.format === 'json') {
-            return res.status(500).json({ error: "Internal Server Error" });
+            return res.status(500).json({ error: "Error interno del servidor" });
         }
         res.status(500).render('error', {
-            errorMessage: "Could not load recipes from server.",
+            errorMessage: "No se pudieron cargar recetas desde el servidor.",
             backUrl: '/',
-            backUrlText: 'Back to Home'
+            backUrlText: 'Volver al inicio'
         });
     }
 });
@@ -152,7 +152,7 @@ router.get('/error', (req, res) => {
     res.render('error', {
         errorMessage,
         backUrl: backUrl || '/',
-        backUrlText: 'Go Back'
+        backUrlText: 'Volver'
     });
 });
 
@@ -198,19 +198,19 @@ router.post('/receta/nueva', upload.single('recipeImage'), async (req, res) => {
 
         // 1. Server-Side Validation
         if (!recipeName || !description || !ingredients || !category || !difficulty || !preparationTime) {
-            return res.status(400).json({ success: false, message: 'All fields are mandatory.' });
+            return res.status(400).json({ success: false, message: 'Todos los campos son obligatorios.' });
         }
 
         if (recipeName.trim()[0] !== recipeName.trim()[0].toUpperCase()) {
-            return res.status(400).json({ success: false, message: 'Recipe name must start with an uppercase letter.' });
+            return res.status(400).json({ success: false, message: 'El nombre de la receta debe comenzar con una letra mayúscula.' });
         }
 
         if (description.trim().length < 20 || description.trim().length > 500) {
-            return res.status(400).json({ success: false, message: 'Description must be between 20 and 500 characters.' });
+            return res.status(400).json({ success: false, message: 'La descripción debe tener entre 20 y 500 caracteres.' });
         }
 
         if (isNaN(preparationTime) || parseInt(preparationTime) <= 0) {
-            return res.status(400).json({ success: false, message: 'Preparation time must be a positive number.' });
+            return res.status(400).json({ success: false, message: 'El tiempo de preparación debe ser un número positivo.' });
         }
 
         const existingRecipe = await db.connection.collection('recipes').findOne({
@@ -218,7 +218,7 @@ router.post('/receta/nueva', upload.single('recipeImage'), async (req, res) => {
         });
 
         if (existingRecipe) {
-            return res.status(400).json({ success: false, message: `A recipe with the name "${recipeName}" already exists.` });
+            return res.status(400).json({ success: false, message: `Ya existe una receta con el nombre "${recipeName}"` });
         }
 
         // 2. Object Creation
@@ -239,13 +239,13 @@ router.post('/receta/nueva', upload.single('recipeImage'), async (req, res) => {
         // 4. Response
         res.json({
             success: true,
-            message: `Recipe "${newRecipe.name}" created successfully.`,
+            message: `Receta "${newRecipe.name}" creada con éxito.`,
             redirectUrl: `/receta/${result.insertedId}`
         });
 
     } catch (error) {
-        console.error("❌ Error creating recipe:", error);
-        res.status(500).json({ success: false, message: 'Internal Server Error.' });
+        console.error("❌ Error al crear la receta:", error);
+        res.status(500).json({ success: false, message: 'Error Interno del Servidor.' });
     }
 });
 
@@ -255,7 +255,7 @@ router.post('/receta/nueva', upload.single('recipeImage'), async (req, res) => {
 router.get('/receta/:id', async (req, res) => {
     try {
         if (!ObjectId.isValid(req.params.id)) {
-            return res.status(404).render('error', { errorMessage: 'Invalid Recipe ID.' });
+            return res.status(404).render('error', { errorMessage: 'ID de receta no válida.' });
         }
 
         const recipe = await recipesCollection.findOne({ _id: new ObjectId(req.params.id) });
@@ -269,11 +269,11 @@ router.get('/receta/:id', async (req, res) => {
             }
             res.render('detalleReceta', { recipe });
         } else {
-            res.status(404).render('error', { errorMessage: 'Recipe not found.' });
+            res.status(404).render('error', { errorMessage: 'Receta no encontrada.' });
         }
     } catch (error) {
-        console.error("❌ Error fetching recipe details:", error);
-        res.status(500).render('error', { errorMessage: "Internal Server Error." });
+        console.error("❌ Error al obtener los detalles de la receta:", error);
+        res.status(500).render('error', { errorMessage: "Error Interno del Servidor." });
     }
 });
 
@@ -282,7 +282,7 @@ router.get('/receta/:id', async (req, res) => {
  */
 router.get('/receta/editar/:id', async (req, res) => {
     try {
-        if (!ObjectId.isValid(req.params.id)) return res.status(404).render('error', { errorMessage: 'Invalid ID' });
+        if (!ObjectId.isValid(req.params.id)) return res.status(404).render('error', { errorMessage: 'ID no válida' });
 
         const recipe = await db.connection.collection('recipes').findOne({ _id: new ObjectId(req.params.id) });
 
@@ -293,11 +293,11 @@ router.get('/receta/editar/:id', async (req, res) => {
 
             res.render('AñadirReceta', { recipe, editing: true });
         } else {
-            res.status(404).render('error', { errorMessage: 'Recipe not found for editing.' });
+            res.status(404).render('error', { errorMessage: 'Receta no encontrada para editar.' });
         }
     } catch (error) {
-        console.error("❌ Error fetching recipe for edit:", error);
-        res.status(500).render('error', { errorMessage: 'Internal Server Error.' });
+        console.error("❌ Error al obtener la receta para editar:", error);
+        res.status(500).render('error', { errorMessage: 'Error Interno del Servidor.' });
     }
 });
 
@@ -309,20 +309,20 @@ router.post('/receta/editar/:id', upload.single('recipeImage'), async (req, res)
         const recipeId = req.params.id;
         const { recipeName, description, ingredients, category, difficulty, preparationTime } = req.body;
 
-        if (!ObjectId.isValid(recipeId)) return res.status(400).json({ success: false, message: 'Invalid ID.' });
+        if (!ObjectId.isValid(recipeId)) return res.status(400).json({ success: false, message: 'ID no válida.' });
 
         // Validations
         if (!recipeName || !description || !ingredients || !category || !difficulty || !preparationTime) {
-            return res.status(400).json({ success: false, message: 'All fields are mandatory.' });
+            return res.status(400).json({ success: false, message: 'Todos los campos son obligatorios.' });
         }
         if (recipeName.trim()[0] !== recipeName.trim()[0].toUpperCase()) {
-            return res.status(400).json({ success: false, message: 'Name must start with uppercase.' });
+            return res.status(400).json({ success: false, message: 'El nombre debe comenzar con mayúscula.' });
         }
         if (description.trim().length < 20 || description.trim().length > 500) {
-            return res.status(400).json({ success: false, message: 'Description length invalid (20-500 chars).' });
+            return res.status(400).json({ success: false, message: 'Longitud de descripción no válida (20-500 caracteres).' });
         }
         if (isNaN(preparationTime) || parseInt(preparationTime) <= 0) {
-            return res.status(400).json({ success: false, message: 'Invalid time.' });
+            return res.status(400).json({ success: false, message: 'Tiempo no válido.' });
         }
 
         // Unique Name Check (excluding current)
@@ -332,7 +332,7 @@ router.post('/receta/editar/:id', upload.single('recipeImage'), async (req, res)
         });
 
         if (existingRecipe) {
-            return res.status(400).json({ success: false, message: `The name "${recipeName}" is already taken.` });
+            return res.status(400).json({ success: false, message: `El nombre "${recipeName}" ya está en uso.` });
         }
 
         const updateData = {
@@ -355,13 +355,13 @@ router.post('/receta/editar/:id', upload.single('recipeImage'), async (req, res)
 
         res.json({
             success: true,
-            message: 'Recipe updated successfully.',
+            message: 'Receta actualizada con éxito.',
             redirectUrl: `/receta/${recipeId}`
         });
 
     } catch (error) {
-        console.error("❌ Error updating recipe:", error);
-        res.status(500).json({ success: false, message: 'Internal Server Error.' });
+        console.error("❌ Error al actualizar la receta:", error);
+        res.status(500).json({ success: false, message: 'Error Interno del Servidor.' });
     }
 });
 
@@ -371,18 +371,18 @@ router.post('/receta/editar/:id', upload.single('recipeImage'), async (req, res)
 router.post('/receta/borrar/:id', async (req, res) => {
     try {
         const recipeId = req.params.id;
-        if (!ObjectId.isValid(recipeId)) return res.status(400).json({ success: false, message: 'Invalid ID' });
+        if (!ObjectId.isValid(recipeId)) return res.status(400).json({ success: false, message: 'ID no válida' });
 
         const result = await recipesCollection.deleteOne({ _id: new ObjectId(recipeId) });
 
         if (result.deletedCount === 1) {
-            res.json({ success: true, message: 'Recipe deleted.', redirectUrl: '/' });
+            res.json({ success: true, message: 'Receta eliminada.', redirectUrl: '/' });
         } else {
-            res.status(404).json({ success: false, message: 'Recipe not found.' });
+            res.status(404).json({ success: false, message: 'Receta no encontrada.' });
         }
     } catch (error) {
         console.error(error);
-        res.status(500).json({ success: false, message: 'Server Error.' });
+        res.status(500).json({ success: false, message: 'Error Interno del Servidor.' });
     }
 });
 
@@ -399,7 +399,7 @@ router.post('/receta/:id/paso/nuevo', async (req, res) => {
         const { stepName, stepDescription } = req.body;
 
         if (!stepName || !stepDescription) {
-            return res.status(400).json({ success: false, message: 'Missing step data.' });
+            return res.status(400).json({ success: false, message: 'Faltan datos del paso.' });
         }
 
         const newStep = {
@@ -419,14 +419,14 @@ router.post('/receta/:id/paso/nuevo', async (req, res) => {
         // Return the created step object for dynamic DOM insertion
         res.json({
             success: true,
-            message: 'Step added successfully.',
+            message: 'Paso añadido exitosamente.',
             step: newStep,
             recipeId: recipeId
         });
 
     } catch (error) {
         console.error(error);
-        res.status(500).json({ success: false, message: 'Internal Error.' });
+        res.status(500).json({ success: false, message: 'Error Interno del Servidor.' });
     }
 });
 
@@ -440,9 +440,9 @@ router.post('/receta/:id/paso/borrar/:stepId', async (req, res) => {
             { _id: new ObjectId(id) },
             { $pull: { steps: { _id: new ObjectId(stepId) } } }
         );
-        res.json({ success: true, message: 'Step deleted.' });
+        res.json({ success: true, message: 'Paso eliminado.' });
     } catch (error) {
-        res.status(500).json({ success: false, message: 'Error deleting step.' });
+        res.status(500).json({ success: false, message: 'Error al eliminar el paso.' });
     }
 });
 
@@ -453,17 +453,17 @@ router.get('/receta/:id/paso/editar/:stepId', async (req, res) => {
     const { id, stepId } = req.params;
     try {
         const recipe = await db.connection.collection('recipes').findOne({ _id: new ObjectId(id) });
-        if (!recipe) return res.status(404).render('error', { errorMessage: 'Recipe not found.' });
+        if (!recipe) return res.status(404).render('error', { errorMessage: 'Receta no encontrada.' });
 
         const step = recipe.steps ? recipe.steps.find(s => s._id.toString() === stepId) : null;
 
-        if (!step) return res.status(404).render('error', { errorMessage: 'Step not found.' });
+        if (!step) return res.status(404).render('error', { errorMessage: 'Paso no encontrado.' });
 
         res.render('editarPaso', { recipe, step });
 
     } catch (error) {
-        console.error("Error fetching step:", error);
-        res.status(500).render('error', { errorMessage: 'Internal Server Error.' });
+        console.error("Error al buscar el paso:", error);
+        res.status(500).render('error', { errorMessage: 'Error Interno del Servidor.' });
     }
 });
 
@@ -476,7 +476,7 @@ router.post('/receta/:id/paso/editar/:stepId', async (req, res) => {
         const { stepName, stepDescription } = req.body;
 
         if (!stepName || !stepDescription || stepName.trim() === '' || stepDescription.trim() === '') {
-            return res.status(400).json({ success: false, message: 'Incomplete data.' });
+            return res.status(400).json({ success: false, message: 'Datos incompletos.' });
         }
 
         await recipesCollection.updateOne(
@@ -491,7 +491,7 @@ router.post('/receta/:id/paso/editar/:stepId', async (req, res) => {
 
         res.json({
             success: true,
-            message: 'Step updated successfully.',
+            message: 'Paso actualizado exitosamente.',
             step: {
                 name: stepName.trim(),
                 description: stepDescription.trim()
@@ -499,8 +499,8 @@ router.post('/receta/:id/paso/editar/:stepId', async (req, res) => {
         });
 
     } catch (error) {
-        console.error("Error updating step:", error);
-        res.status(500).json({ success: false, message: 'Internal Error.' });
+        console.error("Error al actualizar el paso:", error);
+        res.status(500).json({ success: false, message: 'Error Interno del Servidor.' });
     }
 });
 

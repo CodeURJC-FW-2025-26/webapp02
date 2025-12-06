@@ -4,4 +4,10 @@ Poner mejores fotos // cambiar las recetas // hacerlo mucho más pro
 
 Poner 18 recetas de ejemplo con fotos para hacer más visual el scroll infinito
 
+Al crear una nueva receta aparece Esta receta aún no tiene pasos definidos. pero se mantiene hasta después de crear un paso
+
+Icono de lápiz de editar paso está estirado
+
+
+
 README

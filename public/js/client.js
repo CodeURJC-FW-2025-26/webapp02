@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 nameInput.classList.add('is-valid'); // Green if everything is OK
                             }
                         } catch (error) {
-                            console.error("Error validating title:", error);
+                            console.error("Error al validar el título:", error);
                         }
                     }, 500); // Wait 500ms after user stops typing
                 }
@@ -224,7 +224,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const response = await fetch(url);
 
-                if (!response.ok) throw new Error("Network response was not ok");
+                if (!response.ok) throw new Error("La respuesta de la red no fue correcta");
 
                 const data = await response.json();
 
@@ -252,7 +252,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
             } catch (error) {
-                console.error("Error loading more recipes:", error);
+                console.error("Error al cargar más recetas:", error);
             } finally {
                 // Always reset loading state and hide spinner
                 isLoading = false;
@@ -430,7 +430,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             li.remove();
                         } else {
                             // Error handling
-                            alert("Error deleting step: " + result.message);
+                            alert("Error al eliminar el paso: " + result.message);
                         }
                     } catch (err) { console.error(err); }
                 };
@@ -482,8 +482,8 @@ document.addEventListener('DOMContentLoaded', () => {
                             <div class="invalid-feedback">La descripción es obligatoria.</div>
                         </div>
                         <div class="d-flex justify-content-end gap-2">
-                            <button type="button" class="btn btn-sm btn-secondary btn-cancel-edit">Cancelar</button>
-                            <button type="submit" class="btn btn-sm btn-success">Guardar</button>
+                            <button type="button" class="btn btn-sm btn-dark btn-cancel-edit">Cancelar</button>
+                            <button type="submit" class="btn btn-sm btn-dark">Guardar</button>
                         </div>
                     </form>
                 `;
