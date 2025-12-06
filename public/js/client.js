@@ -1,265 +1,318 @@
 /* webapp02/public/js/client.js */
 
-console.log("Client script loaded correctly!");
+/**
+ * Main Client-Side Logic
+ * Handles Recipe Forms, Drag & Drop, Infinite Scroll, and Dynamic Step Management via AJAX.
+ */
+
+console.log("Client script loaded successfully.");
 
 document.addEventListener('DOMContentLoaded', () => {
 
     // ============================================================
-    //  SECTION 1: RECIPE FORM LOGIC (Create & Edit)
+    //  HELPER FUNCTIONS (UI & UTILITIES)
     // ============================================================
+
+    /**
+     * Toggles the full-screen loading spinner.
+     * @param {boolean} show - True to show, false to hide.
+     */
+    const toggleSpinner = (show) => {
+        const spinner = document.getElementById('loadingSpinner');
+        if (spinner) {
+            show ? spinner.classList.remove('d-none') : spinner.classList.add('d-none');
+        }
+    };
+
+    /**
+     * Displays the generic Bootstrap Feedback Modal.
+     * @param {string} title - Modal Title.
+     * @param {string} message - Body text.
+     * @param {string} type - 'success' or 'error' (determines color).
+     * @param {object} options - Configuration for buttons { showActionBtn, actionUrl, actionText, closeBtnText }.
+     */
+    const showFeedbackModal = (title, message, type, options = {}) => {
+        const modalEl = document.getElementById('feedbackModal');
+        if (!modalEl) return; // Safety check
+
+        const modal = new bootstrap.Modal(modalEl);
+        const modalTitle = document.getElementById('modalTitle');
+        const modalBody = document.getElementById('modalBody');
+        const modalActionBtn = document.getElementById('modalActionBtn');
+        const modalCloseBtn = document.getElementById('modalCloseBtn');
+
+        // Set content and style
+        modalTitle.textContent = title;
+        modalBody.textContent = message;
+        modalTitle.className = type === 'success' ? "modal-title text-success" : "modal-title text-danger";
+
+        // Configure Action Button (e.g., "View Recipe")
+        if (options.showActionBtn) {
+            modalActionBtn.classList.remove('d-none');
+            modalActionBtn.textContent = options.actionText || "Continue";
+            modalActionBtn.href = options.actionUrl || '#';
+            if (modalCloseBtn) modalCloseBtn.classList.add('d-none'); // Hide close button if action is mandatory
+        } else {
+            modalActionBtn.classList.add('d-none');
+            if (modalCloseBtn) {
+                modalCloseBtn.classList.remove('d-none');
+                modalCloseBtn.textContent = options.closeBtnText || "Close";
+            }
+        }
+
+        modal.show();
+    };
+
+    // ============================================================
+    //  MODULE 1: RECIPE FORM MANAGEMENT (CREATE / EDIT)
+    // ============================================================
+
     const recipeForm = document.getElementById('recipeForm');
 
     if (recipeForm) {
-
-        // 1. Detect Recipe ID (to avoid false duplicates when editing)
+        // 1.1 Detect Recipe ID for duplicate checking (exclude current ID on edit)
         let recipeId = null;
         const actionUrl = recipeForm.getAttribute('action');
         if (actionUrl && actionUrl.includes('/editar/')) {
             recipeId = actionUrl.split('/').pop();
         }
 
-        // 2. Real-time Validation (Uppercase + AJAX Duplicate Check)
+        // 1.2 Real-time Title Validation (Debounced AJAX)
         const nameInput = document.getElementById('recipeName');
-        let timeout = null; // Variable for debounce
+        let debounceTimeout = null;
 
         if (nameInput) {
             nameInput.addEventListener('input', () => {
                 const nameValue = nameInput.value.trim();
+                clearTimeout(debounceTimeout);
 
-                // Clear previous timeout to avoid saturating the server
-                clearTimeout(timeout);
-
-                // A) Synchronous Validation: Uppercase start
+                // Sync Validation: Uppercase check
                 if (nameValue.length > 0 && nameValue[0] !== nameValue[0].toUpperCase()) {
-                    nameInput.setCustomValidity("El nombre debe comenzar con mayúscula.");
+                    nameInput.setCustomValidity("The name must start with an uppercase letter.");
                     nameInput.classList.add('is-invalid');
                     nameInput.classList.remove('is-valid');
-                    return; // If this fails, we don't proceed to AJAX
+                    return;
                 } else {
-                    // Reset momentarily
-                    nameInput.setCustomValidity("");
+                    nameInput.setCustomValidity(""); // Reset
                     nameInput.classList.remove('is-invalid');
                 }
 
-                // B) Asynchronous Validation (AJAX): Duplicate Title
+                // Async Validation: Check duplicates
                 if (nameValue.length > 0) {
-                    timeout = setTimeout(async () => {
+                    debounceTimeout = setTimeout(async () => {
                         try {
                             const params = new URLSearchParams({ title: nameValue });
                             if (recipeId) params.append('id', recipeId);
 
                             const response = await fetch(`/api/check-title?${params.toString()}`);
+
+                            if (!response.headers.get("content-type")?.includes("application/json")) {
+                                throw new Error("Invalid server response (Not JSON)");
+                            }
+
                             const data = await response.json();
 
                             if (data.exists) {
-                                nameInput.setCustomValidity("Este nombre de receta ya existe.");
+                                nameInput.setCustomValidity("This recipe name already exists.");
                                 nameInput.classList.add('is-invalid');
                                 nameInput.classList.remove('is-valid');
-                                // Update feedback text if the specific div exists
+                                // Update feedback text dynamically if element exists
                                 const feedbackDiv = nameInput.nextElementSibling;
                                 if (feedbackDiv && feedbackDiv.classList.contains('invalid-feedback')) {
-                                    feedbackDiv.textContent = "Este título ya está en uso. Elige otro.";
+                                    feedbackDiv.textContent = "This title is already in use. Please choose another.";
                                 }
                             } else {
                                 nameInput.setCustomValidity("");
                                 nameInput.classList.remove('is-invalid');
-                                nameInput.classList.add('is-valid'); // Green if everything is OK
+                                nameInput.classList.add('is-valid');
                             }
                         } catch (error) {
-                            console.error("Error al validar el título:", error);
+                            console.error("Error validating title:", error);
                         }
-                    }, 500); // Wait 500ms after user stops typing
+                    }, 500); // 500ms debounce
                 }
             });
         }
 
-        // 3. Image Preview Logic
+        // 1.3 Image Drag & Drop Logic
+        const dropZone = document.getElementById('drop-zone');
         const imageInput = document.getElementById('recipeImage');
+        const previewContainer = document.getElementById('image-preview-container');
+        const removeImageFlag = document.getElementById('removeImageFlag');
 
-        if (imageInput) {
-            // Check if preview container exists, if not, create it
-            let previewContainer = document.getElementById('image-preview-container');
-            if (!previewContainer) {
-                previewContainer = document.createElement('div');
-                previewContainer.id = 'image-preview-container';
-                previewContainer.className = 'mt-3 d-none';
-                imageInput.parentNode.appendChild(previewContainer);
-            }
+        if (dropZone && imageInput) {
 
-            imageInput.addEventListener('change', function (event) {
-                const file = event.target.files[0];
-                previewContainer.innerHTML = ''; // Clear previous preview
+            // Highlight helpers
+            const highlight = () => dropZone.classList.add('bg-light', 'border-primary');
+            const unhighlight = () => dropZone.classList.remove('bg-light', 'border-primary');
 
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function (e) {
-                        const img = document.createElement('img');
-                        img.src = e.target.result;
-                        img.className = 'img-thumbnail';
-                        img.style.maxWidth = '200px';
+            // Event Listeners for Drop Zone
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropZone.addEventListener(eventName, (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }, false);
+            });
 
-                        // Button to remove the image
-                        const removeBtn = document.createElement('button');
-                        removeBtn.type = 'button';
-                        removeBtn.className = 'btn btn-sm btn-danger mt-1 d-block';
-                        removeBtn.textContent = 'Eliminar imagen';
+            ['dragenter', 'dragover'].forEach(evt => dropZone.addEventListener(evt, highlight, false));
+            ['dragleave', 'drop'].forEach(evt => dropZone.addEventListener(evt, unhighlight, false));
 
-                        removeBtn.onclick = () => {
-                            imageInput.value = ''; // Clear input
-                            previewContainer.classList.add('d-none');
-                            previewContainer.innerHTML = '';
-                        };
-
-                        previewContainer.appendChild(img);
-                        previewContainer.appendChild(removeBtn);
-                        previewContainer.classList.remove('d-none');
-                    }
-                    reader.readAsDataURL(file);
+            // Handle Drop
+            dropZone.addEventListener('drop', (e) => {
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    imageInput.files = files; // Assign files to the hidden input
+                    handleFiles(files[0]);
                 }
             });
+
+            // Handle Click (opens file explorer)
+            dropZone.addEventListener('click', () => imageInput.click());
+
+            // Handle Standard Input Change
+            imageInput.addEventListener('change', function () {
+                if (this.files.length > 0) handleFiles(this.files[0]);
+            });
+
+            // Image Processing & Preview
+            const handleFiles = (file) => {
+                if (!file.type.startsWith('image/')) {
+                    alert("Only image files are allowed.");
+                    return;
+                }
+
+                // Reset delete flag if user uploads a new one
+                if (removeImageFlag) removeImageFlag.value = "false";
+
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    previewContainer.innerHTML = `
+                        <img src="${e.target.result}" class="img-thumbnail" style="max-width: 200px;">
+                        <div class="mt-2">
+                            <button type="button" class="btn btn-sm btn-danger" id="btnRemoveImage">Remove Image</button>
+                        </div>
+                    `;
+                    previewContainer.classList.remove('d-none');
+
+                    // Re-bind delete button
+                    document.getElementById('btnRemoveImage').addEventListener('click', clearImage);
+                };
+                reader.readAsDataURL(file);
+            };
+
+            // Clear Image Logic
+            const clearImage = (e) => {
+                e.stopPropagation(); // Prevent bubbling to dropZone click
+                imageInput.value = '';
+                previewContainer.innerHTML = '';
+                previewContainer.classList.add('d-none');
+                if (removeImageFlag) removeImageFlag.value = "true"; // Signal backend to delete DB reference
+            };
+
+            // Bind initial delete button if it exists (edit mode)
+            const initialRemoveBtn = document.getElementById('btnRemoveImage');
+            if (initialRemoveBtn) initialRemoveBtn.addEventListener('click', clearImage);
         }
 
-        // 4. Form Submission (AJAX Submit)
+        // 1.4 Main Form Submission
         recipeForm.addEventListener('submit', async event => {
-            event.preventDefault(); // Stop traditional submission
+            event.preventDefault();
             event.stopPropagation();
 
-            // Final check of HTML5/Bootstrap validation
             if (!recipeForm.checkValidity()) {
                 recipeForm.classList.add('was-validated');
-                return; // Stop if there are errors
+                return;
             }
 
-            // Show Loading Spinner
-            const spinner = document.getElementById('loadingSpinner');
-            if (spinner) spinner.classList.remove('d-none');
+            const submitBtn = recipeForm.querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn.textContent;
+
+            // Disable UI to prevent double submission
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Processing...';
+            toggleSpinner(true);
 
             try {
                 const formData = new FormData(recipeForm);
                 const url = recipeForm.getAttribute('action');
 
-                // Request to server
                 const response = await fetch(url, {
                     method: 'POST',
                     body: formData
                 });
 
-                // Hide Spinner
-                if (spinner) spinner.classList.add('d-none');
+                if (!response.headers.get("content-type")?.includes("application/json")) {
+                    throw new Error("Invalid server response. HTML received instead of JSON.");
+                }
 
-                // Process JSON response
                 const result = await response.json();
+                toggleSpinner(false);
 
-                // Configure Feedback Modal
-                const modalEl = document.getElementById('feedbackModal');
-                if (modalEl) {
-                    const modal = new bootstrap.Modal(modalEl);
-                    const modalTitle = document.getElementById('modalTitle');
-                    const modalBody = document.getElementById('modalBody');
-                    const modalActionBtn = document.getElementById('modalActionBtn');
-                    const modalCloseBtn = document.getElementById('modalCloseBtn'); // Referencia al botón secundario
-
-                    if (response.ok && result.success) {
-                        // --- CASO DE ÉXITO ---
-                        modalTitle.textContent = "¡Receta Creada!";
-                        modalTitle.className = "modal-title text-success";
-                        modalBody.textContent = result.message;
-
-                        // 1. Configurar botón principal (Ver Receta)
-                        modalActionBtn.classList.remove('d-none');
-                        modalActionBtn.textContent = "Ver Receta";
-                        modalActionBtn.className = "btn btn-dark"; // Verde para indicar éxito/avance
-                        modalActionBtn.href = result.redirectUrl || '/';
-
-                        // 2. Gestionar botón secundario (Cerrar)
-                        // Opción A: Ocultarlo para forzar el foco en "Ver Receta" (Más limpio)
-                        if (modalCloseBtn) modalCloseBtn.classList.add('d-none');
-
-                        // Opción B (Alternativa): Cambiar texto a "Cerrar" (si quieres permitir quedarse)
-                        /* 
-                        if (modalCloseBtn) {
-                             modalCloseBtn.textContent = "Cerrar";
-                             modalCloseBtn.classList.remove('d-none');
-                        }
-                        */
-
-                    } else {
-                        // --- CASO DE ERROR ---
-                        modalTitle.textContent = "Error";
-                        modalTitle.className = "modal-title text-danger";
-                        modalBody.textContent = result.message || "Ha ocurrido un error desconocido.";
-
-                        // 1. Ocultar botón de ir a receta
-                        modalActionBtn.classList.add('d-none');
-
-                        // 2. Mostrar y configurar botón de corregir
-                        if (modalCloseBtn) {
-                            modalCloseBtn.classList.remove('d-none');
-                            modalCloseBtn.textContent = "Cerrar y corregir";
-                            modalCloseBtn.className = "btn btn-dark";
-                        }
-                    }
-                    modal.show();
+                if (response.ok && result.success) {
+                    showFeedbackModal("Success!", result.message, "success", {
+                        showActionBtn: true,
+                        actionText: "View Recipe",
+                        actionUrl: result.redirectUrl || '/'
+                    });
                 } else {
-                    // Fallback if no modal exists (just in case)
-                    if (result.success) window.location.href = result.redirectUrl;
-                    else alert(result.message);
+                    showFeedbackModal("Error", result.message || "Unknown error occurred.", "error", {
+                        closeBtnText: "Close and Fix"
+                    });
+                    // Re-enable button on error to allow retry
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = originalBtnText;
                 }
 
             } catch (error) {
-                if (spinner) spinner.classList.add('d-none');
-                console.error(error);
-                alert("Error crítico de comunicación con el servidor");
+                toggleSpinner(false);
+                console.error("Critical Error:", error);
+                alert("Communication error with the server.");
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalBtnText;
             }
         }, false);
     }
 
     // ============================================================
-    //  SECTION 2: INFINITE SCROLL LOGIC (Index Page)
+    //  MODULE 2: INFINITE SCROLL (INDEX PAGE)
     // ============================================================
 
     const recipeGrid = document.getElementById('recipe-grid');
 
     if (recipeGrid) {
         const nextPageInput = document.getElementById('next-page');
-        let isLoading = false; // Flag to prevent multiple simultaneous fetches
+        let isLoading = false;
 
-        // Function to fetch and render new recipes
         const loadMoreRecipes = async () => {
-            // Check conditions: not currently loading AND there is a next page available
             if (isLoading || !nextPageInput || !nextPageInput.value) return;
 
             isLoading = true;
+            const scrollSpinner = document.getElementById('scroll-spinner');
+            if (scrollSpinner) scrollSpinner.classList.remove('d-none');
 
-            // Show the specific scroll spinner
-            const spinner = document.getElementById('scroll-spinner');
-            if (spinner) spinner.classList.remove('d-none');
-
-            // Get current state from hidden inputs
             const nextPage = nextPageInput.value;
-            const search = document.getElementById('initial-search').value;
-            const category = document.getElementById('initial-category').value;
+            const search = document.getElementById('initial-search')?.value || '';
+            const category = document.getElementById('initial-category')?.value || '';
 
             try {
-                // Construct URL with JSON format parameter
+                // Build URL
                 let url = `/?page=${nextPage}&format=json`;
                 if (search) url += `&search=${encodeURIComponent(search)}`;
                 if (category) url += `&category=${encodeURIComponent(category)}`;
 
                 const response = await fetch(url);
 
-                if (!response.ok) throw new Error("La respuesta de la red no fue correcta");
+                if (!response.ok) throw new Error("Network response was not ok");
+                if (!response.headers.get("content-type")?.includes("application/json")) {
+                    throw new Error("Server returned HTML instead of JSON. Stopping scroll.");
+                }
 
                 const data = await response.json();
 
                 if (data.recipes && data.recipes.length > 0) {
-                    // Iterate over recipes and append them to the DOM
                     data.recipes.forEach(recipe => {
                         const col = document.createElement('div');
-                        // Use same Bootstrap classes as in Index.html
                         col.className = 'col-12 col-sm-6 col-lg-4 recipe-card-container';
-
-                        // Template Literal to generate the Card HTML
                         col.innerHTML = `
                             <a href='/receta/${recipe._id}'>
                                 <img src="/uploads/${recipe.image}" alt="${recipe.name}">
@@ -268,27 +321,23 @@ document.addEventListener('DOMContentLoaded', () => {
                         `;
                         recipeGrid.appendChild(col);
                     });
-
-                    // Update the pointer for the next page
                     nextPageInput.value = data.nextPage || '';
                 } else {
-                    nextPageInput.value = ''; // Stop logic if no recipes returned
+                    nextPageInput.value = '';
                 }
 
             } catch (error) {
-                console.error("Error al cargar más recetas:", error);
+                console.error("Error loading more recipes:", error);
             } finally {
-                // Always reset loading state and hide spinner
                 isLoading = false;
-                if (spinner) spinner.classList.add('d-none');
+                if (scrollSpinner) scrollSpinner.classList.add('d-none');
             }
         };
 
-        // Scroll Event Listener
+        // Detect Scroll Position
         window.addEventListener('scroll', () => {
             const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
-
-            // Trigger load when user is 100px from the bottom
+            // Trigger when 100px from bottom
             if (scrollTop + clientHeight >= scrollHeight - 100) {
                 loadMoreRecipes();
             }
@@ -296,50 +345,45 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ============================================================
-    //  SECTION 3: DETAIL PAGE (Delete Recipe & Step Management)
+    //  MODULE 3: DETAIL PAGE (RECIPE DELETE & STEPS)
     // ============================================================
 
-    // 1. Delete Recipe (Main Entity)
+    // 3.1 Delete Entire Recipe
     const deleteRecipeBtn = document.getElementById('btnDeleteRecipe');
     if (deleteRecipeBtn) {
         deleteRecipeBtn.addEventListener('click', event => {
-            event.preventDefault(); // Stop default submit
+            event.preventDefault();
 
-            // Show Confirmation Modal
+            // Bootstrap Modal for Confirmation
             const confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
-            document.getElementById('confirmModalBody').textContent = "¿Estás seguro de que quieres borrar esta receta completamente?";
+            document.getElementById('confirmModalBody').textContent = "Are you sure you want to delete this recipe entirely?";
             const confirmBtn = document.getElementById('confirmModalBtn');
 
-            // Define action on confirmation
             confirmBtn.onclick = async () => {
                 confirmModal.hide();
-
-                // Show spinner
-                document.getElementById('loadingSpinner').classList.remove('d-none');
+                toggleSpinner(true);
 
                 const form = document.getElementById('deleteRecipeForm');
-                const url = form.getAttribute('action');
 
                 try {
-                    const response = await fetch(url, { method: 'POST' });
+                    const response = await fetch(form.getAttribute('action'), { method: 'POST' });
+
+                    if (!response.headers.get("content-type")?.includes("application/json")) {
+                        throw new Error("Invalid server response on delete.");
+                    }
+
                     const result = await response.json();
+                    toggleSpinner(false);
 
-                    document.getElementById('loadingSpinner').classList.add('d-none');
-
-                    // Check result
                     if (result.success) {
                         window.location.href = result.redirectUrl;
                     } else {
-                        // Reuse the generic feedback modal for error
-                        const errorModal = new bootstrap.Modal(document.getElementById('feedbackModal'));
-                        document.getElementById('modalTitle').textContent = "Error";
-                        document.getElementById('modalTitle').className = "modal-title text-danger";
-                        document.getElementById('modalBody').textContent = result.message;
-                        document.getElementById('modalActionBtn').classList.add('d-none');
-                        errorModal.show();
+                        showFeedbackModal("Error", result.message, "error");
                     }
                 } catch (err) {
                     console.error(err);
+                    toggleSpinner(false);
+                    alert("An error occurred while deleting.");
                 }
             };
 
@@ -347,20 +391,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 2. Add Step (AJAX)
+    // 3.2 Add New Step
     const addStepForm = document.getElementById('addStepForm');
     if (addStepForm) {
         addStepForm.addEventListener('submit', async event => {
             event.preventDefault();
-            event.stopPropagation();
 
             if (!addStepForm.checkValidity()) {
                 addStepForm.classList.add('was-validated');
                 return;
             }
 
-            // Spinner...
-            document.getElementById('loadingSpinner').classList.remove('d-none');
+            toggleSpinner(true);
 
             try {
                 const formData = new FormData(addStepForm);
@@ -372,15 +414,18 @@ document.addEventListener('DOMContentLoaded', () => {
                     body: JSON.stringify(data)
                 });
 
+                if (!response.headers.get("content-type")?.includes("application/json")) {
+                    throw new Error("Invalid server response adding step.");
+                }
+
                 const result = await response.json();
-                document.getElementById('loadingSpinner').classList.add('d-none');
+                toggleSpinner(false);
 
                 if (result.success) {
-                    // CLEAR FORM (Rubric item 12)
                     addStepForm.reset();
                     addStepForm.classList.remove('was-validated');
 
-                    // ADD TO DOM (Rubric item 12)
+                    // Dynamic DOM Insertion
                     const stepsList = document.getElementById('stepsList');
                     const newStep = result.step;
 
@@ -393,7 +438,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <span class="step-desc">${newStep.description}</span>
                         </div>
                         <div class="d-flex gap-2">
-                            <a href="/receta/${result.recipeId}/paso/editar/${newStep._id}" class="btn btn-sm btn-outline-primary btn-edit-step" data-step-id="${newStep._id}">
+                            <a href="#" class="btn btn-sm btn-outline-primary btn-edit-step" data-step-id="${newStep._id}">
                                 <i class="bi bi-pencil"></i>
                             </a>
                             <form class="delete-step-form" action="/receta/${result.recipeId}/paso/borrar/${newStep._id}" method="POST">
@@ -403,177 +448,91 @@ document.addEventListener('DOMContentLoaded', () => {
                     `;
                     stepsList.appendChild(li);
 
-                    // ELIMINAR MENSAJE DE LISTA VACÍA
-                    // Buscamos el párrafo por su ID
+                    // Remove "No steps" message if present
                     const noStepsMsg = document.getElementById('noStepsMessage');
-                    // Si existe (es decir, si la lista estaba vacía antes), lo eliminamos
-                    if (noStepsMsg) {
-                        noStepsMsg.remove();
-                    }
+                    if (noStepsMsg) noStepsMsg.remove();
 
-                    // Show success modal (Optional but good UX)
-                    const successModal = new bootstrap.Modal(document.getElementById('feedbackModal'));
-                    document.getElementById('modalTitle').textContent = "¡Éxito!";
-                    document.getElementById('modalTitle').className = "modal-title text-success";
-                    document.getElementById('modalBody').textContent = result.message;
-                    document.getElementById('modalActionBtn').classList.add('d-none');
-
-                    // --- MODIFICACIÓN DEL BOTÓN ---
-                    if (modalCloseBtn) {
-                        modalCloseBtn.textContent = "Aceptar"; // Cambiamos el texto para éxito
-                        modalCloseBtn.className = "btn btn-dark"; // Opcional: ponerlo verde
-                    }
-
-                    successModal.show();
+                    showFeedbackModal("Success!", result.message, "success", { closeBtnText: "OK" });
 
                 } else {
-                    // Show error modal
-                    const errorModal = new bootstrap.Modal(document.getElementById('feedbackModal'));
-                    document.getElementById('modalTitle').textContent = "Error";
-                    document.getElementById('modalTitle').className = "modal-title text-danger";
-                    document.getElementById('modalBody').textContent = result.message;
-
-                    // --- RESTAURAR BOTÓN (por si acaso) ---
-                    if (closeBtn) {
-                        closeBtn.textContent = "Cerrar y corregir";
-                        closeBtn.className = "btn btn-dark";
-                    }
-
-                    errorModal.show();
+                    showFeedbackModal("Error", result.message, "error");
                 }
 
             } catch (err) {
                 console.error(err);
+                toggleSpinner(false);
             }
         });
     }
 
-    // 3. Delete Step (Event Delegation with Bootstrap Modal)
+    // ============================================================
+    //  MODULE 4: DYNAMIC STEP MANAGEMENT (DELETE & EDIT INLINE)
+    // ============================================================
+
     const stepsList = document.getElementById('stepsList');
     if (stepsList) {
+
+        // 4.1 Delete Step (Event Delegation)
         stepsList.addEventListener('submit', async event => {
             if (event.target.classList.contains('delete-step-form')) {
-                event.preventDefault(); // Stop submit
+                event.preventDefault();
                 const form = event.target;
 
-                // Setup Bootstrap Modal for Step Deletion
-                const confirmModalElement = document.getElementById('confirmModal');
-                const confirmModal = new bootstrap.Modal(confirmModalElement);
-                document.getElementById('confirmModalBody').textContent = "¿Seguro que quieres eliminar este paso?";
+                // Confirmation Modal
+                const confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
+                document.getElementById('confirmModalBody').textContent = "Are you sure you want to delete this step?";
                 const confirmBtn = document.getElementById('confirmModalBtn');
 
-                // Define confirmation action
                 confirmBtn.onclick = async () => {
-                    confirmModal.hide(); // Close modal
+                    confirmModal.hide();
 
                     try {
                         const response = await fetch(form.action, { method: 'POST' });
+                        if (!response.headers.get("content-type")?.includes("application/json")) {
+                            throw new Error("Invalid server response deleting step.");
+                        }
                         const result = await response.json();
 
                         if (result.success) {
-                            // Remove from DOM (Rubric item 14)
+                            // Animation: Fade out
                             const li = form.closest('li');
-                            li.remove();
-                            // MOSTRAR MENSAJE SI LA LISTA QUEDA VACÍA
-                            const stepsList = document.getElementById('stepsList');
-                            // Si la lista no tiene hijos (<li>), volvemos a crear el mensaje
-                            if (stepsList.children.length === 0) {
-                                const p = document.createElement('p');
-                                p.className = "mt-3";
-                                p.id = "noStepsMessage";
-                                p.textContent = "Esta receta aún no tiene pasos definidos.";
-                                // Insertamos el mensaje justo después de la lista (ol)
-                                stepsList.parentNode.insertBefore(p, stepsList.nextSibling);
-                            }
+                            li.classList.add('fade-out');
+
+                            // Remove after animation
+                            setTimeout(() => {
+                                li.remove();
+
+                                // Check if list is empty
+                                if (stepsList.children.length === 0) {
+                                    const p = document.createElement('p');
+                                    p.className = "mt-3 text-muted";
+                                    p.id = "noStepsMessage";
+                                    p.textContent = "This recipe has no steps yet.";
+                                    stepsList.parentNode.insertBefore(p, stepsList.nextSibling);
+                                }
+                            }, 500);
                         } else {
-                            // Error handling
-                            alert("Error al eliminar el paso: " + result.message);
+                            alert("Error deleting step: " + result.message);
                         }
                     } catch (err) { console.error(err); }
                 };
 
-                confirmModal.show(); // Display Modal
+                confirmModal.show();
             }
-        });
-    }
-
-    // ============================================================
-    //  SECTION 4: INLINE EDIT (Steps)
-    // ============================================================
-
-    if (stepsList) {
-
-        // Delegation for the EDIT button
-        stepsList.addEventListener('click', async event => {
-            // Check if click was on the edit button or its icon
-            const editBtn = event.target.closest('.btn-edit-step');
-
-            if (editBtn) {
-                event.preventDefault(); // Prevent navigation
-
-                const li = editBtn.closest('li');
-                const stepId = editBtn.dataset.stepId;
-
-                // 1. Get current data
-                const nameDiv = li.querySelector('.step-name');
-                const descSpan = li.querySelector('.step-desc');
-
-                const currentName = nameDiv.textContent;
-                const currentDesc = descSpan.textContent;
-
-                // 2. Save original HTML to allow "Cancel"
-                li.dataset.originalHtml = li.innerHTML;
-
-                // 3. Replace HTML with the inline form
-                const recipeIdUrl = window.location.pathname.split('/')[2]; // /receta/ID/...
-                const actionUrl = `/receta/${recipeIdUrl}/paso/editar/${stepId}`;
-
-                li.innerHTML = `
-                    <form action="${actionUrl}" method="POST" class="w-100 edit-step-form needs-validation" novalidate>
-                        <div class="mb-2">
-                            <input type="text" class="form-control form-control-sm" name="stepName" value="${currentName}" required>
-                            <div class="invalid-feedback">El título es obligatorio.</div>
-                        </div>
-                        <div class="mb-2">
-                            <textarea class="form-control form-control-sm" name="stepDescription" rows="2" required>${currentDesc}</textarea>
-                            <div class="invalid-feedback">La descripción es obligatoria.</div>
-                        </div>
-                        <div class="d-flex justify-content-end gap-2">
-                            <button type="button" class="btn btn-sm btn-dark btn-cancel-edit">Cancelar</button>
-                            <button type="submit" class="btn btn-sm btn-dark">Guardar</button>
-                        </div>
-                    </form>
-                `;
-            }
-
-            // Delegation for the CANCEL button
-            const cancelBtn = event.target.closest('.btn-cancel-edit');
-            if (cancelBtn) {
-                const li = cancelBtn.closest('li');
-                if (li.dataset.originalHtml) {
-                    li.innerHTML = li.dataset.originalHtml; // Restore original HTML
-                }
-            }
-        });
-
-        // Delegation for the SUBMIT of the inline edit form
-        stepsList.addEventListener('submit', async event => {
-            if (event.target.classList.contains('edit-step-form')) {
+            // 4.3 Handle Inline Edit Submit
+            else if (event.target.classList.contains('edit-step-form')) {
                 event.preventDefault();
                 const form = event.target;
 
-                // Bootstrap validation check
                 if (!form.checkValidity()) {
                     form.classList.add('was-validated');
                     return;
                 }
 
-                // Show Spinner
-                document.getElementById('loadingSpinner').classList.remove('d-none');
+                toggleSpinner(true);
 
                 try {
                     const formData = new FormData(form);
-                    // Convert to JSON
                     const data = Object.fromEntries(formData.entries());
 
                     const response = await fetch(form.action, {
@@ -582,22 +541,26 @@ document.addEventListener('DOMContentLoaded', () => {
                         body: JSON.stringify(data)
                     });
 
+                    if (!response.headers.get("content-type")?.includes("application/json")) {
+                        throw new Error("Invalid server response editing step.");
+                    }
+
                     const result = await response.json();
-                    document.getElementById('loadingSpinner').classList.add('d-none');
+                    toggleSpinner(false);
 
                     if (result.success) {
                         const li = form.closest('li');
                         const recipeIdUrl = window.location.pathname.split('/')[2];
-                        const stepId = form.action.split('/').pop(); // Extract ID from URL
+                        const stepId = form.action.split('/').pop();
 
-                        // Reconstruct the LI with new data (Visual format)
+                        // Restore standard view with updated data
                         li.innerHTML = `
                             <div class="ms-2 me-auto">
                                 <div class="fw-bold step-name">${result.step.name}</div>
                                 <span class="step-desc">${result.step.description}</span>
                             </div>
                             <div class="d-flex gap-2">
-                                <a href="/receta/${recipeIdUrl}/paso/editar/${stepId}" class="btn btn-sm btn-outline-primary btn-edit-step" data-step-id="${stepId}">
+                                <a href="#" class="btn btn-sm btn-outline-primary btn-edit-step" data-step-id="${stepId}">
                                     <i class="bi bi-pencil"></i>
                                 </a>
                                 <form class="delete-step-form" action="/receta/${recipeIdUrl}/paso/borrar/${stepId}" method="POST">
@@ -605,14 +568,61 @@ document.addEventListener('DOMContentLoaded', () => {
                                 </form>
                             </div>
                         `;
-
                     } else {
                         alert("Error: " + result.message);
                     }
-
                 } catch (err) {
                     console.error(err);
-                    document.getElementById('loadingSpinner').classList.add('d-none');
+                    toggleSpinner(false);
+                }
+            }
+        });
+
+        // 4.2 Inline Edit Mode Toggle
+        stepsList.addEventListener('click', async event => {
+            const editBtn = event.target.closest('.btn-edit-step');
+            const cancelBtn = event.target.closest('.btn-cancel-edit');
+
+            // Activate Edit Mode
+            if (editBtn) {
+                event.preventDefault();
+                const li = editBtn.closest('li');
+                const stepId = editBtn.dataset.stepId;
+
+                // Retrieve current values
+                const currentName = li.querySelector('.step-name').textContent;
+                const currentDesc = li.querySelector('.step-desc').textContent;
+
+                // Store original HTML for cancel action
+                li.dataset.originalHtml = li.innerHTML;
+
+                // Inject Form
+                const recipeIdUrl = window.location.pathname.split('/')[2];
+                const actionUrl = `/receta/${recipeIdUrl}/paso/editar/${stepId}`;
+
+                li.innerHTML = `
+                    <form action="${actionUrl}" method="POST" class="w-100 edit-step-form needs-validation" novalidate>
+                        <div class="mb-2">
+                            <input type="text" class="form-control form-control-sm" name="stepName" value="${currentName}" required>
+                            <div class="invalid-feedback">Title is required.</div>
+                        </div>
+                        <div class="mb-2">
+                            <textarea class="form-control form-control-sm" name="stepDescription" rows="2" required>${currentDesc}</textarea>
+                            <div class="invalid-feedback">Description is required.</div>
+                        </div>
+                        <div class="d-flex justify-content-end gap-2">
+                            <button type="button" class="btn btn-sm btn-dark btn-cancel-edit">Cancel</button>
+                            <button type="submit" class="btn btn-sm btn-dark">Save</button>
+                        </div>
+                    </form>
+                `;
+            }
+
+            // Cancel Edit Mode
+            if (cancelBtn) {
+                const li = cancelBtn.closest('li');
+                if (li.dataset.originalHtml) {
+                    li.innerHTML = li.dataset.originalHtml;
                 }
             }
         });

@@ -2,61 +2,63 @@
 
 import { db } from './database.js';
 import { promises as fs } from 'fs';
-import { join } from 'path';
+import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
-import { dirname } from 'path';
 import { ObjectId } from 'mongodb';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
+/**
+ * Seeds the database with initial data if the collection is empty.
+ * Also copies sample images to the uploads directory.
+ */
 export async function seedDatabase() {
     try {
         const recipesCollection = db.connection.collection('recipes');
         const count = await recipesCollection.countDocuments();
 
         if (count === 0) {
-            console.log("ℹ️ Base de datos vacía. Cargando datos iniciales...");
+            console.log("Database is empty. Seeding initial data...");
 
-            // 1. Read the data from the JSON file
+            // 1. Read JSON data
             const dataPath = join(__dirname, '../data/recipes.json');
             const recipesData = JSON.parse(await fs.readFile(dataPath, 'utf-8'));
 
-            // We define the path to the uploads folder
+            // 2. Prepare upload directory
             const uploadsDir = join(__dirname, '../uploads');
-
-            // We ensure that the destination folder exists. 
-            // { recursive: true } prevents errors if the folder already exists.
             await fs.mkdir(uploadsDir, { recursive: true });
 
-            // 2. Copy images and adjust paths
+            // 3. Process recipes and images
             const processedRecipes = [];
             for (const recipe of recipesData) {
+                // Image handling
                 const sourceImagePath = join(__dirname, '../data/images', recipe.image);
                 const destImagePath = join(__dirname, '../uploads', recipe.image);
 
-                // Copy the image from 'data/images' to 'uploads'
-                await fs.copyFile(sourceImagePath, destImagePath);
+                try {
+                    await fs.copyFile(sourceImagePath, destImagePath);
+                } catch (imgErr) {
+                    console.warn(`Warning: Image ${recipe.image} not found in source.`);
+                }
 
+                // Generate ObjectIds for sub-entities (Steps)
                 if (recipe.steps) {
                     recipe.steps.forEach(step => {
-                        step._id = new ObjectId(); // <-- ADDED THE ID TO THE STEP
+                        step._id = new ObjectId();
                     });
                 }
-                // Update the recipe object so that the image path points to 'uploads'
-                processedRecipes.push({
-                    ...recipe,
-                    image: recipe.image // The route that the HTML will use,  Guardamos solo el nombre del archivo, ej: "pulpo.jpg"  will use
-                });
+
+                processedRecipes.push({ ...recipe });
             }
 
-            // 3. Insert into the database
+            // 4. Insert into DB
             await recipesCollection.insertMany(processedRecipes);
-            console.log(`✅ ${processedRecipes.length} recetas insertadas y sus imágenes copiadas.`);
+            console.log(`${processedRecipes.length} recipes inserted successfully.`);
         } else {
-            console.log("ℹ️ La base de datos ya contiene datos.");
+            console.log("ℹDatabase already contains data.");
         }
     } catch (error) {
-        console.error("❌ Error durante la carga de datos iniciales:", error);
+        console.error("Error seeding database:", error);
         process.exit(1);
     }
 }

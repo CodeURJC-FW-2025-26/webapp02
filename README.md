@@ -238,3 +238,42 @@ The 5 files I have worked on the most are:
   3. [src/views/error.html](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/views/error.html)
   4. [src/views/Index.html](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/views/Index.html)
   5. [public/css/Cocina.css](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/public/css/Cocina.css)  
+
+## Practice 3: Client-Side Interactivity
+
+### Goal
+
+Enhance user experience (UX) by introducing dynamic client-side behavior using JavaScript, AJAX (Fetch API), and DOM manipulation, reducing page reloads.
+
+### Features Implemented
+
+1. **Infinite Scroll:**
+    - The main recipe list now loads automatically as the user scrolls down, replacing manual pagination.
+    - Implemented using the `scroll` event listener and the Fetch API to retrieve JSON data from the server.
+
+2. **Advanced Form Validation:**
+    - **Client-Side:** Forms use Bootstrap's `needs-validation` classes for immediate visual feedback.
+    - **Asynchronous Validation:** The recipe creation form checks the server in real-time (via AJAX) to ensure the recipe title doesn't already exist, preventing duplicates before submission.
+
+3. **AJAX Form Submission:**
+    - Recipe creation and editing are handled asynchronously.
+    - **Spinners:** Visual loading indicators appear during network requests.
+    - **Modals:** Bootstrap modals allow users to see success messages or correct errors without leaving the page.
+
+4. **Drag & Drop Image Upload:**
+    - Users can drag an image file from their desktop directly onto the form.
+    - A JavaScript `FileReader` provides an instant preview of the image before uploading.
+
+5. **Dynamic Step Management:**
+    - **Inline Editing:** Recipe steps can be edited directly within the list. The text transforms into a form, and updates are saved via AJAX.
+    - **Dynamic Deletion:** Steps can be removed instantly without a full page reload, utilizing DOM manipulation to update the UI.
+
+### Files Description (Updated)
+
+- `public/js/client.js`: The core logic for all client-side interactivity (validations, AJAX, DOM manipulation).
+- `src/routes/main.js`: Updated to support JSON responses for API calls (`format=json`) and handle asynchronous validation requests.
+- `AñadirReceta.html`: Updated structure to support Drag & Drop and hidden input flags.
+
+### Team Participation
+
+**(Soon)**

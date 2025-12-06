@@ -3,7 +3,6 @@
 import express from 'express';
 import session from 'express-session';
 import mustacheExpress from 'mustache-express';
-//import bodyParser from 'body-parser';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 import { connect } from './database.js';
@@ -14,43 +13,43 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const app = express();
 
-// 1. Serve static files from the 'public' folder
+// 1. Serve static files (CSS, JS, Images)
 app.use(express.static(join(__dirname, '../public')));
 app.use('/uploads', express.static(join(__dirname, '../uploads')));
-// Serve files from the 'uploads' folder
-app.use('/uploads', express.static(join(__dirname, '../uploads')));
 
-// 2. Configure body-parser to read data from POST forms
-//app.use(bodyParser.urlencoded({ extended: true }));
-
-// Configuration for parsing form data (replaces body-parser)
+// 2. Middleware for parsing JSON and URL-encoded data
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// 3. Session Configuration
 app.use(session({
-    secret: 'cadena-aleatoria-secreta-webb',
+    secret: 'your-random-secret-key-webapp',
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false } // Change into 'true' if using https
+    cookie: { secure: false } // Set to 'true' if using HTTPS
 }));
 
-// 3. Configure the Mustache template engine
+// 4. Configure Mustache Template Engine
 app.engine('html', mustacheExpress());
 app.set('views', join(__dirname, 'views'));
 app.set('view engine', 'html');
 
-// 4. Connect the routers
+// 5. Register Routes
 app.use('/', mainRouter);
 
-// 5. Main function to start the application
+// 6. Application Entry Point
 async function startServer() {
-    await connect();      // First, we connect to the database
-    await seedDatabase();   // Then, we load the data if necessary
+    try {
+        await connect();        // Establish DB connection
+        await seedDatabase();   // Seed initial data if empty
 
-    const PORT = 3000;
-    app.listen(PORT, () => { // Finally, we started the web server.
-        console.log(`🚀 Servidor web funcionando en http://localhost:${PORT}`);
-    });
+        const PORT = 3000;
+        app.listen(PORT, () => {
+            console.log(`Web server running at http://localhost:${PORT}`);
+        });
+    } catch (error) {
+        console.error("Critical error starting server:", error);
+    }
 }
 
-startServer(); // Call the function to get everything started
+startServer();

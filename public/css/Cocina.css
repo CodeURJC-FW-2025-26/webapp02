@@ -1,188 +1,152 @@
 /* webapp02/public/css/Cocina.css */
 
+/* ==========================================================================
+   TABLE OF CONTENTS
+   ==========================================================================
+   1.  Variables & Reset
+   2.  Global Layout (Body, Typography)
+   3.  Header (Navbar)
+   4.  Footer
+   5.  Main Index (Banner, Search, Categories, Grid)
+   6.  Recipe Detail View
+   7.  Forms (Add/Edit Recipe, Drop Zone)
+   8.  Feedback Pages (Error/Success)
+   9.  Pagination
+   10. Dynamic Components (Step List, Animations)
+   ========================================================================== */
 
-/* --- STYLES INDEX ---
-1. GENERAL STYLES & TYPOGRAPHY
-2. HEADER (NAVBAR)
-3. FOOTER
-4. MAIN PAGE (INDEX.HTML)
-    - Category Buttons
-    - Banner & Search Bar
-    - Recipe Grid
-5. RECIPE DETAIL PAGE (PULPO.HTML)
-    - Main Container
-    - Titles & Badges
-    - Add Step Form
-6. ADD RECIPE PAGE (AÑADIRRECETA.HTML)
-    - Form Container
-    - Form & Buttons
-    - Decorative Images
-7. ERROR AND CONFIRMATION PAGES
-8. PAGINATION STYLES
+/* --- 1. VARIABLES & RESET --- */
+:root {
+    /* Color Palette */
+    --bg-primary: #F8E7A5;
+    /* Main Cream/Yellow Background */
+    --bg-dark: #222e38;
+    /* Dark Blue/Grey for Nav & Footer */
+    --bg-dark-hover: #303e49;
+    /* Slightly lighter dark for hovers */
+    --bg-card: azure;
+    /* Card Backgrounds */
+    --text-light: whitesmoke;
+    --text-dark: #222e38;
 
+    /* UI Constants */
+    --btn-radius: 25px;
+    --shadow-card: 0 10px 20px rgba(0, 0, 0, 1);
+    --shadow-soft: 0 4px 15px rgba(0, 0, 0, 0.05);
 
-/* --- 1. GENERAL STYLES & TYPOGRAPHY --- */
-/*
- * Defines the basic setup for the entire document.
- * Ensures the body takes up the full viewport height
- * and sets a general background color.
- */
+    /* Font Stack */
+    --font-display: "DM Serif Display", serif;
+}
 
+/* --- 2. GLOBAL LAYOUT --- */
 body {
     display: flex;
-    /* Uses Flexbox to organize the main content and footer */
     flex-direction: column;
-    /* Stacks elements vertically (header, content, footer) */
-    background-color: #F8E7A5;
-    /* General page background color */
+    min-height: 100vh;
+    /* Ensures footer sticks to bottom */
+    background-color: var(--bg-primary);
     margin: 0;
     padding: 0;
 }
 
-/* Main font definition for titles */
+h2 {
+    margin-left: 30px;
+}
+
+/* Typography Utility */
 .dm-serif-display-regular {
-    font-family: "DM Serif Display", serif;
+    font-family: var(--font-display);
     font-weight: 400;
     font-style: normal;
 }
 
-/* Base style for h2 subheadings */
-h2 {
-    margin-left: 30px;
-    /* Adds a left margin to align with content */
-}
-
-
-/* --- 2. HEADER (NAVBAR) --- */
-/*
- * Styles for the top navigation bar.
- * Includes background color, main title (brand) style,
- * and customization for the dropdown menu (hamburger).
- */
-
-
+/* --- 3. HEADER (NAVBAR) --- */
 .navbar {
     min-height: 60px;
 }
 
-
-/* Style for the logo image */
-.navbar-logo img {
-    height: 35px;
-    /* Fixed height for the logo */
-    width: auto;
-    /* Auto width to maintain aspect ratio */
-    margin-right: 15px;
-    /* Space between the logo and the dropdown menu */
-    border-radius: 5px;
-    /* Optional: slightly rounded corners if the image is square */
+.navbar-custom {
+    background-color: var(--bg-dark);
+    padding: 10px 30px;
 }
 
-.navbar-custom {
-    background-color: #222e38;
-    /* Dark background color for the navbar */
-    padding: 10px 30px;
-    /* Inner padding for spacing */
+.navbar-logo img {
+    height: 35px;
+    width: auto;
+    margin-right: 15px;
+    border-radius: 5px;
 }
 
 .navbar-brand {
-    font-family: "DM Serif Display", serif;
-    /* Special typography for the title */
+    font-family: var(--font-display);
     font-size: 45px !important;
-    /* Large font size with high priority */
-    color: whitesmoke !important;
-    /* Text color */
+    color: var(--text-light) !important;
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-    /* Shadow for depth */
+
+    /* Absolute centering technique */
     position: absolute;
-    /* Absolute positioning for easy centering */
     left: 50%;
     transform: translateX(-50%);
-    /* Trick to center the element horizontally */
 }
 
-/* Styles for the dropdown toggle button (hamburger) */
+/* Hamburger Menu Styling */
 .dropdown-toggle-icon {
     background-color: transparent !important;
-    /* Transparent background */
     border: none !important;
-    /* No borders */
     padding: 0.25rem 0.5rem;
 }
 
 .dropdown-toggle-icon:focus {
     box-shadow: none !important;
-    /* Removes the glow on click */
 }
 
-/* Changes the hamburger icon color to white */
 .dropdown-toggle-icon .navbar-toggler-icon {
     filter: brightness(0) invert(1);
+    /* Turns icon white */
 }
 
-/* Style for the dropdown menu */
 .dropdown-menu {
     background-color: #2d3e4d;
-    /* Dark background */
     border: 1px solid #3c5265;
-    /* Subtle border */
 }
 
-/* Style for items within the dropdown menu */
 .dropdown-item {
-    color: whitesmoke;
-    /* Text color */
+    color: var(--text-light);
     font-weight: bold;
-    /* Bold text */
 }
 
 .dropdown-item:hover {
     background-color: #3c5265;
-    /* Hover color */
     color: white;
 }
 
-/* Custom SVG for the navbar toggler icon */
+/* Custom Toggler SVG */
 .navbar-toggler-icon {
     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 0.9)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
 }
 
-/* Hides the right-side nav items, used only to center the title */
 .navbar-placeholder {
     visibility: hidden;
+    /* Keeps layout balanced */
 }
 
-
-/* --- 3. FOOTER --- */
-/*
- * Defines the appearance of the professional footer.
- * Uses Flexbox to always stick to the bottom.
- * Includes styles for headings, text, links, and social media icons.
- */
+/* --- 4. FOOTER --- */
 .professional-footer {
-    background: #222e38;
-    /* Same dark color as the header for consistency */
+    background: var(--bg-dark);
     color: #adb5bd;
-    /* Light gray text color for content */
     padding-top: 50px;
     margin-top: auto;
-    /* Pushes the footer to the bottom of the page */
+    /* Sticky footer logic */
 }
 
-/* Adjusts the footer container to have no background of its own */
 .professional-footer .container {
     background-color: transparent;
-    margin: 0 auto;
-    padding: 0;
-    width: 100%;
 }
 
 .footer-heading {
     color: #ffffff;
-    /* Headings in white */
     margin-bottom: 20px;
-    font-family: "DM Serif Display", serif;
-    /* Title font */
+    font-family: var(--font-display);
     font-size: 22px;
 }
 
@@ -191,35 +155,21 @@ h2 {
     line-height: 1.6;
 }
 
-.footer-links li {
-    margin-bottom: 10px;
-    /* Spacing between links */
-}
-
 .footer-links a {
     text-decoration: none;
     color: #adb5bd;
-    /* Same color as the footer text */
     transition: color 0.3s ease;
-    /* Smooth transition for color change */
 }
 
 .footer-links a:hover {
-    color: #F8E7A5;
-    /* Accent color on hover */
+    color: var(--bg-primary);
 }
 
-/* Style for social media icons */
+/* Social Icons */
 .social-icons a {
-
     display: inline-flex;
-
-
     align-items: center;
-
-
     justify-content: center;
-
     height: 40px;
     width: 40px;
     background-color: #343a40;
@@ -231,16 +181,12 @@ h2 {
 }
 
 .social-icons a:hover {
-    background-color: #F8E7A5;
-    /* Accent color on hover */
-    color: #222e38;
-    /* Icon color changes for contrast */
+    background-color: var(--bg-primary);
+    color: var(--bg-dark);
 }
 
-/* Bottom bar of the footer with copyright info */
 .footer-bottom {
     background-color: #1c252d;
-    /* Slightly darker shade */
     text-align: center;
     padding: 15px 0;
     margin-top: 40px;
@@ -251,112 +197,91 @@ h2 {
     margin: 0;
 }
 
+/* --- 5. MAIN PAGE (INDEX) --- */
 
-/* --- 4. MAIN PAGE (INDEX.HTML) --- */
-
-/* 4.1 - Category Buttons */
+/* Category Filters */
 .category-buttons {
     display: flex;
     justify-content: center;
-    /* Horizontally centers the buttons */
     gap: 20px;
-    /* Space between buttons */
     padding: 20px 0;
-    background-color: #F8E7A5;
-    /* Same as body background */
+    background-color: var(--bg-primary);
 }
 
 .category-buttons a {
     text-decoration: none;
-    color: #222e38;
+    color: var(--text-dark);
     font-weight: bold;
     font-size: 18px;
     padding: 8px 18px;
     border-radius: 20px;
-    /* Rounded corners */
     background-color: rgba(255, 255, 255, 0.5);
-    /* Semi-transparent background */
     transition: all 0.3s ease;
-    /* Smooth transition */
 }
 
 .category-buttons a:hover,
 .category-buttons a.active {
-    background-color: #222e38;
-    /* Inverts colors on hover or if active */
-    color: whitesmoke;
+    background-color: var(--bg-dark);
+    color: var(--text-light);
 }
 
-/* 4.2 - Banner & Search Bar */
+/* Banner & Search */
 .banner {
-    background: #F8E7A5;
+    background: var(--bg-primary);
     padding: 0 60px 25px 60px;
     width: 100%;
     display: flex;
     flex-direction: column;
-    /* Organizes search bar and content vertically */
     align-items: center;
-    /* Centers the elements */
 }
 
 .search-container {
     width: 100%;
     max-width: 800px;
-    /* Max width for the search bar */
-    margin-top: 25px;
-    margin-bottom: 25px;
+    margin: 25px 0;
 }
 
 .search-container input {
     width: 100%;
     padding: 12px 25px;
     border: 1px solid #e6d59a;
-    /* Subtle border */
     border-radius: 50px;
-    /* Fully rounded search bar */
     font-size: 17px;
     background-color: #fffaf0;
-    /* Light cream color */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-    /* Light shadow */
+    box-shadow: var(--shadow-soft);
 }
 
 .banner-content {
     position: relative;
-    /* Creates a positioning context for the button */
     display: flex;
     justify-content: center;
-    /* Centers the title naturally */
     align-items: center;
     width: 100%;
 }
 
 .banner-title {
-    font-family: "DM Serif Display", serif;
-    color: #222e38;
-    text-align: center;
+    font-family: var(--font-display);
+    color: var(--text-dark);
     font-size: 40px;
     font-weight: bold;
     margin: 0;
 }
 
 .banner .btn {
-    border-radius: 25px;
+    border-radius: var(--btn-radius);
     padding: 10px 25px;
-    background-color: #222e38;
+    background-color: var(--bg-dark);
     color: white;
     font-size: 18px;
     position: absolute;
-    /* Positions the button absolutely to the right */
     right: 0;
 }
 
-/* 4.3 - Recipe Grid */
+/* Grid & Cards */
 .container {
     width: 80%;
     margin: 20px auto 40px auto;
-    background-color: azure;
-    /* Background for the card container */
+    background-color: var(--bg-card);
     border-radius: 10px;
 }
 
@@ -368,31 +293,23 @@ h2 {
 .container img {
     width: 100%;
     height: 200px;
-    /* Fixed height for recipe images */
     border-radius: 10px;
     display: block;
     margin: 20px 0;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 1);
-    /* Pronounced shadow to highlight the image */
+    box-shadow: var(--shadow-card);
 }
 
-
-/* --- 5. RECIPE DETAIL PAGE (PULPO.HTML) --- */
-
-/* 5.1 - Main Container */
+/* --- 6. RECIPE DETAIL PAGE --- */
 .recipe-container {
     width: 80%;
     margin: 40px auto;
-    background-color: azure;
-    /* Same color as the index container */
+    background-color: var(--bg-card);
     border-radius: 10px;
     padding: 40px;
 }
 
-/* 5.2 - Titles & Badges */
 .dish-title {
     color: black;
-    text-decoration: none;
     font-weight: bold;
     font-size: 40px;
     text-align: center;
@@ -407,7 +324,6 @@ h2 {
     text-align: left;
     padding-bottom: 10px;
     border-bottom: 2px solid #ddd;
-    /* Divider line to separate sections */
 }
 
 .recipe-image {
@@ -415,85 +331,48 @@ h2 {
     border: 1px solid #ddd;
 }
 
-/* 5.3 - Add Step Form */
 .add-step-form {
     background-color: #f8f9fa;
-    /* Slightly gray background to differentiate it */
     padding: 20px;
     border-radius: 8px;
     margin-top: 20px;
 }
 
-
-/* Change submit button style to match the other buttons */
-.btn-success {
-    background-color: #222e38;
-    border-radius: 25px;
-}
-
-.btn-success:hover {
-    background-color: #303e49
-}
-
-.btn-success:active {
-    /* Change color when clicking the button */
-    background-color: #303e49;
-    border-color: #222e38;
-    color: white;
-}
-
+/* Detail Buttons overrides */
+.recipe-container .btn,
+.btn-success,
 .btn-primary {
-    background-color: #222e38;
-    border-radius: 25px;
+    background-color: var(--bg-dark);
+    border-radius: var(--btn-radius);
+    border-color: var(--bg-dark);
 }
 
+.recipe-container .btn:hover,
+.btn-success:hover,
 .btn-primary:hover {
-    background-color: #303e49
+    background-color: var(--bg-dark-hover);
 }
 
-.btn-primary:active {
-    /* Change color when clicking the button */
-    background-color: #303e49;
-    border-color: #222e38;
-    color: white;
-}
-
-/* --- FINAL FIX DETAIL BUTTON ALIGN --- */
-
-/* 1. The father container of the buttons */
+/* Flex alignment for detail buttons */
 .recipe-container .d-md-flex {
     align-items: stretch;
-    /* It forces all direct children (links and forms) to have the same height */
 }
 
-/* 2. The form (which surrounds the red button) */
 .recipe-container .d-md-flex form {
     display: flex;
-    /* Turn the form into a flexible container */
     margin: 0;
-    /* Remove extraneous margins */
 }
 
-/* 3. The buttons themselves (both <a> and <button>) */
 .recipe-container .d-md-flex .btn {
     display: flex;
-    /* We use flexbox inside the button */
     align-items: center;
-    /* Perfect vertical centering of the text */
     justify-content: center;
-    /* Horizontal centering */
     height: 100%;
-    /* KEY! Occupy 100% of the height of the tallest neighbor */
     min-height: 60px;
-    /* Base minimum height so they don't look squashed */
     width: 100%;
-    /* Optional: if you want them all to have similar width, or remove it for automatic width */
 }
 
-
-/* --- 6. ADD RECIPE PAGE (AÑADIRRECETA.HTML) --- */
-/* DESKTOP STYLES */
-
+/* --- 7. FORMS (ADD/EDIT) & DROP ZONE --- */
 .AddRecipe {
     padding-top: 20px;
 }
@@ -509,14 +388,17 @@ h2 {
 }
 
 .form-control {
-    border-radius: 25px;
-    width: 550px;
-    /* Fixed width for large screens */
+    border-radius: var(--btn-radius);
+    width: 100%;
+    /* Responsive width instead of fixed 550px */
+    max-width: 600px;
 }
 
+/* Unified Button Styles for Forms */
 .buttons {
     display: flex;
     margin-left: 150px;
+    /* Adjust based on layout needs */
     padding: 20px 0 50px 0;
 }
 
@@ -524,24 +406,23 @@ h2 {
     padding-right: 50px;
 }
 
-.btn-dark {
-    border-radius: 25px;
-    background-color: #222e38;
+/* Generic button style override for uniformity */
+.btn-dark,
+.btn-danger,
+.btn-info,
+.btn-success {
+    border-radius: var(--btn-radius);
 }
 
-.btn-danger {
-    border-radius: 25px;
+.btn-dark {
+    background-color: var(--bg-dark);
 }
 
 .btn-info {
-    border-radius: 25px;
     color: white;
 }
 
-.btn-success {
-    border-radius: 25px;
-}
-
+/* Sidebar Images */
 .DecorativeImages {
     width: 325px;
     display: flex;
@@ -557,187 +438,148 @@ h2 {
     box-shadow: 10px 10px 30px rgb(255, 255, 255);
 }
 
-.DecorativeImages img:first-child {
-    transform: translate(0, 0);
-}
-
 .DecorativeImages img:nth-child(2) {
     transform: translate(225px, 10px);
 }
 
-/* --- 7. ERROR AND CONFIRMATION PAGES --- */
-/*
- * Styles for user feedback pages, such as the error page.
- * Consistency and visual clarity are sought.
- */
+/* -- Drag & Drop Zone Styling -- */
+#drop-zone {
+    border: 2px dashed #adb5bd;
+    background-color: #f8f9fa;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
 
+#drop-zone:hover,
+#drop-zone.bg-light {
+    background-color: #e9ecef !important;
+    border-color: var(--bg-dark) !important;
+}
+
+#drop-zone i {
+    transition: transform 0.3s ease;
+}
+
+#drop-zone:hover i {
+    transform: translateY(-5px);
+}
+
+/* --- 8. FEEDBACK PAGES --- */
 .feedback-page {
-    /* Main container for the error or confirmation page */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
     padding: 3rem 1rem;
-    /* Internal spacing */
 }
 
 .feedback-icon {
     font-size: 4rem;
-    /* Icon size, moved from inline style */
     margin-bottom: 1rem;
 }
 
 .feedback-title {
-    font-family: "DM Serif Display", serif;
-    /* Maintain the consistency of the text font */
+    font-family: var(--font-display);
     font-weight: bold;
     font-size: 2.5rem;
-    /* A large and prominent font size */
 }
 
 .feedback-text {
     font-size: 1.25rem;
-    /* Readable main text */
     max-width: 600px;
-    /* Avoid making lines of text too long */
     margin-top: 1rem;
 }
 
-/* Specific colors for the error page */
-.feedback-icon--error {
-    color: var(--bs-danger);
-    /* Use Bootstrap's color variable for consistency */
-}
-
+.feedback-icon--error,
 .feedback-title--error {
     color: var(--bs-danger);
 }
 
-/* --- 8. PAGINATION STYLES --- */
-
-/* Main container (ul list) */
+/* --- 9. PAGINATION --- */
 .pagination {
     margin-top: 40px;
 }
 
-/* Base style for every <a> in the pagination */
 .page-link {
     font-family: sans-serif;
     font-weight: bold;
-    color: #222e38;
+    color: var(--text-dark);
     background-color: rgba(255, 255, 255, 0.5);
     border: none;
-
-    /* Space and shape */
     margin: 0 8px;
     border-radius: 30px;
     padding: 10px 20px;
-
-    /* Shadow and transition */
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
     transition: all 0.3s ease;
-    /* Hover transtition */
 }
 
-/* Style while hovering */
-/* Only if not disabled */
 .page-item:not(.active):not(.disabled) .page-link:hover {
-    background-color: #222e38;
-    color: whitesmoke;
-
-    /* "go up" animation */
+    background-color: var(--bg-dark);
+    color: var(--text-light);
     transform: translateY(-3px);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
 }
 
-/* Page indicator style */
 .page-item.active .page-link {
-    background-color: #222e38;
-    color: whitesmoke;
+    background-color: var(--bg-dark);
+    color: var(--text-light);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
-/* Disabled button style */
 .page-item.disabled .page-link {
     background-color: rgba(255, 255, 255, 0.7);
     color: #72797f;
     box-shadow: none;
 }
 
-/* Highlight style when using TAB */
 .page-link:focus {
-    box-shadow: 0 0 0 0.25rem #222e38;
-    color: #222e38;
+    box-shadow: 0 0 0 0.25rem var(--bg-dark);
+    color: var(--bg-dark);
 }
 
-/* --- 9. CORRECCIONES LISTA DE PASOS (Versión "Perfecta") --- */
+/* --- 10. DYNAMIC COMPONENTS & ANIMATIONS --- */
 
-/* 
- * 1. Contenedor de botones: 
- * - align-items: center -> Centra verticalmente respecto al texto de la izquierda.
- * - flex-shrink: 0 -> OBLIGATORIO. Impide que los botones se aplasten si el texto es largo.
- */
+/* Step List Alignment Fixes */
 #stepsList .d-flex.gap-2 {
     align-items: center;
     flex-shrink: 0;
     margin-left: 15px;
-    /* Un poco de aire extra para separar del texto */
 }
 
-/* 
- * 2. CORRECCIÓN DE ALINEACIÓN DEL FORMULARIO
- * Esto es lo que arregla que uno se vea más arriba que el otro.
- * Quitamos márgenes y lo convertimos en flex para que no ocupe espacio extra.
- */
 #stepsList form {
     margin: 0;
     padding: 0;
     display: flex;
-    /* Hace que el formulario abrace exactamente al botón */
 }
 
-/* 
- * 3. Botones individuales:
- * - Dimensiones fijas para que sean cuadrados exactos.
- * - Flexbox interno para centrar el icono al pixel.
- */
 #stepsList .btn {
     min-height: auto !important;
-    /* Anula estilos heredados */
     width: 38px;
-    /* Ancho fijo */
     height: 38px;
-    /* Alto fijo idéntico al ancho */
     padding: 0;
-    /* Eliminamos padding interno para control total */
-
     display: inline-flex;
-    /* Flexbox inline */
     justify-content: center;
-    /* Centrado horizontal del icono */
     align-items: center;
-    /* Centrado vertical del icono */
-
     border-radius: 8px;
-    /* Bordes un poco más suaves */
     transition: transform 0.2s ease, background-color 0.2s;
-    /* Animación sutil */
 }
 
-/* 4. Ajuste del icono dentro del botón */
 #stepsList .btn i {
     font-size: 1.1rem;
-    /* Tamaño del icono ajustado al botón */
     line-height: 1;
-    /* Evita desplazamientos fantasma */
     display: block;
-    /* Asegura comportamiento de bloque */
 }
 
-/* 5. Pequeño efecto visual al pasar el ratón (opcional, pero queda pro) */
 #stepsList .btn:hover {
     transform: translateY(-2px);
-    /* Se eleva ligeramente */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Fade Out Animation for JS deletion */
+.fade-out {
+    opacity: 0;
+    transform: translateX(20px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    pointer-events: none;
 }

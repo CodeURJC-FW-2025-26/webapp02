@@ -6,25 +6,34 @@ import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-// 1. Storage settings (where and how to save files)
+// 1. Storage Configuration
 const storage = multer.diskStorage({
-    // destination: Defines the folder where the files will be saved
     destination: function (req, file, cb) {
-        // We used path.join to create a safe path to the 'uploads' folder
-        // The 'uploads' folder must exist in the project root.
         cb(null, join(__dirname, '../uploads'));
     },
-    // filename: Defines how the file will be named within the folder
     filename: function (req, file, cb) {
-        // To prevent two files with the same name from overwriting each other,
-        // Create a unique name by adding the current date and a random number.
+        // Create unique filename: timestamp + random + original name
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        cb(null, uniqueSuffix + '-' + file.originalname);
+        // Sanitize original name to remove spaces
+        const sanitizedName = file.originalname.replace(/\s+/g, '_');
+        cb(null, uniqueSuffix + '-' + sanitizedName);
     }
 });
 
-// 2. We created the multer instance with the storage configuration
-const upload = multer({ storage: storage });
+// 2. File Filter (Security: Allow only images)
+const fileFilter = (req, file, cb) => {
+    if (file.mimetype.startsWith('image/')) {
+        cb(null, true);
+    } else {
+        cb(new Error('Only image files are allowed!'), false);
+    }
+};
 
-// 3. We exported the instance to use in our routes
+// 3. Initialize Multer
+const upload = multer({
+    storage: storage,
+    fileFilter: fileFilter,
+    limits: { fileSize: 10 * 1024 * 1024 } // Limit: 10MB
+});
+
 export default upload;

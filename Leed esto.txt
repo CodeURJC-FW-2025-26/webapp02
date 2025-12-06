@@ -3,7 +3,7 @@
 Poner 18 recetas de ejemplo con fotos para hacer más visual el scroll infinito 
 (hacen falta el equivalente a 3 páginas)
 
-README
+hacer el README
 
 
 (PROFE)

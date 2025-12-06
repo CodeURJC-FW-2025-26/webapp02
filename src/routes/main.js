@@ -6,10 +6,15 @@ import { ObjectId } from 'mongodb';
 import upload from '../multerConfig.js';
 
 const router = express.Router();
+const PAGE_SIZE = 6; // Number of items per page for pagination/infinite scroll
 
+// Cache for the collection reference
 let recipesCollection;
 
-// Middleware: Ensure database collection is initialized
+/**
+ * Middleware: Database Initialization Check
+ * Ensures the database connection is active before processing requests.
+ */
 router.use((req, res, next) => {
     if (!recipesCollection) {
         recipesCollection = db.connection.collection('recipes');
@@ -18,45 +23,78 @@ router.use((req, res, next) => {
 });
 
 // =================================================================
+//  HELPER FUNCTIONS
+// =================================================================
+
+/**
+ * Validates recipe input data.
+ * @param {object} body - The request body containing form data.
+ * @returns {object} - { valid: boolean, message: string|null }
+ */
+function validateRecipeInput(body) {
+    const { recipeName, description, ingredients, category, difficulty, preparationTime } = body;
+
+    if (!recipeName || !description || !ingredients || !category || !difficulty || !preparationTime) {
+        return { valid: false, message: 'Todos los campos son obligatorios.' };
+    }
+
+    const nameTrimmed = recipeName.trim();
+    if (nameTrimmed.length === 0 || nameTrimmed[0] !== nameTrimmed[0].toUpperCase()) {
+        return { valid: false, message: 'El nombre debe comenzar con una letra mayúscula.' };
+    }
+
+    const descTrimmed = description.trim();
+    if (descTrimmed.length < 20 || descTrimmed.length > 500) {
+        return { valid: false, message: 'La descripción debe tener entre 20 y 500 caracteres.' };
+    }
+
+    const time = parseInt(preparationTime);
+    if (isNaN(time) || time <= 0) {
+        return { valid: false, message: 'El tiempo de preparación debe ser un número positivo.' };
+    }
+
+    return { valid: true, message: null };
+}
+
+// =================================================================
 //  GENERAL ROUTES & API
 // =================================================================
 
 /**
- * API: Check if a recipe title already exists (for AJAX validation)
- * Query Params: title (string), id (optional string to exclude current recipe)
+ * API: Check if a recipe title exists.
+ * Used for asynchronous client-side validation.
  */
 router.get('/api/check-title', async (req, res) => {
     try {
         const { title, id } = req.query;
 
-        // Case-insensitive exact match
+        // Regex for case-insensitive exact match
         const query = { name: { $regex: `^${title.trim()}$`, $options: 'i' } };
 
-        // Exclude current recipe if editing
+        // Exclude current ID if we are in "Edit" mode
         if (id && ObjectId.isValid(id)) {
             query._id = { $ne: new ObjectId(id) };
         }
 
-        const existingRecipe = await db.connection.collection('recipes').findOne(query);
-
+        const existingRecipe = await recipesCollection.findOne(query);
         res.json({ exists: !!existingRecipe });
+
     } catch (error) {
-        console.error("Error de validación del título:", error);
-        res.status(500).json({ error: 'Error interno del servidor' });
+        console.error("Server Error (Check Title):", error);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 });
 
 /**
- * HOME PAGE
- * Handles both HTML rendering and JSON data fetching (Infinite Scroll)
+ * HOME PAGE (Index)
+ * Supports both standard HTML rendering and JSON responses for Infinite Scroll.
  */
 router.get('/', async (req, res) => {
     try {
         const page = parseInt(req.query.page) || 1;
-        const pageSize = 6;
-        const skip = (page - 1) * pageSize;
+        const skip = (page - 1) * PAGE_SIZE;
 
-        // Filter Configuration
+        // Build Search Filter
         const filter = {};
         if (req.query.search) {
             filter.name = { $regex: req.query.search, $options: 'i' };
@@ -65,42 +103,23 @@ router.get('/', async (req, res) => {
             filter.category = req.query.category;
         }
 
-        // Fetch Data
-        const recipes = await recipesCollection.find(filter)
-            .skip(skip)
-            .limit(pageSize)
-            .toArray();
+        // Execute Queries
+        const [recipes, totalRecipes] = await Promise.all([
+            recipesCollection.find(filter).skip(skip).limit(PAGE_SIZE).toArray(),
+            recipesCollection.countDocuments(filter)
+        ]);
 
-        const totalRecipes = await recipesCollection.countDocuments(filter);
-        const totalPages = Math.ceil(totalRecipes / pageSize);
+        const totalPages = Math.ceil(totalRecipes / PAGE_SIZE);
         const nextPage = page < totalPages ? page + 1 : null;
 
-        // --- JSON RESPONSE (Infinite Scroll) ---
+        // --- JSON Mode (AJAX Infinite Scroll) ---
         if (req.query.format === 'json') {
-            return res.json({
-                recipes: recipes,
-                nextPage: nextPage
-            });
+            return res.json({ recipes, nextPage });
         }
 
-        // --- HTML RESPONSE (Initial Load) ---
+        // --- HTML Mode (Initial Load) ---
 
-        // Classic Pagination Logic (Fallback / SEO)
-        const pagesForTemplate = [];
-        const window = 2;
-        if (totalPages > 1) {
-            for (let i = 1; i <= totalPages; i++) {
-                if (i === 1 || i === totalPages || (i >= page - window && i <= page + window)) {
-                    pagesForTemplate.push({ page: i, isCurrent: i === page, isEllipsis: false });
-                } else if (pagesForTemplate.length > 0 && pagesForTemplate[pagesForTemplate.length - 1].page < i - 1) {
-                    if (!pagesForTemplate[pagesForTemplate.length - 1].isEllipsis) {
-                        pagesForTemplate.push({ isEllipsis: true });
-                    }
-                }
-            }
-        }
-
-        // Active Category Logic
+        // Determine active category state for UI highlighting
         const categoryStates = {
             all: !req.query.category,
             entrante: req.query.category === 'entrante',
@@ -108,6 +127,20 @@ router.get('/', async (req, res) => {
             postre: req.query.category === 'postre',
             vegano: req.query.category === 'vegano'
         };
+
+        // Generate pagination logic for SEO/Fallback
+        const pagesForTemplate = [];
+        if (totalPages > 1) {
+            // Logic to show limited page numbers (e.g., 1, ... 4, 5, 6 ...)
+            const window = 2;
+            for (let i = 1; i <= totalPages; i++) {
+                if (i === 1 || i === totalPages || (i >= page - window && i <= page + window)) {
+                    pagesForTemplate.push({ page: i, isCurrent: i === page, isEllipsis: false });
+                } else if (pagesForTemplate.length > 0 && !pagesForTemplate[pagesForTemplate.length - 1].isEllipsis && pagesForTemplate[pagesForTemplate.length - 1].page < i - 1) {
+                    pagesForTemplate.push({ isEllipsis: true });
+                }
+            }
+        }
 
         res.render('index', {
             recipes,
@@ -121,16 +154,16 @@ router.get('/', async (req, res) => {
             categoryQuery: req.query.category,
             pagesForTemplate,
             categoryStates,
-            initialNextPage: nextPage // Critical for client.js infinite scroll start point
+            initialNextPage: nextPage
         });
 
     } catch (error) {
-        console.error("❌ Error al obtener las recetas:", error);
+        console.error("Server Error (Get Recipes):", error);
         if (req.query.format === 'json') {
-            return res.status(500).json({ error: "Error interno del servidor" });
+            return res.status(500).json({ error: "Internal Server Error" });
         }
         res.status(500).render('error', {
-            errorMessage: "No se pudieron cargar recetas desde el servidor.",
+            errorMessage: "No se pudieron cargar las recetas.",
             backUrl: '/',
             backUrlText: 'Volver al inicio'
         });
@@ -138,12 +171,13 @@ router.get('/', async (req, res) => {
 });
 
 /**
- * GENERIC ERROR PAGE
+ * GENERIC ERROR PAGE HANDLER
+ * Displays errors stored in session (Flash pattern).
  */
 router.get('/error', (req, res) => {
-    const errorMessage = req.session.errorMessage;
-    const backUrl = req.session.backUrl;
+    const { errorMessage, backUrl } = req.session;
 
+    // Clear session errors after reading
     delete req.session.errorMessage;
     delete req.session.backUrl;
 
@@ -157,26 +191,24 @@ router.get('/error', (req, res) => {
 });
 
 // =================================================================
-//  RECIPE MANAGEMENT ROUTES
+//  RECIPE MANAGEMENT ROUTES (CRUD)
 // =================================================================
 
 /**
- * FORM: New Recipe
+ * GET: Create Recipe Form
  */
 router.get('/receta/nueva', (req, res) => {
-    const formData = req.session.formData;
-    delete req.session.formData;
+    const formData = req.session.formData || {};
+    delete req.session.formData; // Clear temp data
 
-    const recipeData = formData || {};
+    // Helper for selecting dropdowns in the template
+    const recipeData = {
+        ...formData,
+        [`isCategory${(formData.category || '').charAt(0).toUpperCase() + (formData.category || '').slice(1)}`]: true,
+        [`isDifficulty${(formData.difficulty || '').charAt(0).toUpperCase() + (formData.difficulty || '').slice(1)}`]: true
+    };
 
-    // Helper properties for Select inputs
-    if (recipeData.category) {
-        recipeData[`isCategory${recipeData.category.charAt(0).toUpperCase() + recipeData.category.slice(1)}`] = true;
-    }
-    if (recipeData.difficulty) {
-        recipeData[`isDifficulty${recipeData.difficulty.charAt(0).toUpperCase() + recipeData.difficulty.slice(1)}`] = true;
-    }
-
+    // Map fields to match edit structure
     const recipe = {
         name: recipeData.recipeName,
         description: recipeData.description,
@@ -189,54 +221,42 @@ router.get('/receta/nueva', (req, res) => {
 });
 
 /**
- * ACTION: Create New Recipe
- * Returns JSON for AJAX handling
+ * POST: Create Recipe Logic
  */
 router.post('/receta/nueva', upload.single('recipeImage'), async (req, res) => {
     try {
-        const { recipeName, description, ingredients, category, difficulty, preparationTime } = req.body;
-
-        // 1. Server-Side Validation
-        if (!recipeName || !description || !ingredients || !category || !difficulty || !preparationTime) {
-            return res.status(400).json({ success: false, message: 'Todos los campos son obligatorios.' });
+        // 1. Validate Input
+        const validation = validateRecipeInput(req.body);
+        if (!validation.valid) {
+            return res.status(400).json({ success: false, message: validation.message });
         }
 
-        if (recipeName.trim()[0] !== recipeName.trim()[0].toUpperCase()) {
-            return res.status(400).json({ success: false, message: 'El nombre de la receta debe comenzar con una letra mayúscula.' });
-        }
+        const { recipeName } = req.body;
 
-        if (description.trim().length < 20 || description.trim().length > 500) {
-            return res.status(400).json({ success: false, message: 'La descripción debe tener entre 20 y 500 caracteres.' });
-        }
-
-        if (isNaN(preparationTime) || parseInt(preparationTime) <= 0) {
-            return res.status(400).json({ success: false, message: 'El tiempo de preparación debe ser un número positivo.' });
-        }
-
-        const existingRecipe = await db.connection.collection('recipes').findOne({
+        // 2. Check Duplicate (Double check on server side)
+        const existingRecipe = await recipesCollection.findOne({
             name: { $regex: `^${recipeName.trim()}$`, $options: 'i' }
         });
 
         if (existingRecipe) {
-            return res.status(400).json({ success: false, message: `Ya existe una receta con el nombre "${recipeName}"` });
+            return res.status(400).json({ success: false, message: `Ya existe una receta con el nombre "${recipeName}".` });
         }
 
-        // 2. Object Creation
+        // 3. Construct Object
         const newRecipe = {
             name: recipeName.trim(),
-            description: description.trim(),
-            ingredients: ingredients,
-            category: category,
-            difficulty: difficulty,
-            preparation_time: parseInt(preparationTime),
-            image: req.file ? req.file.filename : 'logo.jpg',
+            description: req.body.description.trim(),
+            ingredients: req.body.ingredients,
+            category: req.body.category,
+            difficulty: req.body.difficulty,
+            preparation_time: parseInt(req.body.preparationTime),
+            image: req.file ? req.file.filename : 'logo.jpg', // Default image
             steps: []
         };
 
-        // 3. Database Insertion
-        const result = await db.connection.collection('recipes').insertOne(newRecipe);
+        // 4. Insert
+        const result = await recipesCollection.insertOne(newRecipe);
 
-        // 4. Response
         res.json({
             success: true,
             message: `Receta "${newRecipe.name}" creada con éxito.`,
@@ -244,13 +264,13 @@ router.post('/receta/nueva', upload.single('recipeImage'), async (req, res) => {
         });
 
     } catch (error) {
-        console.error("❌ Error al crear la receta:", error);
+        console.error("Server Error (Create Recipe):", error);
         res.status(500).json({ success: false, message: 'Error Interno del Servidor.' });
     }
 });
 
 /**
- * VIEW: Recipe Details
+ * GET: Recipe Details View
  */
 router.get('/receta/:id', async (req, res) => {
     try {
@@ -260,95 +280,93 @@ router.get('/receta/:id', async (req, res) => {
 
         const recipe = await recipesCollection.findOne({ _id: new ObjectId(req.params.id) });
 
-        if (recipe) {
-            // Inject recipe_id into each step for easier templating
-            if (recipe.steps) {
-                recipe.steps.forEach(step => {
-                    step.recipe_id = recipe._id;
-                });
-            }
-            res.render('detalleReceta', { recipe });
-        } else {
-            res.status(404).render('error', { errorMessage: 'Receta no encontrada.' });
+        if (!recipe) {
+            return res.status(404).render('error', { errorMessage: 'Receta no encontrada.' });
         }
+
+        // Inject recipe_id into steps for template navigation
+        if (recipe.steps) {
+            recipe.steps.forEach(step => step.recipe_id = recipe._id);
+        }
+
+        res.render('detalleReceta', { recipe });
+
     } catch (error) {
-        console.error("❌ Error al obtener los detalles de la receta:", error);
+        console.error("Server Error (Get Recipe Detail):", error);
         res.status(500).render('error', { errorMessage: "Error Interno del Servidor." });
     }
 });
 
 /**
- * FORM: Edit Recipe
+ * GET: Edit Recipe Form
  */
 router.get('/receta/editar/:id', async (req, res) => {
     try {
         if (!ObjectId.isValid(req.params.id)) return res.status(404).render('error', { errorMessage: 'ID no válida' });
 
-        const recipe = await db.connection.collection('recipes').findOne({ _id: new ObjectId(req.params.id) });
+        const recipe = await recipesCollection.findOne({ _id: new ObjectId(req.params.id) });
 
-        if (recipe) {
-            // Helpers
-            if (recipe.category) recipe[`isCategory${recipe.category.charAt(0).toUpperCase() + recipe.category.slice(1)}`] = true;
-            if (recipe.difficulty) recipe[`isDifficulty${recipe.difficulty.charAt(0).toUpperCase() + recipe.difficulty.slice(1)}`] = true;
+        if (!recipe) return res.status(404).render('error', { errorMessage: 'Receta no encontrada.' });
 
-            res.render('AñadirReceta', { recipe, editing: true });
-        } else {
-            res.status(404).render('error', { errorMessage: 'Receta no encontrada para editar.' });
-        }
+        // Template helpers for Select boxes
+        if (recipe.category) recipe[`isCategory${recipe.category.charAt(0).toUpperCase() + recipe.category.slice(1)}`] = true;
+        if (recipe.difficulty) recipe[`isDifficulty${recipe.difficulty.charAt(0).toUpperCase() + recipe.difficulty.slice(1)}`] = true;
+
+        res.render('AñadirReceta', { recipe, editing: true });
+
     } catch (error) {
-        console.error("❌ Error al obtener la receta para editar:", error);
+        console.error("Server Error (Edit Form):", error);
         res.status(500).render('error', { errorMessage: 'Error Interno del Servidor.' });
     }
 });
 
 /**
- * ACTION: Update Recipe
+ * POST: Update Recipe Logic
+ * Handles updates including file uploads and image deletion flag.
  */
 router.post('/receta/editar/:id', upload.single('recipeImage'), async (req, res) => {
     try {
         const recipeId = req.params.id;
-        const { recipeName, description, ingredients, category, difficulty, preparationTime } = req.body;
-
         if (!ObjectId.isValid(recipeId)) return res.status(400).json({ success: false, message: 'ID no válida.' });
 
-        // Validations
-        if (!recipeName || !description || !ingredients || !category || !difficulty || !preparationTime) {
-            return res.status(400).json({ success: false, message: 'Todos los campos son obligatorios.' });
-        }
-        if (recipeName.trim()[0] !== recipeName.trim()[0].toUpperCase()) {
-            return res.status(400).json({ success: false, message: 'El nombre debe comenzar con mayúscula.' });
-        }
-        if (description.trim().length < 20 || description.trim().length > 500) {
-            return res.status(400).json({ success: false, message: 'Longitud de descripción no válida (20-500 caracteres).' });
-        }
-        if (isNaN(preparationTime) || parseInt(preparationTime) <= 0) {
-            return res.status(400).json({ success: false, message: 'Tiempo no válido.' });
+        // 1. Validate Input
+        const validation = validateRecipeInput(req.body);
+        if (!validation.valid) {
+            return res.status(400).json({ success: false, message: validation.message });
         }
 
-        // Unique Name Check (excluding current)
-        const existingRecipe = await db.connection.collection('recipes').findOne({
-            name: { $regex: `^${recipeName.trim()}$`, $options: 'i' },
+        // 2. Check Duplicate Name (Exclude self)
+        const existingRecipe = await recipesCollection.findOne({
+            name: { $regex: `^${req.body.recipeName.trim()}$`, $options: 'i' },
             _id: { $ne: new ObjectId(recipeId) }
         });
 
         if (existingRecipe) {
-            return res.status(400).json({ success: false, message: `El nombre "${recipeName}" ya está en uso.` });
+            return res.status(400).json({ success: false, message: `El nombre "${req.body.recipeName}" ya está en uso.` });
         }
 
+        // 3. Prepare Update Data
         const updateData = {
-            name: recipeName.trim(),
-            description: description.trim(),
-            ingredients: ingredients,
-            category: category,
-            difficulty: difficulty,
-            preparation_time: parseInt(preparationTime)
+            name: req.body.recipeName.trim(),
+            description: req.body.description.trim(),
+            ingredients: req.body.ingredients,
+            category: req.body.category,
+            difficulty: req.body.difficulty,
+            preparation_time: parseInt(req.body.preparationTime)
         };
 
+        // --- IMPROVED IMAGE LOGIC ---
         if (req.file) {
+            // Case A: New file uploaded -> Replace image
             updateData.image = req.file.filename;
+        } else if (req.body.removeImageFlag === "true") {
+            // Case B: User requested deletion -> Reset to default
+            updateData.image = 'logo.jpg';
         }
+        // Case C: No file + Flag false -> Keep existing image (Do nothing)
 
-        await db.connection.collection('recipes').updateOne(
+        // 4. Perform Update
+        await recipesCollection.updateOne(
             { _id: new ObjectId(recipeId) },
             { $set: updateData }
         );
@@ -360,13 +378,13 @@ router.post('/receta/editar/:id', upload.single('recipeImage'), async (req, res)
         });
 
     } catch (error) {
-        console.error("❌ Error al actualizar la receta:", error);
+        console.error("Server Error (Update Recipe):", error);
         res.status(500).json({ success: false, message: 'Error Interno del Servidor.' });
     }
 });
 
 /**
- * ACTION: Delete Recipe
+ * POST: Delete Recipe Logic
  */
 router.post('/receta/borrar/:id', async (req, res) => {
     try {
@@ -381,7 +399,7 @@ router.post('/receta/borrar/:id', async (req, res) => {
             res.status(404).json({ success: false, message: 'Receta no encontrada.' });
         }
     } catch (error) {
-        console.error(error);
+        console.error("Server Error (Delete Recipe):", error);
         res.status(500).json({ success: false, message: 'Error Interno del Servidor.' });
     }
 });
@@ -391,11 +409,11 @@ router.post('/receta/borrar/:id', async (req, res) => {
 // =================================================================
 
 /**
- * ACTION: Add New Step
+ * POST: Add New Step
  */
 router.post('/receta/:id/paso/nuevo', async (req, res) => {
-    const recipeId = req.params.id;
     try {
+        const recipeId = req.params.id;
         const { stepName, stepDescription } = req.body;
 
         if (!stepName || !stepDescription) {
@@ -408,6 +426,7 @@ router.post('/receta/:id/paso/nuevo', async (req, res) => {
             description: stepDescription.trim()
         };
 
+        // Calculate Order (Append to end)
         const recipe = await recipesCollection.findOne({ _id: new ObjectId(recipeId) }, { projection: { steps: 1 } });
         newStep.order = (recipe.steps || []).length + 1;
 
@@ -416,7 +435,6 @@ router.post('/receta/:id/paso/nuevo', async (req, res) => {
             { $push: { steps: newStep } }
         );
 
-        // Return the created step object for dynamic DOM insertion
         res.json({
             success: true,
             message: 'Paso añadido exitosamente.',
@@ -425,57 +443,60 @@ router.post('/receta/:id/paso/nuevo', async (req, res) => {
         });
 
     } catch (error) {
-        console.error(error);
+        console.error("Server Error (Add Step):", error);
         res.status(500).json({ success: false, message: 'Error Interno del Servidor.' });
     }
 });
 
 /**
- * ACTION: Delete Step
+ * POST: Delete Step
  */
 router.post('/receta/:id/paso/borrar/:stepId', async (req, res) => {
-    const { id, stepId } = req.params;
     try {
+        const { id, stepId } = req.params;
+
         await recipesCollection.updateOne(
             { _id: new ObjectId(id) },
             { $pull: { steps: { _id: new ObjectId(stepId) } } }
         );
+
         res.json({ success: true, message: 'Paso eliminado.' });
     } catch (error) {
+        console.error("Server Error (Delete Step):", error);
         res.status(500).json({ success: false, message: 'Error al eliminar el paso.' });
     }
 });
 
 /**
- * FORM: Edit Step (Fallback for direct URL access, mostly handled inline via AJAX)
+ * GET: Edit Step Form (Fallback/Direct Access)
  */
 router.get('/receta/:id/paso/editar/:stepId', async (req, res) => {
-    const { id, stepId } = req.params;
     try {
-        const recipe = await db.connection.collection('recipes').findOne({ _id: new ObjectId(id) });
+        const { id, stepId } = req.params;
+        const recipe = await recipesCollection.findOne({ _id: new ObjectId(id) });
+
         if (!recipe) return res.status(404).render('error', { errorMessage: 'Receta no encontrada.' });
 
         const step = recipe.steps ? recipe.steps.find(s => s._id.toString() === stepId) : null;
-
         if (!step) return res.status(404).render('error', { errorMessage: 'Paso no encontrado.' });
 
         res.render('editarPaso', { recipe, step });
 
     } catch (error) {
-        console.error("Error al buscar el paso:", error);
+        console.error("Server Error (Get Step Form):", error);
         res.status(500).render('error', { errorMessage: 'Error Interno del Servidor.' });
     }
 });
 
 /**
- * ACTION: Update Step (Used by Inline Edit)
+ * POST: Update Step Logic
  */
 router.post('/receta/:id/paso/editar/:stepId', async (req, res) => {
     try {
         const { id, stepId } = req.params;
         const { stepName, stepDescription } = req.body;
 
-        if (!stepName || !stepDescription || stepName.trim() === '' || stepDescription.trim() === '') {
+        if (!stepName?.trim() || !stepDescription?.trim()) {
             return res.status(400).json({ success: false, message: 'Datos incompletos.' });
         }
 
@@ -499,7 +520,7 @@ router.post('/receta/:id/paso/editar/:stepId', async (req, res) => {
         });
 
     } catch (error) {
-        console.error("Error al actualizar el paso:", error);
+        console.error("Server Error (Update Step):", error);
         res.status(500).json({ success: false, message: 'Error Interno del Servidor.' });
     }
 });
