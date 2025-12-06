@@ -367,4 +367,127 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+    // ============================================================
+    //  SECCIÓN 4: EDICIÓN INLINE DE PASOS (Fase 5)
+    // ============================================================
+
+    // Usamos el mismo stepsList que ya teníamos
+    if (stepsList) {
+
+        // Delegación para el botón EDITAR
+        stepsList.addEventListener('click', async event => {
+            // Buscamos si el clic fue en el botón de editar (o en el icono dentro)
+            const editBtn = event.target.closest('.btn-edit-step');
+
+            if (editBtn) {
+                event.preventDefault(); // Evitamos navegar al link
+
+                const li = editBtn.closest('li');
+                const stepId = editBtn.dataset.stepId;
+
+                // 1. Obtener datos actuales
+                const nameDiv = li.querySelector('.step-name');
+                const descSpan = li.querySelector('.step-desc');
+
+                const currentName = nameDiv.textContent;
+                const currentDesc = descSpan.textContent;
+
+                // 2. Guardar HTML original para poder "Cancelar"
+                li.dataset.originalHtml = li.innerHTML;
+
+                // 3. Reemplazar HTML con el formulario
+                // NOTA: Usamos el mismo action que el link original tenía
+                const recipeIdUrl = window.location.pathname.split('/')[2]; // /receta/ID/...
+                const actionUrl = `/receta/${recipeIdUrl}/paso/editar/${stepId}`;
+
+                li.innerHTML = `
+                    <form action="${actionUrl}" method="POST" class="w-100 edit-step-form needs-validation" novalidate>
+                        <div class="mb-2">
+                            <input type="text" class="form-control form-control-sm" name="stepName" value="${currentName}" required>
+                            <div class="invalid-feedback">El título es obligatorio.</div>
+                        </div>
+                        <div class="mb-2">
+                            <textarea class="form-control form-control-sm" name="stepDescription" rows="2" required>${currentDesc}</textarea>
+                            <div class="invalid-feedback">La descripción es obligatoria.</div>
+                        </div>
+                        <div class="d-flex justify-content-end gap-2">
+                            <button type="button" class="btn btn-sm btn-secondary btn-cancel-edit">Cancelar</button>
+                            <button type="submit" class="btn btn-sm btn-success">Guardar</button>
+                        </div>
+                    </form>
+                `;
+            }
+
+            // Delegación para el botón CANCELAR (generado dinámicamente)
+            const cancelBtn = event.target.closest('.btn-cancel-edit');
+            if (cancelBtn) {
+                const li = cancelBtn.closest('li');
+                if (li.dataset.originalHtml) {
+                    li.innerHTML = li.dataset.originalHtml; // Restaurar
+                }
+            }
+        });
+
+        // Delegación para el ENVÍO del formulario de edición (SUBMIT)
+        stepsList.addEventListener('submit', async event => {
+            if (event.target.classList.contains('edit-step-form')) {
+                event.preventDefault();
+                const form = event.target;
+
+                // Validación Bootstrap
+                if (!form.checkValidity()) {
+                    form.classList.add('was-validated');
+                    return;
+                }
+
+                // Mostrar Spinner
+                document.getElementById('loadingSpinner').classList.remove('d-none');
+
+                try {
+                    const formData = new FormData(form);
+                    // Convertir a JSON
+                    const data = Object.fromEntries(formData.entries());
+
+                    const response = await fetch(form.action, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data)
+                    });
+
+                    const result = await response.json();
+                    document.getElementById('loadingSpinner').classList.add('d-none');
+
+                    if (result.success) {
+                        const li = form.closest('li');
+                        const recipeIdUrl = window.location.pathname.split('/')[2];
+                        const stepId = form.action.split('/').pop(); // Extraer ID de la URL
+
+                        // Reconstruir el LI con los nuevos datos (formato visual)
+                        li.innerHTML = `
+                            <div class="ms-2 me-auto">
+                                <div class="fw-bold step-name">${result.step.name}</div>
+                                <span class="step-desc">${result.step.description}</span>
+                            </div>
+                            <div class="d-flex gap-2">
+                                <a href="/receta/${recipeIdUrl}/paso/editar/${stepId}" class="btn btn-sm btn-outline-primary btn-edit-step" data-step-id="${stepId}">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <form class="delete-step-form" action="/receta/${recipeIdUrl}/paso/borrar/${stepId}" method="POST">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                                </form>
+                            </div>
+                        `;
+
+                        // Opcional: Mostrar toast o modal pequeño de éxito
+                    } else {
+                        alert("Error: " + result.message);
+                    }
+
+                } catch (err) {
+                    console.error(err);
+                    document.getElementById('loadingSpinner').classList.add('d-none');
+                }
+            }
+        });
+    }
 });

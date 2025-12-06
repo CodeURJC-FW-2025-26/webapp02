@@ -20,68 +20,6 @@ router.use((req, res, next) => {
     next(); // Continue to the requested route (e.g., GET '/', POST '/receta/nueva', etc.)
 });
 
-/*
-// Middleware for validating recipe data
-// Accepts a boolean 'isEditing' to adapt name validation
-const validateRecipe = (isEditing = false) => {
-    return async (req, res, next) => {
-        try {
-            const { recipeName, description, ingredients, category, difficulty, preparationTime } = req.body;
-            const backUrl = isEditing ? `/receta/editar/${req.params.id}` : '/receta/nueva';
-
-            // Function to handle the error
-            const handleError = (errorMessage) => {
-                req.session.formData = req.body; //Save ALL form data
-                req.session.errorMessage = errorMessage;
-                req.session.backUrl = backUrl; // We save the URL for the "Back" button
-                res.redirect('/error'); // We redirect to a generic error route
-            };
-
-            // --- START OF CENTRALIZED VALIDATIONS ---
-
-            // Validation 1: All required fields must be present.
-            if (!recipeName || !description || !ingredients || !category || !difficulty || !preparationTime) {
-                return handleError('Todos los campos son obligatorios.');
-            }
-
-            // Validation 2: The recipe name must start with a capital letter.
-            if (recipeName.trim()[0] !== recipeName.trim()[0].toUpperCase()) {
-                return handleError('El nombre de la receta debe empezar con mayúscula.');
-            }
-
-            // 4. Format: Description between 20 and 500 characters
-            if (description.trim().length < 20 || description.trim().length > 500) {
-                return handleError('La descripción debe tener entre 20 y 500 caracteres.');
-            }
-
-            // Validation 5: The preparation time must be a positive number.
-            if (isNaN(preparationTime) || parseInt(preparationTime) <= 0) {
-                return handleError('El tiempo de preparación debe ser un número válido y positivo.');
-            }
-
-            // Unique name validation (adaptive)
-            const query = { name: { $regex: `^${recipeName.trim()}$`, $options: 'i' } };
-            if (isEditing) {
-                query._id = { $ne: new ObjectId(req.params.id) };
-            }
-            const existingRecipe = await recipesCollection.findOne(query);
-            if (existingRecipe) {
-                return handleError(`Ya existe una receta con el nombre "${recipeName}".`);
-            }
-
-            // --- END OF VALIDATIONS ---
-
-            // If all validations pass, we continue to the next route handler.
-            next();
-
-        } catch (error) {
-            console.error("Error en el middleware de validación:", error);
-            res.status(500).render('error', { errorMessage: 'Error interno del servidor durante la validación.' });
-        }
-    };
-};
-*/
-
 // API: Comprobar si el título ya existe (para validación AJAX)
 router.get('/api/check-title', async (req, res) => {
     try {
@@ -617,20 +555,9 @@ router.post('/receta/:id/paso/editar/:stepId', async (req, res) => {
         const { id, stepId } = req.params;
         const { stepName, stepDescription } = req.body;
 
-        // Server validations
+        // Validación Servidor
         if (!stepName || !stepDescription || stepName.trim() === '' || stepDescription.trim() === '') {
-            // 1. We save the standard error message for the generic page.
-            req.session.errorMessage = 'El título y la descripción del paso no pueden estar vacíos.';
-
-            // 2. We save the URL to which the user must go back (the edit page)
-            req.session.backUrl = `/receta/${id}/paso/editar/${stepId}`;
-
-            // Important! We also save the form data to be able to refill all of the fields
-            // when the user comes back. GET route will manage it
-            req.session.formData = { name: stepName, description: stepDescription, _id: stepId };
-
-            // 3. We will redirect to the generic error page
-            return res.redirect('/error');
+            return res.status(400).json({ success: false, message: 'Datos incompletos.' });
         }
 
         await recipesCollection.updateOne(
@@ -643,20 +570,19 @@ router.post('/receta/:id/paso/editar/:stepId', async (req, res) => {
             }
         );
 
-        // res.redirect(`/receta/${id}`);
-        res.render('confirmacion', {
-            message: 'El paso ha sido actualizado con éxito.',
-            nextLink: `/receta/${id}`,
-            nextLinkText: 'Volver a la receta'
+        // JSON Response
+        res.json({
+            success: true,
+            message: 'Paso actualizado.',
+            step: {
+                name: stepName.trim(),
+                description: stepDescription.trim()
+            }
         });
 
     } catch (error) {
         console.error("Error al editar el paso:", error);
-        res.status(500).render('error', {
-            errorMessage: 'Error interno del servidor.',
-            backUrl: '/',
-            backUrlText: 'Volver a la página principal'
-        });
+        res.status(500).json({ success: false, message: 'Error interno.' });
     }
 });
 
