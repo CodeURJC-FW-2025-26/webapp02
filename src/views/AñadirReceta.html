@@ -2,37 +2,54 @@
 
 <main>
      <h2 class="AddRecipe">{{#editing}}Editar{{/editing}}{{^editing}}Añade la{{/editing}} receta</h2>
+
      <div class="form-container">
+
           {{#errorMessage}}
           <div class="alert alert-danger" role="alert">
                {{errorMessage}}
           </div>
           {{/errorMessage}}
-          <form role="form"
+
+          <form id="recipeForm" class="needs-validation" role="form"
                action="{{#editing}}/receta/editar/{{recipe._id}}{{/editing}}{{^editing}}/receta/nueva{{/editing}}"
-               method="POST" enctype="multipart/form-data">
-               <!-- Field: Recipe Name -->
-               <div class="form-group">
-                    <label for="recipeName">Nombre:</label>
+               method="POST" enctype="multipart/form-data" novalidate>
+
+               <!-- Campo: Nombre -->
+               <div class="form-group mb-3">
+                    <label for="recipeName" class="form-label">Nombre:</label>
                     <input type="text" class="form-control" id="recipeName" name="recipeName"
                          placeholder="Introduzca el nombre de la receta" value="{{recipe.name}}" required>
+                    <!-- Div de Feedback de Error -->
+                    <div class="invalid-feedback">
+                         El nombre es obligatorio y debe empezar con mayúscula.
+                    </div>
                </div>
-               <!-- Field: Description -->
-               <div class="form-group">
+
+               <!-- Campo: Descripción -->
+               <div class="form-group mb-3">
                     <label for="description" class="form-label">Descripción:</label>
                     <textarea class="form-control" id="description" name="description" rows="2"
-                         placeholder="Introduzca una breve descripción de la receta"
+                         placeholder="Introduzca una breve descripción de la receta" minlength="20" maxlength="500"
                          required>{{recipe.description}}</textarea>
+                    <div class="invalid-feedback">
+                         La descripción debe tener entre 20 y 500 caracteres.
+                    </div>
                </div>
-               <!-- Field: Ingredients -->
-               <div class="form-group">
+
+               <!-- Campo: Ingredientes -->
+               <div class="form-group mb-3">
                     <label for="ingredients" class="form-label">Ingredientes:</label>
                     <textarea class="form-control" id="ingredients" name="ingredients" rows="3"
                          placeholder="Introduzca los ingredientes necesarios, separados por líneas"
                          required>{{recipe.ingredients}}</textarea>
+                    <div class="invalid-feedback">
+                         Por favor, lista los ingredientes de la receta.
+                    </div>
                </div>
-               <!-- Field: Category (Selector) -->
-               <div class="form-group">
+
+               <!-- Campo: Categoría -->
+               <div class="form-group mb-3">
                     <label for="category" class="form-label">Categoría:</label>
                     <select class="form-select" id="category" name="category" required>
                          <option value="" disabled {{^recipe.category}}selected{{/recipe.category}}>Seleccione una
@@ -48,12 +65,15 @@
                          <option value="vegano" {{#recipe.isCategoryVegano}}selected{{/recipe.isCategoryVegano}}>Vegano
                          </option>
                     </select>
-                    <!-- Note: The selected value on 'editing' is shown so the user can select it again. -->
+                    <div class="invalid-feedback">
+                         Debes seleccionar una categoría.
+                    </div>
                     {{#editing}}<small class="form-text text-muted">Categoría actual:
                          {{recipe.category}}</small>{{/editing}}
                </div>
-               <!-- Field: Difficulty (Selector) -->
-               <div class="form-group">
+
+               <!-- Campo: Dificultad -->
+               <div class="form-group mb-3">
                     <label for="difficulty" class="form-label">Dificultad:</label>
                     <select class="form-select" id="difficulty" name="difficulty" required>
                          <option value="" disabled {{^recipe.difficulty}}selected{{/recipe.difficulty}}>Seleccione una
@@ -67,19 +87,26 @@
                               Difícil
                          </option>
                     </select>
+                    <div class="invalid-feedback">
+                         Debes indicar el nivel de dificultad.
+                    </div>
                     {{#editing}}<small class="form-text text-muted">Dificultad actual:
                          {{recipe.difficulty}}</small>{{/editing}}
                </div>
-               <!-- Field: Preparation Time -->
-               <div class="form-group">
+
+               <!-- Campo: Tiempo -->
+               <div class="form-group mb-3">
                     <label for="preparationTime" class="form-label">Tiempo (minutos):</label>
                     <input type="number" class="form-control" id="preparationTime" name="preparationTime"
                          placeholder="Ej: 30" min="1" value="{{recipe.preparation_time}}" required>
+                    <div class="invalid-feedback">
+                         Introduce un tiempo válido (número positivo).
+                    </div>
                </div>
 
-               <!-- Field: Image Upload (AHORA CORREGIDO) -->
-               <div class="form-group">
-                    <label for="recipeImage">Imagen:</label>
+               <!-- Campo: Imagen (No es required en HTML para permitir mantener la anterior al editar) -->
+               <div class="form-group mb-3">
+                    <label for="recipeImage" class="form-label">Imagen:</label>
                     <input type="file" class="form-control" id="recipeImage" name="recipeImage" accept="image/*">
 
                     {{#editing}}
@@ -92,19 +119,19 @@
                     {{/editing}}
                </div>
 
-               <!-- Form action buttons -->
-               <div class="buttons">
-                    <div class="button">
+               <!-- Botones de Acción -->
+               <div class="buttons mt-4">
+                    <div class="button me-3">
                          <button type="submit" class="btn btn-dark">Guardar Cambios</button>
                     </div>
                     <div class="button">
                          <a class="btn btn-dark"
                               href="{{#editing}}/receta/{{recipe._id}}{{/editing}}{{^editing}}/{{/editing}}">Cancelar</a>
-
                     </div>
                </div>
           </form>
 
+          <!-- Imágenes Decorativas Laterales -->
           <aside class="DecorativeImages">
                <img src="/images/lubina.jpg" alt="Sea Bass dish">
                <img src="/images/entrecot.jpg" alt="Ribeye Steak dish">
