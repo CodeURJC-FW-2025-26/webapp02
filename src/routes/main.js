@@ -497,35 +497,20 @@ router.post('/receta/editar/:id', upload.single('recipeImage'), async (req, res)
 router.post('/receta/borrar/:id', async (req, res) => {
     try {
         const recipeId = req.params.id;
-
         if (!ObjectId.isValid(recipeId)) {
-            return res.status(400).render('error', {
-                errorMessage: 'El ID de la receta no es válido.',
-                backUrl: '/',
-                backUrlText: 'Volver a la página principal'
-            });
+            return res.status(400).json({ success: false, message: 'ID inválido' });
         }
-
         const result = await recipesCollection.deleteOne({ _id: new ObjectId(recipeId) });
 
         if (result.deletedCount === 1) {
-            // If 1 document was deleted, we show confirmation
-            res.render('confirmacion', { message: 'Receta eliminada correctamente.' });
+            // Éxito -> JSON
+            res.json({ success: true, message: 'Receta eliminada.', redirectUrl: '/' });
         } else {
-            // If nothing was deleted (perhaps it no longer existed), we display an error.
-            res.status(404).render('error', {
-                errorMessage: 'No se encontró la receta para eliminar.',
-                backUrl: '/',
-                backUrlText: 'Volver a la página principal'
-            });
+            res.status(404).json({ success: false, message: 'Receta no encontrada.' });
         }
     } catch (error) {
-        console.error("❌ Error al borrar la receta:", error);
-        res.status(500).render('error', {
-            errorMessage: 'Error interno del servidor al eliminar la receta.',
-            backUrl: `/receta/${recipeId}`, // Return to the details page if there is a serious error
-            backUrlText: 'Volver a la receta'
-        });
+        console.error(error);
+        res.status(500).json({ success: false, message: 'Error del servidor.' });
     }
 });
 
@@ -535,87 +520,49 @@ router.post('/receta/:id/paso/nuevo', async (req, res) => {
     try {
         const { stepName, stepDescription } = req.body;
 
-        // Server validation consistent with the recipe form
-        if (!stepName || !stepDescription || stepName.trim() === '' || stepDescription.trim() === '') {
-            // 1. Save the error message in the session.
-            req.session.errorMessage = 'El título y la descripción del paso son obligatorios.';
-            // 2. Save the URL to which the user should return.
-            req.session.backUrl = `/receta/${recipeId}`;
-            // 3. Redirect to the generic error page.
-            return res.redirect('/error');
+        if (!stepName || !stepDescription) {
+            return res.status(400).json({ success: false, message: 'Faltan datos.' });
         }
 
-        // We created the object for the new step. We assigned it a unique ID so we could delete/edit it later.
         const newStep = {
-            _id: new ObjectId(), // Unique ID for the sub-document
+            _id: new ObjectId(),
             name: stepName.trim(),
             description: stepDescription.trim()
         };
 
-        // We obtain the current number of steps to assign the 'order'
         const recipe = await recipesCollection.findOne({ _id: new ObjectId(recipeId) }, { projection: { steps: 1 } });
         newStep.order = (recipe.steps || []).length + 1;
 
-
-        // We use $push to add the new step to the 'steps' array of the correct recipe
         await recipesCollection.updateOne(
             { _id: new ObjectId(recipeId) },
             { $push: { steps: newStep } }
         );
 
-        // We redirect the user back to the same page so they can see the added step
-        // res.redirect(`/receta/${recipeId}`);
-        res.render('confirmacion', {
-            message: 'El nuevo paso ha sido añadido con éxito.',
-            nextLink: `/receta/${recipeId}`,
-            nextLinkText: 'Volver a la receta'
+        // Devolvemos el paso creado para que el cliente lo pinte
+        res.json({
+            success: true,
+            message: 'Paso añadido.',
+            step: newStep,  // <-- IMPORTANTE: Devolvemos el objeto paso
+            recipeId: recipeId
         });
 
     } catch (error) {
-        console.error("❌ Error al añadir un nuevo paso:", error);
-        res.status(500).render('error', {
-            errorMessage: 'Error interno del servidor al añadir el paso.',
-            backUrl: `/receta/${recipeId}`,
-            backUrlText: 'Volver a la receta'
-        });
+        console.error(error);
+        res.status(500).json({ success: false, message: 'Error interno.' });
     }
 });
 
 // PROCESS THE ELIMINATION OF A STEP FROM A RECIPE
 router.post('/receta/:id/paso/borrar/:stepId', async (req, res) => {
-    const recipeId = req.params.id;
-    const stepId = req.params.stepId;
+    const { id, stepId } = req.params;
     try {
-        // We validated both IDs
-        if (!ObjectId.isValid(recipeId) || !ObjectId.isValid(stepId)) {
-            return res.status(400).render('error', {
-                errorMessage: 'ID de receta o de paso no válido.',
-                backUrl: '/',
-                backUrlText: 'Volver a la página principal'
-            });
-        }
-
-        // We use $pull to remove an element from the 'steps' array that matches a criterion
         await recipesCollection.updateOne(
-            { _id: new ObjectId(recipeId) }, // Filter: Find the right recipe
-            { $pull: { steps: { _id: new ObjectId(stepId) } } } // Operation: removes from the 'steps' array the object whose '_id' matches
+            { _id: new ObjectId(id) },
+            { $pull: { steps: { _id: new ObjectId(stepId) } } }
         );
-
-        // res.redirect(`/receta/${recipeId}`);
-
-        res.render('confirmacion', {
-            message: 'El paso ha sido eliminado correctamente.',
-            nextLink: `/receta/${recipeId}`,
-            nextLinkText: 'Volver a la receta'
-        });
-
+        res.json({ success: true, message: 'Paso eliminado.' });
     } catch (error) {
-        console.error("❌ Error al borrar el paso:", error);
-        res.status(500).render('error', {
-            errorMessage: 'Error interno del servidor al borrar el paso.',
-            backUrl: '/',
-            backUrlText: 'Volver a la página principal'
-        });
+        res.status(500).json({ success: false, message: 'Error al borrar paso.' });
     }
 });
 
