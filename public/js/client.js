@@ -73,7 +73,53 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // 3. Form Submission (AJAX Submit)
+        // 3. Image Preview Logic
+        const imageInput = document.getElementById('recipeImage');
+
+        if (imageInput) {
+            // Check if preview container exists, if not, create it
+            let previewContainer = document.getElementById('image-preview-container');
+            if (!previewContainer) {
+                previewContainer = document.createElement('div');
+                previewContainer.id = 'image-preview-container';
+                previewContainer.className = 'mt-3 d-none';
+                imageInput.parentNode.appendChild(previewContainer);
+            }
+
+            imageInput.addEventListener('change', function (event) {
+                const file = event.target.files[0];
+                previewContainer.innerHTML = ''; // Clear previous preview
+
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        img.className = 'img-thumbnail';
+                        img.style.maxWidth = '200px';
+
+                        // Button to remove the image
+                        const removeBtn = document.createElement('button');
+                        removeBtn.type = 'button';
+                        removeBtn.className = 'btn btn-sm btn-danger mt-1 d-block';
+                        removeBtn.textContent = 'Eliminar imagen';
+
+                        removeBtn.onclick = () => {
+                            imageInput.value = ''; // Clear input
+                            previewContainer.classList.add('d-none');
+                            previewContainer.innerHTML = '';
+                        };
+
+                        previewContainer.appendChild(img);
+                        previewContainer.appendChild(removeBtn);
+                        previewContainer.classList.remove('d-none');
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+
+        // 4. Form Submission (AJAX Submit)
         recipeForm.addEventListener('submit', async event => {
             event.preventDefault(); // Stop traditional submission
             event.stopPropagation();
@@ -142,58 +188,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert("Error crítico de comunicación con el servidor");
             }
         }, false);
-
-        // --- IMAGE PREVIEW LOGIC ---
-        const imageInput = document.getElementById('recipeImage');
-        // Crea un div para la preview si no existe en el HTML o úsalo si ya lo tienes
-        if (imageInput) {
-            // Buscar o crear contenedor de preview
-            let previewContainer = document.getElementById('image-preview-container');
-            if (!previewContainer) {
-                previewContainer = document.createElement('div');
-                previewContainer.id = 'image-preview-container';
-                previewContainer.className = 'mt-3 d-none'; // Oculto por defecto
-                imageInput.parentNode.appendChild(previewContainer);
-            }
-
-            imageInput.addEventListener('change', function (event) {
-                const file = event.target.files[0];
-                previewContainer.innerHTML = ''; // Limpiar anterior
-
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function (e) {
-                        const img = document.createElement('img');
-                        img.src = e.target.result;
-                        img.className = 'img-thumbnail';
-                        img.style.maxWidth = '200px';
-
-                        // Botón para eliminar imagen
-                        const removeBtn = document.createElement('button');
-                        removeBtn.type = 'button';
-                        removeBtn.className = 'btn btn-sm btn-danger mt-1 d-block';
-                        removeBtn.textContent = 'Eliminar imagen';
-                        removeBtn.onclick = () => {
-                            imageInput.value = ''; // Limpiar input
-                            previewContainer.classList.add('d-none');
-                            previewContainer.innerHTML = '';
-                        };
-
-                        previewContainer.appendChild(img);
-                        previewContainer.appendChild(removeBtn);
-                        previewContainer.classList.remove('d-none');
-                    }
-                    reader.readAsDataURL(file);
-                }
-            });
-        }
     }
 
     // ============================================================
     //  SECTION 2: INFINITE SCROLL LOGIC (Index Page)
     // ============================================================
 
-    // We look for the grid container. If it exists, we are on the Index page.
     const recipeGrid = document.getElementById('recipe-grid');
 
     if (recipeGrid) {
@@ -207,7 +207,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             isLoading = true;
 
-            // Show the specific scroll spinner (bottom of the page)
+            // Show the specific scroll spinner
             const spinner = document.getElementById('scroll-spinner');
             if (spinner) spinner.classList.remove('d-none');
 
@@ -245,7 +245,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         recipeGrid.appendChild(col);
                     });
 
-                    // Update the pointer for the next page (or empty string if null)
+                    // Update the pointer for the next page
                     nextPageInput.value = data.nextPage || '';
                 } else {
                     nextPageInput.value = ''; // Stop logic if no recipes returned
@@ -272,25 +272,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ============================================================
-    //  SECCIÓN 3: PÁGINA DE DETALLE (Borrar y Pasos)
+    //  SECTION 3: DETAIL PAGE (Delete Recipe & Step Management)
     // ============================================================
 
-    // 1. Borrar Receta Principal
+    // 1. Delete Recipe (Main Entity)
     const deleteRecipeBtn = document.getElementById('btnDeleteRecipe');
     if (deleteRecipeBtn) {
         deleteRecipeBtn.addEventListener('click', event => {
-            event.preventDefault(); // Paramos el submit directo
+            event.preventDefault(); // Stop default submit
 
-            // Mostrar modal de confirmación
+            // Show Confirmation Modal
             const confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
             document.getElementById('confirmModalBody').textContent = "¿Estás seguro de que quieres borrar esta receta completamente?";
             const confirmBtn = document.getElementById('confirmModalBtn');
 
-            // Definimos qué pasa al confirmar
+            // Define action on confirmation
             confirmBtn.onclick = async () => {
-                confirmModal.hide(); // Cerramos modal confirmación
+                confirmModal.hide();
 
-                // Mostrar spinner
+                // Show spinner
                 document.getElementById('loadingSpinner').classList.remove('d-none');
 
                 const form = document.getElementById('deleteRecipeForm');
@@ -302,14 +302,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     document.getElementById('loadingSpinner').classList.add('d-none');
 
-                    // Reutilizamos el feedbackModal para el resultado
-                    // ... (Aquí puedes usar una función auxiliar para mostrar modales y no repetir código)
-                    // Por brevedad:
+                    // Check result
                     if (result.success) {
-                        alert("Receta eliminada"); // O usar el modal bonito
                         window.location.href = result.redirectUrl;
                     } else {
-                        alert("Error: " + result.message);
+                        // Reuse the generic feedback modal for error
+                        const errorModal = new bootstrap.Modal(document.getElementById('feedbackModal'));
+                        document.getElementById('modalTitle').textContent = "Error";
+                        document.getElementById('modalTitle').className = "modal-title text-danger";
+                        document.getElementById('modalBody').textContent = result.message;
+                        document.getElementById('modalActionBtn').classList.add('d-none');
+                        errorModal.show();
                     }
                 } catch (err) {
                     console.error(err);
@@ -320,7 +323,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 2. Añadir Paso (AJAX)
+    // 2. Add Step (AJAX)
     const addStepForm = document.getElementById('addStepForm');
     if (addStepForm) {
         addStepForm.addEventListener('submit', async event => {
@@ -336,7 +339,6 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('loadingSpinner').classList.remove('d-none');
 
             try {
-                // Preparamos datos JSON (o FormData, pero JSON es más limpio para datos simples)
                 const formData = new FormData(addStepForm);
                 const data = Object.fromEntries(formData.entries());
 
@@ -350,11 +352,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.getElementById('loadingSpinner').classList.add('d-none');
 
                 if (result.success) {
-                    // LIMPIAR FORMULARIO (Rúbrica punto 12)
+                    // CLEAR FORM (Rubric item 12)
                     addStepForm.reset();
                     addStepForm.classList.remove('was-validated');
 
-                    // AÑADIR AL DOM (Rúbrica punto 12)
+                    // ADD TO DOM (Rubric item 12)
                     const stepsList = document.getElementById('stepsList');
                     const newStep = result.step;
 
@@ -377,10 +379,21 @@ document.addEventListener('DOMContentLoaded', () => {
                     `;
                     stepsList.appendChild(li);
 
-                    // Mostrar modal éxito
-                    // showFeedbackModal("¡Éxito!", "Paso añadido correctamente", true); // Pseudo-código
+                    // Show success modal (Optional but good UX)
+                    const successModal = new bootstrap.Modal(document.getElementById('feedbackModal'));
+                    document.getElementById('modalTitle').textContent = "¡Éxito!";
+                    document.getElementById('modalTitle').className = "modal-title text-success";
+                    document.getElementById('modalBody').textContent = result.message;
+                    document.getElementById('modalActionBtn').classList.add('d-none');
+                    successModal.show();
+
                 } else {
-                    alert(result.message);
+                    // Show error modal
+                    const errorModal = new bootstrap.Modal(document.getElementById('feedbackModal'));
+                    document.getElementById('modalTitle').textContent = "Error";
+                    document.getElementById('modalTitle').className = "modal-title text-danger";
+                    document.getElementById('modalBody').textContent = result.message;
+                    errorModal.show();
                 }
 
             } catch (err) {
@@ -389,79 +402,72 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 3. Borrar Paso (Delegación de eventos con MODAL)
+    // 3. Delete Step (Event Delegation with Bootstrap Modal)
     const stepsList = document.getElementById('stepsList');
     if (stepsList) {
         stepsList.addEventListener('submit', async event => {
             if (event.target.classList.contains('delete-step-form')) {
-                event.preventDefault(); // Detener envío
+                event.preventDefault(); // Stop submit
                 const form = event.target;
 
-                // Instancia del modal existente
+                // Setup Bootstrap Modal for Step Deletion
                 const confirmModalElement = document.getElementById('confirmModal');
                 const confirmModal = new bootstrap.Modal(confirmModalElement);
-
-                // Personalizar texto
                 document.getElementById('confirmModalBody').textContent = "¿Seguro que quieres eliminar este paso?";
                 const confirmBtn = document.getElementById('confirmModalBtn');
 
-                // Lógica al confirmar
-                // IMPORTANTE: Sobrescribimos el onclick para que ejecute ESTA acción específica
+                // Define confirmation action
                 confirmBtn.onclick = async () => {
-                    confirmModal.hide(); // Cerrar modal
+                    confirmModal.hide(); // Close modal
 
                     try {
                         const response = await fetch(form.action, { method: 'POST' });
                         const result = await response.json();
 
                         if (result.success) {
+                            // Remove from DOM (Rubric item 14)
                             const li = form.closest('li');
                             li.remove();
-                            // Opcional: Mostrar feedbackModal de éxito breve
                         } else {
-                            // Mostrar modal de error si falla
-                            const errorModal = new bootstrap.Modal(document.getElementById('feedbackModal'));
-                            document.getElementById('modalTitle').textContent = "Error";
-                            document.getElementById('modalBody').textContent = result.message;
-                            errorModal.show();
+                            // Error handling
+                            alert("Error deleting step: " + result.message);
                         }
                     } catch (err) { console.error(err); }
                 };
 
-                confirmModal.show(); // Mostrar modal
+                confirmModal.show(); // Display Modal
             }
         });
     }
+
     // ============================================================
-    //  SECCIÓN 4: EDICIÓN INLINE DE PASOS (Fase 5)
+    //  SECTION 4: INLINE EDIT (Steps)
     // ============================================================
 
-    // Usamos el mismo stepsList que ya teníamos
     if (stepsList) {
 
-        // Delegación para el botón EDITAR
+        // Delegation for the EDIT button
         stepsList.addEventListener('click', async event => {
-            // Buscamos si el clic fue en el botón de editar (o en el icono dentro)
+            // Check if click was on the edit button or its icon
             const editBtn = event.target.closest('.btn-edit-step');
 
             if (editBtn) {
-                event.preventDefault(); // Evitamos navegar al link
+                event.preventDefault(); // Prevent navigation
 
                 const li = editBtn.closest('li');
                 const stepId = editBtn.dataset.stepId;
 
-                // 1. Obtener datos actuales
+                // 1. Get current data
                 const nameDiv = li.querySelector('.step-name');
                 const descSpan = li.querySelector('.step-desc');
 
                 const currentName = nameDiv.textContent;
                 const currentDesc = descSpan.textContent;
 
-                // 2. Guardar HTML original para poder "Cancelar"
+                // 2. Save original HTML to allow "Cancel"
                 li.dataset.originalHtml = li.innerHTML;
 
-                // 3. Reemplazar HTML con el formulario
-                // NOTA: Usamos el mismo action que el link original tenía
+                // 3. Replace HTML with the inline form
                 const recipeIdUrl = window.location.pathname.split('/')[2]; // /receta/ID/...
                 const actionUrl = `/receta/${recipeIdUrl}/paso/editar/${stepId}`;
 
@@ -483,34 +489,34 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
             }
 
-            // Delegación para el botón CANCELAR (generado dinámicamente)
+            // Delegation for the CANCEL button
             const cancelBtn = event.target.closest('.btn-cancel-edit');
             if (cancelBtn) {
                 const li = cancelBtn.closest('li');
                 if (li.dataset.originalHtml) {
-                    li.innerHTML = li.dataset.originalHtml; // Restaurar
+                    li.innerHTML = li.dataset.originalHtml; // Restore original HTML
                 }
             }
         });
 
-        // Delegación para el ENVÍO del formulario de edición (SUBMIT)
+        // Delegation for the SUBMIT of the inline edit form
         stepsList.addEventListener('submit', async event => {
             if (event.target.classList.contains('edit-step-form')) {
                 event.preventDefault();
                 const form = event.target;
 
-                // Validación Bootstrap
+                // Bootstrap validation check
                 if (!form.checkValidity()) {
                     form.classList.add('was-validated');
                     return;
                 }
 
-                // Mostrar Spinner
+                // Show Spinner
                 document.getElementById('loadingSpinner').classList.remove('d-none');
 
                 try {
                     const formData = new FormData(form);
-                    // Convertir a JSON
+                    // Convert to JSON
                     const data = Object.fromEntries(formData.entries());
 
                     const response = await fetch(form.action, {
@@ -525,9 +531,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (result.success) {
                         const li = form.closest('li');
                         const recipeIdUrl = window.location.pathname.split('/')[2];
-                        const stepId = form.action.split('/').pop(); // Extraer ID de la URL
+                        const stepId = form.action.split('/').pop(); // Extract ID from URL
 
-                        // Reconstruir el LI con los nuevos datos (formato visual)
+                        // Reconstruct the LI with new data (Visual format)
                         li.innerHTML = `
                             <div class="ms-2 me-auto">
                                 <div class="fw-bold step-name">${result.step.name}</div>
@@ -543,7 +549,6 @@ document.addEventListener('DOMContentLoaded', () => {
                             </div>
                         `;
 
-                        // Opcional: Mostrar toast o modal pequeño de éxito
                     } else {
                         alert("Error: " + result.message);
                     }

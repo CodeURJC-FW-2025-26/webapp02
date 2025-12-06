@@ -1,1 +1,7 @@
+Hacer toda la vista de la página más profesional, más interactiva.
+
+Poner mejores fotos // cambiar las recetas // hacerlo mucho más pro
+
 Poner 18 recetas de ejemplo con fotos para hacer más visual el scroll infinito
+
+README
