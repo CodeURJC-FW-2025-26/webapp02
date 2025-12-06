@@ -1,3 +1,4 @@
+/* webapp02/src/database.js */
 
 import { MongoClient } from 'mongodb';
 

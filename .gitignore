@@ -1,3 +1,5 @@
+# webapp02/.gitignore
+
 node_modules
 uploads
 

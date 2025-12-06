@@ -1,4 +1,4 @@
-/* public/js/client.js */
+/* webapp02/public/js/client.js */
 
 console.log("Client script loaded correctly!");
 
@@ -156,24 +156,48 @@ document.addEventListener('DOMContentLoaded', () => {
                     const modal = new bootstrap.Modal(modalEl);
                     const modalTitle = document.getElementById('modalTitle');
                     const modalBody = document.getElementById('modalBody');
-                    const modalBtn = document.getElementById('modalActionBtn');
+                    const modalActionBtn = document.getElementById('modalActionBtn');
+                    const modalCloseBtn = document.getElementById('modalCloseBtn'); // Referencia al botón secundario
 
                     if (response.ok && result.success) {
-                        // SUCCESS
-                        modalTitle.textContent = "¡Éxito!";
+                        // --- CASO DE ÉXITO ---
+                        modalTitle.textContent = "¡Receta Creada!";
                         modalTitle.className = "modal-title text-success";
                         modalBody.textContent = result.message;
 
-                        modalBtn.classList.remove('d-none');
-                        modalBtn.textContent = "Ver Receta";
-                        modalBtn.href = result.redirectUrl || '/';
+                        // 1. Configurar botón principal (Ver Receta)
+                        modalActionBtn.classList.remove('d-none');
+                        modalActionBtn.textContent = "Ver Receta";
+                        modalActionBtn.className = "btn btn-dark"; // Verde para indicar éxito/avance
+                        modalActionBtn.href = result.redirectUrl || '/';
+
+                        // 2. Gestionar botón secundario (Cerrar)
+                        // Opción A: Ocultarlo para forzar el foco en "Ver Receta" (Más limpio)
+                        if (modalCloseBtn) modalCloseBtn.classList.add('d-none');
+
+                        // Opción B (Alternativa): Cambiar texto a "Cerrar" (si quieres permitir quedarse)
+                        /* 
+                        if (modalCloseBtn) {
+                             modalCloseBtn.textContent = "Cerrar";
+                             modalCloseBtn.classList.remove('d-none');
+                        }
+                        */
+
                     } else {
-                        // ERROR
+                        // --- CASO DE ERROR ---
                         modalTitle.textContent = "Error";
                         modalTitle.className = "modal-title text-danger";
                         modalBody.textContent = result.message || "Ha ocurrido un error desconocido.";
 
-                        modalBtn.classList.add('d-none');
+                        // 1. Ocultar botón de ir a receta
+                        modalActionBtn.classList.add('d-none');
+
+                        // 2. Mostrar y configurar botón de corregir
+                        if (modalCloseBtn) {
+                            modalCloseBtn.classList.remove('d-none');
+                            modalCloseBtn.textContent = "Cerrar y corregir";
+                            modalCloseBtn.className = "btn btn-dark";
+                        }
                     }
                     modal.show();
                 } else {
@@ -379,12 +403,27 @@ document.addEventListener('DOMContentLoaded', () => {
                     `;
                     stepsList.appendChild(li);
 
+                    // ELIMINAR MENSAJE DE LISTA VACÍA
+                    // Buscamos el párrafo por su ID
+                    const noStepsMsg = document.getElementById('noStepsMessage');
+                    // Si existe (es decir, si la lista estaba vacía antes), lo eliminamos
+                    if (noStepsMsg) {
+                        noStepsMsg.remove();
+                    }
+
                     // Show success modal (Optional but good UX)
                     const successModal = new bootstrap.Modal(document.getElementById('feedbackModal'));
                     document.getElementById('modalTitle').textContent = "¡Éxito!";
                     document.getElementById('modalTitle').className = "modal-title text-success";
                     document.getElementById('modalBody').textContent = result.message;
                     document.getElementById('modalActionBtn').classList.add('d-none');
+
+                    // --- MODIFICACIÓN DEL BOTÓN ---
+                    if (modalCloseBtn) {
+                        modalCloseBtn.textContent = "Aceptar"; // Cambiamos el texto para éxito
+                        modalCloseBtn.className = "btn btn-dark"; // Opcional: ponerlo verde
+                    }
+
                     successModal.show();
 
                 } else {
@@ -393,6 +432,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     document.getElementById('modalTitle').textContent = "Error";
                     document.getElementById('modalTitle').className = "modal-title text-danger";
                     document.getElementById('modalBody').textContent = result.message;
+
+                    // --- RESTAURAR BOTÓN (por si acaso) ---
+                    if (closeBtn) {
+                        closeBtn.textContent = "Cerrar y corregir";
+                        closeBtn.className = "btn btn-dark";
+                    }
+
                     errorModal.show();
                 }
 
@@ -428,6 +474,17 @@ document.addEventListener('DOMContentLoaded', () => {
                             // Remove from DOM (Rubric item 14)
                             const li = form.closest('li');
                             li.remove();
+                            // MOSTRAR MENSAJE SI LA LISTA QUEDA VACÍA
+                            const stepsList = document.getElementById('stepsList');
+                            // Si la lista no tiene hijos (<li>), volvemos a crear el mensaje
+                            if (stepsList.children.length === 0) {
+                                const p = document.createElement('p');
+                                p.className = "mt-3";
+                                p.id = "noStepsMessage";
+                                p.textContent = "Esta receta aún no tiene pasos definidos.";
+                                // Insertamos el mensaje justo después de la lista (ol)
+                                stepsList.parentNode.insertBefore(p, stepsList.nextSibling);
+                            }
                         } else {
                             // Error handling
                             alert("Error al eliminar el paso: " + result.message);

@@ -1,3 +1,6 @@
+/* webapp02/public/css/Cocina.css */
+
+
 /* --- STYLES INDEX ---
 1. GENERAL STYLES & TYPOGRAPHY
 2. HEADER (NAVBAR)
@@ -666,4 +669,75 @@ h2 {
 .page-link:focus {
     box-shadow: 0 0 0 0.25rem #222e38;
     color: #222e38;
+}
+
+/* --- 9. CORRECCIONES LISTA DE PASOS (Versión "Perfecta") --- */
+
+/* 
+ * 1. Contenedor de botones: 
+ * - align-items: center -> Centra verticalmente respecto al texto de la izquierda.
+ * - flex-shrink: 0 -> OBLIGATORIO. Impide que los botones se aplasten si el texto es largo.
+ */
+#stepsList .d-flex.gap-2 {
+    align-items: center;
+    flex-shrink: 0;
+    margin-left: 15px;
+    /* Un poco de aire extra para separar del texto */
+}
+
+/* 
+ * 2. CORRECCIÓN DE ALINEACIÓN DEL FORMULARIO
+ * Esto es lo que arregla que uno se vea más arriba que el otro.
+ * Quitamos márgenes y lo convertimos en flex para que no ocupe espacio extra.
+ */
+#stepsList form {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    /* Hace que el formulario abrace exactamente al botón */
+}
+
+/* 
+ * 3. Botones individuales:
+ * - Dimensiones fijas para que sean cuadrados exactos.
+ * - Flexbox interno para centrar el icono al pixel.
+ */
+#stepsList .btn {
+    min-height: auto !important;
+    /* Anula estilos heredados */
+    width: 38px;
+    /* Ancho fijo */
+    height: 38px;
+    /* Alto fijo idéntico al ancho */
+    padding: 0;
+    /* Eliminamos padding interno para control total */
+
+    display: inline-flex;
+    /* Flexbox inline */
+    justify-content: center;
+    /* Centrado horizontal del icono */
+    align-items: center;
+    /* Centrado vertical del icono */
+
+    border-radius: 8px;
+    /* Bordes un poco más suaves */
+    transition: transform 0.2s ease, background-color 0.2s;
+    /* Animación sutil */
+}
+
+/* 4. Ajuste del icono dentro del botón */
+#stepsList .btn i {
+    font-size: 1.1rem;
+    /* Tamaño del icono ajustado al botón */
+    line-height: 1;
+    /* Evita desplazamientos fantasma */
+    display: block;
+    /* Asegura comportamiento de bloque */
+}
+
+/* 5. Pequeño efecto visual al pasar el ratón (opcional, pero queda pro) */
+#stepsList .btn:hover {
+    transform: translateY(-2px);
+    /* Se eleva ligeramente */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }

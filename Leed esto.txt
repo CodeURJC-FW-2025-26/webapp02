@@ -1,0 +1,26 @@
+(NOSOTROS)
+
+Poner 18 recetas de ejemplo con fotos para hacer más visual el scroll infinito 
+(hacen falta el equivalente a 3 páginas)
+
+README
+
+
+(PROFE)
+
+Preguntar si al borrar un paso hace falta confirmación o no, o si simplemente lo borra de una. 
+En el enunciado no menciona cuadro de diálogo
+Preguntar si al crear una receta con éxito muestra mensaje de éxito con botón para ir a la receta o simplemente 
+redirige a la receta sin mensaje, directo. El enunciado no menciona cuadro.
+
+
+
+(OPCIONAL)
+
+Poner imágenes de mejor calidad en todo para que la web se vea mejor.
+
+Hacer toda la vista de la página más profesional, más interactiva. Dándole una buena modificación se puede hacer la web más chula: 
+cambiando los colores, estructurando mejor el display de la página de detalle, añadiendo un vídeo de fondo en la página principal/imágenes rotativas
+tipo tarjeta para las recetas, poniendo mejores fotos, profundizando en las recetas, se puede hacer todo mucho más pro.
+
+Ayúdame a limpiar todos los archivos de mi proyecto. Dime cuáles puedo eliminar ya (para la práctica 3, que es la final). Cuáles puedo mejorar (como el archivo cocina.css que seguramente se pueda simplificar). En general, quiero llegar a la versión más profesional de mi proyecto

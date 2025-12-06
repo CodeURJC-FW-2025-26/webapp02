@@ -1,3 +1,4 @@
+/* webapp02/data/recipes.json */
 [
     {
         "name": "Pulpo a la Gallega",
@@ -18,13 +19,13 @@
                 "name": "Asustar y cocer",
                 "description": "Pon a hervir agua y 'asusta' el pulpo 3 veces antes de cocerlo durante 30-40 minutos."
             },
-            { 
-                "order":3,
+            {
+                "order": 3,
                 "name": "Cortar",
                 "description": "Pela y corta las patatas en rodajas. Corta el pulpo con tijeras."
             },
-            { 
-                "order":4,
+            {
+                "order": 4,
                 "name": "Emplatar",
                 "description": "Monta el plato: base de patatas, pulpo, aceite, sal gorda y pimentón."
             }
@@ -152,11 +153,11 @@
                 "name": "Reposo en el horno",
                 "description": "Apagar el horno y dejar la tarta dentro con la puerta entreabierta durante 10-15 minutos. Sacar y dejar enfriar completamente a temperatura ambiente."
             },
-            {         
+            {
                 "order": 4,
                 "name": "Refrigerar y servir",
                 "description": "Una vez fría, refrigerar en la nevera al menos 4 horas (idealmente de un día para otro). Desmoldar y servir. Está mejor a temperatura ambiente."
-         }
+            }
         ]
     },
     {
@@ -208,7 +209,7 @@
                 "order": 3,
                 "name": "Montaje y Servir",
                 "description": "Escurrir bien las patatas fritas, colocarlas en un plato o cazuelita y salsear generosamente con la salsa brava bien caliente."
-         }
+            }
         ]
     },
     {
@@ -244,7 +245,7 @@
         "preparation_time": 35,
         "difficulty": "media",
         "image": "polloCurry.jpg",
-        "ingredients":"500 g de Pechuga de pollo \n1 Cebolla grande\n400 ml de Leche de coco \n2-3 cucharadas de Curry en polvo (al gusto)\nPimienta negra (al gusto)\nOpcional: Arroz basmati (para acompañar)",
+        "ingredients": "500 g de Pechuga de pollo \n1 Cebolla grande\n400 ml de Leche de coco \n2-3 cucharadas de Curry en polvo (al gusto)\nPimienta negra (al gusto)\nOpcional: Arroz basmati (para acompañar)",
         "steps": [
             {
                 "order": 1,

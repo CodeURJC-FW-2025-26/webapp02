@@ -1,27 +1,25 @@
+<!-- webapp02/README.md -->
+
 # Secretos de Cocina
 
 A website for homemade recipes.
-
 
 ## Development team
 
 | Full Name         | Official URJC email address                | GitHub      |
 |-------------------------|------------------------------------------|-------------|
-| Fernán Rama Hombreiro   | f.rama.2024@alumnos.urjc.es              | [fernanrama](https://github.com/fernanrama) |
-| Izan Calle Feijoo       | i.calle.2024@alumnos.urjc.es             | [IzanCalle](https://github.com/IzanCalle)   |
-| Rubén Torres Rivero     | r.torresr.2024@alumnos.urjc.es           | [Ruben2843](https://github.com/Ruben2843)   |
-
-
+| Fernán Rama Hombreiro   | <f.rama.2024@alumnos.urjc.es>              | [fernanrama](https://github.com/fernanrama) |
+| Izan Calle Feijoo       | <i.calle.2024@alumnos.urjc.es>             | [IzanCalle](https://github.com/IzanCalle)   |
+| Rubén Torres Rivero     | <r.torresr.2024@alumnos.urjc.es>           | [Ruben2843](https://github.com/Ruben2843)   |
 
 ## Coordination tools
 
 We do not use Trello.
 If we incorporate any tool, we will add the link here.
 
-
 ## Functionality
 
-###  Entities
+### Entities
 
 - Main Entity: Recipe  
   Attributes:  
@@ -36,13 +34,11 @@ If we incorporate any tool, we will add the link here.
 
 - Secondary Entity: Step  
   Attributes:  
-  - id (unique numeric identifier) 
-  - name (string, name of the step) 
+  - id (unique numeric identifier)
+  - name (string, name of the step)
   - order (integer, indicates the step number in the sequence)
   - description (detailed text of the step)  
   - image (optional, shows the result of that intermediate step)
-
-
 
 ### Images
 
@@ -50,15 +46,17 @@ If we incorporate any tool, we will add the link here.
 - Each step may include an image showing the intermediate state of the preparation.
 
 ### Categorization
+
 We will use categorization queries for the recipes.
 The user will be able to consult recipes according to their category:
 
-- Starters 
+- Starters
 - Main dish  
 - Desserts  
 - Vegans
 
 ### Search engine  
+
 We will add a search bar to the website to make it easier to explore the different recipes.
 
 ## Practice 1
@@ -75,8 +73,6 @@ We will add a search bar to the website to make it easier to explore the differe
   <img src="ScreenShots/PulpoALaGAlllega.jpeg" width="800" >
 </p>
 
-
-
 ### Members Participation
 
 #### Rubén Torres Rivero
@@ -86,18 +82,19 @@ However, most of my work has been focused on the AñadirReceta.html page, as I w
 
 5 most important commits:
 
-  1. Creation of the form in the AñadirReceta.html: https://github.com/CodeURJC-FW-2025-26/webapp02/commit/96afaf88d0b151c30b76c58a8ba5ea5a2d8559bb
-  2. Creation of the grid in the index.html: https://github.com/CodeURJC-FW-2025-26/webapp02/commit/1906256d8950cf646be112afbca4de00ecec0d34
-  3. Achieve that the grid is responsive: https://github.com/CodeURJC-FW-2025-26/webapp02/commit/5da793c4ae0a8c309ba337b683dd247541c2015b
-  4. Non- final decoration of the AñadirReceta.html: https://github.com/CodeURJC-FW-2025-26/webapp02/commit/613c454de76fecfe63e99ec2be19431934963813
-  5. Delete of the edit and delete ingredient buttons (they were unnecessary): https://github.com/CodeURJC-FW-2025-26/webapp02/commit/65bc5ce655816af879e6af08448177cca71f8073
+  1. Creation of the form in the AñadirReceta.html: <https://github.com/CodeURJC-FW-2025-26/webapp02/commit/96afaf88d0b151c30b76c58a8ba5ea5a2d8559bb>
+  2. Creation of the grid in the index.html: <https://github.com/CodeURJC-FW-2025-26/webapp02/commit/1906256d8950cf646be112afbca4de00ecec0d34>
+  3. Achieve that the grid is responsive: <https://github.com/CodeURJC-FW-2025-26/webapp02/commit/5da793c4ae0a8c309ba337b683dd247541c2015b>
+  4. Non- final decoration of the AñadirReceta.html: <https://github.com/CodeURJC-FW-2025-26/webapp02/commit/613c454de76fecfe63e99ec2be19431934963813>
+  5. Delete of the edit and delete ingredient buttons (they were unnecessary): <https://github.com/CodeURJC-FW-2025-26/webapp02/commit/65bc5ce655816af879e6af08448177cca71f8073>
 
 The 5 files I have worked on the most are:
-  1. AñadirReceta.html (https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/A%C3%B1adirReceta.html)
-  2. Index.html (https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/Index.html)
-  3. Cocina.css (https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/Cocina.css)
-  4. Pulpo.html (https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/Pulpo.html)
-  5. PatatasBravas.html (https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/PatatasBravas.html)
+
+  1. AñadirReceta.html (<https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/A%C3%B1adirReceta.html>)
+  2. Index.html (<https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/Index.html>)
+  3. Cocina.css (<https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/Cocina.css>)
+  4. Pulpo.html (<https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/Pulpo.html>)
+  5. PatatasBravas.html (<https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/PatatasBravas.html>)
 
 #### Izan Calle Feijoo
 
@@ -105,40 +102,41 @@ I have been working in several areas of the page, trying to improve its design a
 
 5 most important commits:
 
-  1. Creation of the navigation bar and top layout in the main page: https://github.com/CodeURJC-FW-2025-26/webapp02/commit/e8a3bfb4e46a2f997f76f9e50d200e0ca5f74374
-  2. Creation of the "Añadir Receta" button and improvement of the CSS: https://github.com/CodeURJC-FW-2025-26/webapp02/commit/51a3bd785713f42916e876e5d1ba2a020f7f2979
-  3. Color palette change and creation of the footer: https://github.com/CodeURJC-FW-2025-26/webapp02/commit/640b2bcfa7ff3851ddeaf907f47b5246c5d12e93
-  4. Creation of the layout and content of the first 2 detail pages (Pulpo.html and PatatasBravas.html): https://github.com/CodeURJC-FW-2025-26/webapp02/commit/b9c6be3757ead0e74e4c3ad2009423e9988d9ecc
-  5. Change in the style of the top header, including font style: https://github.com/CodeURJC-FW-2025-26/webapp02/commit/9e9be4fdfc60c73f56b103cdf08d2fd23d5abddd
+  1. Creation of the navigation bar and top layout in the main page: <https://github.com/CodeURJC-FW-2025-26/webapp02/commit/e8a3bfb4e46a2f997f76f9e50d200e0ca5f74374>
+  2. Creation of the "Añadir Receta" button and improvement of the CSS: <https://github.com/CodeURJC-FW-2025-26/webapp02/commit/51a3bd785713f42916e876e5d1ba2a020f7f2979>
+  3. Color palette change and creation of the footer: <https://github.com/CodeURJC-FW-2025-26/webapp02/commit/640b2bcfa7ff3851ddeaf907f47b5246c5d12e93>
+  4. Creation of the layout and content of the first 2 detail pages (Pulpo.html and PatatasBravas.html): <https://github.com/CodeURJC-FW-2025-26/webapp02/commit/b9c6be3757ead0e74e4c3ad2009423e9988d9ecc>
+  5. Change in the style of the top header, including font style: <https://github.com/CodeURJC-FW-2025-26/webapp02/commit/9e9be4fdfc60c73f56b103cdf08d2fd23d5abddd>
 
 The 5 files I have worked on the most are:
 
-  1. Index.html: https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/Index.html
-  2. Cocina.css: https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/Cocina.css
-  3. Pulpo.html: https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/Pulpo.html
-  4. PatatasBravas.html: https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/PatatasBravas.html
-  5. Añadir receta.html: https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/A%C3%B1adirReceta.html
+  1. Index.html: <https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/Index.html>
+  2. Cocina.css: <https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/Cocina.css>
+  3. Pulpo.html: <https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/Pulpo.html>
+  4. PatatasBravas.html: <https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/PatatasBravas.html>
+  5. Añadir receta.html: <https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/A%C3%B1adirReceta.html>
 
 #### Fernán Rama Hombreiro
 
-I have been working mainly on trying to give the entire website a more professional look. Starting from a very solid foundation laid by my colleagues, I have been able to improve the detail page (Pulpo.html) so that it has an aesthetic worthy of a serious project. 
+I have been working mainly on trying to give the entire website a more professional look. Starting from a very solid foundation laid by my colleagues, I have been able to improve the detail page (Pulpo.html) so that it has an aesthetic worthy of a serious project.
 Also, thanks to the good foundation we had built, I have been refining the most important sections so that the project adheres to the guidelines given.  
 Lastly, I organised the code contained in the files into sections to make it easier to understand and added comments that clearly explain each of the project's functionalities.
 
 5 most important commits:
 
-  1. Modification and improvement of the detail page ‘Pulpo.html’: (https://github.com/CodeURJC-FW-2025-26/webapp02/commit/3837443d9d87b62e78b9467422e624dcdbf004e4#diff-722c545a3b7dec713c7a7e32fabd71a0f0e0afec4197d400e95ce146db9222ff)
-  2. Restructuring and organisation of the pages ‘AñadirReceta.html’ and ‘Index.html’: (https://github.com/CodeURJC-FW-2025-26/webapp02/commit/d0b51dfe69646be2268b55baace1b070221b36da)
-  3. Improvement of headers and footers in all files for a more professional look: (https://github.com/CodeURJC-FW-2025-26/webapp02/commit/fd5ded0cafa585b198651cae40c297e1f231aec2)
-  4. Added comments to improve understanding of the entire code. All files: (https://github.com/CodeURJC-FW-2025-26/webapp02/commit/66c3dc50e96a2d0e4e088227e45fbdca28520546)
-  5. Improved functionalities of the form on file "AñadirReceta.html": (https://github.com/CodeURJC-FW-2025-26/webapp02/commit/3837443d9d87b62e78b9467422e624dcdbf004e4)
+  1. Modification and improvement of the detail page ‘Pulpo.html’: (<https://github.com/CodeURJC-FW-2025-26/webapp02/commit/3837443d9d87b62e78b9467422e624dcdbf004e4#diff-722c545a3b7dec713c7a7e32fabd71a0f0e0afec4197d400e95ce146db9222ff>)
+  2. Restructuring and organisation of the pages ‘AñadirReceta.html’ and ‘Index.html’: (<https://github.com/CodeURJC-FW-2025-26/webapp02/commit/d0b51dfe69646be2268b55baace1b070221b36da>)
+  3. Improvement of headers and footers in all files for a more professional look: (<https://github.com/CodeURJC-FW-2025-26/webapp02/commit/fd5ded0cafa585b198651cae40c297e1f231aec2>)
+  4. Added comments to improve understanding of the entire code. All files: (<https://github.com/CodeURJC-FW-2025-26/webapp02/commit/66c3dc50e96a2d0e4e088227e45fbdca28520546>)
+  5. Improved functionalities of the form on file "AñadirReceta.html": (<https://github.com/CodeURJC-FW-2025-26/webapp02/commit/3837443d9d87b62e78b9467422e624dcdbf004e4>)
 
 The 5 files I have worked on the most are:
-  1. Pulpo.html (https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/Pulpo.html)
-  2. Index.html (https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/Index.html)
-  3. Cocina.css (https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/Cocina.css)
-  4. AñadirReceta.html (https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/A%C3%B1adirReceta.html)
-  5. PatatasBravas.html (https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/PatatasBravas.html)
+
+  1. Pulpo.html (<https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/Pulpo.html>)
+  2. Index.html (<https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/Index.html>)
+  3. Cocina.css (<https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/Cocina.css>)
+  4. AñadirReceta.html (<https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/A%C3%B1adirReceta.html>)
+  5. PatatasBravas.html (<https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/PatatasBravas.html>)
 
 ## Practice 2
 
@@ -146,34 +144,35 @@ The 5 files I have worked on the most are:
 
 To run this application, you will need Node.js (version 18 or higher) and MongoDB Server (version 5 or higher) installed on your system.
 
-1.  Clone the repository or download the "practica2" release ZIP file and unzip it.
-2.  Navigate to the project's root directory in your terminal.
-3.  Run the command `npm install` to install all the necessary dependencies listed in `package.json`.
-4.  Ensure your MongoDB server is running.
-5.  Start the application with the command `npm start`. This will execute `src/app.js`. The script will automatically connect to the database, seed it with initial data if it's empty, and start the web server.
-6.  Open your web browser and go to `http://localhost:3000`.
+1. Clone the repository or download the "practica2" release ZIP file and unzip it.
+2. Navigate to the project's root directory in your terminal.
+3. Run the command `npm install` to install all the necessary dependencies listed in `package.json`.
+4. Ensure your MongoDB server is running.
+5. Start the application with the command `npm start`. This will execute `src/app.js`. The script will automatically connect to the database, seed it with initial data if it's empty, and start the web server.
+6. Open your web browser and go to `http://localhost:3000`.
 
 ### File Description
 
 The project is structured following a professional, modular approach:
 
--   `data/`: Contains the initial static data, including `recipes.json` and the source images.
--   `public/`: Holds all static assets served to the client, like the `Cocina.css` stylesheet and public images (e.g., the logo).
--   `src/`: The main source code for the application.
-    -   `routes/`: Contains the routing logic.
-        -   `main.js`: The application's main router. It defines all URL endpoints, handles requests (GET, POST), validates form data, and interacts with the MongoDB database to manage recipes and their steps.
-    -   `views/`: Contains all the Mustache HTML templates.
-        -   `partials/`: Reusable components like `header.html` and `footer.html`.
-        -   Other `.html` files are the different pages of the application (index, recipe detail, form, etc.).
-    -   `uploads/`: This folder is where user-uploaded images are stored. It is created automatically if it doesn't exist.
-    -   `app.js`: The main entry point of the application. It configures and starts the Express server, sets up the Mustache template engine, serves static files, connects to the database, and imports the main router.
-    -   `database.js`: Handles the MongoDB connection. It exports a `connect` function and the `db` object for other modules to access the active database connection.
-    -   `loadData.js`: This script seeds the database. It loads initial recipes from `recipes.json` and copies their images to the `uploads` folder if the database is detected as empty on startup.
-    -   `multerConfig.js`: Configures the Multer middleware, specifying that uploaded files should be saved to the `uploads/` folder with a unique name to prevent collisions.
+- `data/`: Contains the initial static data, including `recipes.json` and the source images.
+- `public/`: Holds all static assets served to the client, like the `Cocina.css` stylesheet and public images (e.g., the logo).
+- `src/`: The main source code for the application.
+  - `routes/`: Contains the routing logic.
+    - `main.js`: The application's main router. It defines all URL endpoints, handles requests (GET, POST), validates form data, and interacts with the MongoDB database to manage recipes and their steps.
+  - `views/`: Contains all the Mustache HTML templates.
+    - `partials/`: Reusable components like `header.html` and `footer.html`.
+    - Other `.html` files are the different pages of the application (index, recipe detail, form, etc.).
+  - `uploads/`: This folder is where user-uploaded images are stored. It is created automatically if it doesn't exist.
+  - `app.js`: The main entry point of the application. It configures and starts the Express server, sets up the Mustache template engine, serves static files, connects to the database, and imports the main router.
+  - `database.js`: Handles the MongoDB connection. It exports a `connect` function and the `db` object for other modules to access the active database connection.
+  - `loadData.js`: This script seeds the database. It loads initial recipes from `recipes.json` and copies their images to the `uploads` folder if the database is detected as empty on startup.
+  - `multerConfig.js`: Configures the Multer middleware, specifying that uploaded files should be saved to the `uploads/` folder with a unique name to prevent collisions.
 
 ### Demonstration video
 
-The video demonstrating the functionality is available at: https://youtu.be/g-BBM9ncu94
+The video demonstrating the functionality is available at: <https://youtu.be/g-BBM9ncu94>
+
 ### Members Participation
 
 #### Fernán Rama Hombreiro
@@ -194,7 +193,7 @@ For Practice 2, my primary role was the architecture and implementation of the a
   2. [src/app.js](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/app.js)
   3. [src/database.js](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/database.js)
   4. [src/multerConfig.js](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/multerConfig.js)
-  5. [src/views/detalleReceta.html](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/views/detalleReceta.html) 
+  5. [src/views/detalleReceta.html](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/views/detalleReceta.html)
 
 ---
 
