@@ -20,6 +20,7 @@ router.use((req, res, next) => {
     next(); // Continue to the requested route (e.g., GET '/', POST '/receta/nueva', etc.)
 });
 
+/*
 // Middleware for validating recipe data
 // Accepts a boolean 'isEditing' to adapt name validation
 const validateRecipe = (isEditing = false) => {
@@ -79,6 +80,31 @@ const validateRecipe = (isEditing = false) => {
         }
     };
 };
+*/
+
+// API: Comprobar si el título ya existe (para validación AJAX)
+router.get('/api/check-title', async (req, res) => {
+    try {
+        const { title, id } = req.query;
+
+        // Buscamos si existe una receta con ese nombre (insensible a mayúsculas/minúsculas)
+        // La expresión regular ^...$ asegura que coincida exactamente con todo el texto
+        const query = { name: { $regex: `^${title.trim()}$`, $options: 'i' } };
+
+        // Si estamos editando (tenemos ID), excluimos la receta actual de la búsqueda
+        if (id) {
+            query._id = { $ne: new ObjectId(id) };
+        }
+
+        const existingRecipe = await db.connection.collection('recipes').findOne(query);
+
+        // Devolvemos JSON: exists es true si se encontró algo
+        res.json({ exists: !!existingRecipe });
+    } catch (error) {
+        console.error("Error en validación de título:", error);
+        res.status(500).json({ error: 'Server error' });
+    }
+});
 
 // Route to the homepage with pagination, search, and filter
 router.get('/', async (req, res) => {
@@ -223,9 +249,43 @@ router.get('/receta/nueva', (req, res) => {
 });
 
 // PROCESS THE SUBMISSION OF THE FORM TO CREATE A NEW RECIPE
-router.post('/receta/nueva', upload.single('recipeImage'), validateRecipe(false), async (req, res) => {
+// Nota: Hemos quitado el middleware validateRecipe(false) para manejar los errores manualmente con JSON
+router.post('/receta/nueva', upload.single('recipeImage'), async (req, res) => {
     try {
         const { recipeName, description, ingredients, category, difficulty, preparationTime } = req.body;
+
+        // --- 1. VALIDACIONES DEL SERVIDOR (Replica de validateRecipe) ---
+
+        // Campos obligatorios
+        if (!recipeName || !description || !ingredients || !category || !difficulty || !preparationTime) {
+            return res.status(400).json({ success: false, message: 'Todos los campos son obligatorios.' });
+        }
+
+        // Mayúscula inicial
+        if (recipeName.trim()[0] !== recipeName.trim()[0].toUpperCase()) {
+            return res.status(400).json({ success: false, message: 'El nombre de la receta debe empezar con mayúscula.' });
+        }
+
+        // Longitud descripción
+        if (description.trim().length < 20 || description.trim().length > 500) {
+            return res.status(400).json({ success: false, message: 'La descripción debe tener entre 20 y 500 caracteres.' });
+        }
+
+        // Tiempo válido
+        if (isNaN(preparationTime) || parseInt(preparationTime) <= 0) {
+            return res.status(400).json({ success: false, message: 'El tiempo de preparación debe ser un número positivo.' });
+        }
+
+        // Nombre único
+        const existingRecipe = await db.connection.collection('recipes').findOne({
+            name: { $regex: `^${recipeName.trim()}$`, $options: 'i' }
+        });
+
+        if (existingRecipe) {
+            return res.status(400).json({ success: false, message: `Ya existe una receta con el nombre "${recipeName}".` });
+        }
+
+        // --- 2. CREACIÓN DEL OBJETO ---
 
         const newRecipe = {
             name: recipeName.trim(),
@@ -234,24 +294,26 @@ router.post('/receta/nueva', upload.single('recipeImage'), validateRecipe(false)
             category: category,
             difficulty: difficulty,
             preparation_time: parseInt(preparationTime),
-            image: req.file ? req.file.filename : 'logo.jpg', // We just save the file name
+            image: req.file ? req.file.filename : 'logo.jpg', // Guardamos solo el nombre del archivo
             steps: []
         };
 
+        // --- 3. INSERCIÓN EN BASE DE DATOS ---
+
         const result = await db.connection.collection('recipes').insertOne(newRecipe);
 
-        res.render('confirmacion', {
+        // --- 4. RESPUESTA JSON ---
+        res.json({
+            success: true,
             message: `La receta "${newRecipe.name}" ha sido creada con éxito.`,
-            nextLink: `/receta/${result.insertedId}`,
-            nextLinkText: 'Ver la nueva receta'
+            redirectUrl: `/receta/${result.insertedId}`
         });
 
     } catch (error) {
         console.error("❌ Error al crear la receta:", error);
-        res.status(500).render('error', {
-            errorMessage: 'Error interno del servidor. No se pudo guardar la receta.',
-            backUrl: '/',
-            backUrlText: 'Volver a la página principal'
+        res.status(500).json({
+            success: false,
+            message: 'Error interno del servidor. No se pudo guardar la receta.'
         });
     }
 });
@@ -344,10 +406,45 @@ router.get('/receta/editar/:id', async (req, res) => {
 });
 
 // PROCESS THE SUBMISSION OF THE FORM TO EDIT A RECIPE
-router.post('/receta/editar/:id', upload.single('recipeImage'), validateRecipe(true), async (req, res) => {
+// Nota: Hemos quitado el middleware validateRecipe(true)
+router.post('/receta/editar/:id', upload.single('recipeImage'), async (req, res) => {
     try {
         const recipeId = req.params.id;
         const { recipeName, description, ingredients, category, difficulty, preparationTime } = req.body;
+
+        if (!ObjectId.isValid(recipeId)) {
+            return res.status(400).json({ success: false, message: 'ID de receta inválido.' });
+        }
+
+        // --- 1. VALIDACIONES DEL SERVIDOR ---
+
+        if (!recipeName || !description || !ingredients || !category || !difficulty || !preparationTime) {
+            return res.status(400).json({ success: false, message: 'Todos los campos son obligatorios.' });
+        }
+
+        if (recipeName.trim()[0] !== recipeName.trim()[0].toUpperCase()) {
+            return res.status(400).json({ success: false, message: 'El nombre debe empezar con mayúscula.' });
+        }
+
+        if (description.trim().length < 20 || description.trim().length > 500) {
+            return res.status(400).json({ success: false, message: 'La descripción debe tener entre 20 y 500 caracteres.' });
+        }
+
+        if (isNaN(preparationTime) || parseInt(preparationTime) <= 0) {
+            return res.status(400).json({ success: false, message: 'Tiempo inválido.' });
+        }
+
+        // Validación de nombre único (excluyendo la receta actual)
+        const existingRecipe = await db.connection.collection('recipes').findOne({
+            name: { $regex: `^${recipeName.trim()}$`, $options: 'i' },
+            _id: { $ne: new ObjectId(recipeId) }
+        });
+
+        if (existingRecipe) {
+            return res.status(400).json({ success: false, message: `El nombre "${recipeName}" ya está en uso por otra receta.` });
+        }
+
+        // --- 2. ACTUALIZACIÓN ---
 
         const updateData = {
             name: recipeName.trim(),
@@ -359,7 +456,7 @@ router.post('/receta/editar/:id', upload.single('recipeImage'), validateRecipe(t
         };
 
         if (req.file) {
-            updateData.image = req.file.filename; // We just save the file name
+            updateData.image = req.file.filename;
         }
 
         await db.connection.collection('recipes').updateOne(
@@ -367,18 +464,18 @@ router.post('/receta/editar/:id', upload.single('recipeImage'), validateRecipe(t
             { $set: updateData }
         );
 
-        res.render('confirmacion', {
+        // --- 3. RESPUESTA JSON ---
+        res.json({
+            success: true,
             message: 'Receta actualizada correctamente.',
-            nextLink: `/receta/${recipeId}`,
-            nextLinkText: 'Volver a la receta'
+            redirectUrl: `/receta/${recipeId}`
         });
 
     } catch (error) {
         console.error("❌ Error al editar la receta:", error);
-        res.status(500).render('error', {
-            errorMessage: 'Error interno del servidor al actualizar la receta.',
-            backUrl: `/receta/${recipeId}`, // Return to the details page if there is a serious error
-            backUrlText: 'Volver a la receta'
+        res.status(500).json({
+            success: false,
+            message: 'Error interno del servidor al actualizar la receta.'
         });
     }
 });

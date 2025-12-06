@@ -38,6 +38,36 @@
     <div class="footer-bottom">
         <p>&copy; 2025 Secretos de Cocina. Todos los derechos reservados.</p>
     </div>
+
+    <!-- SPINNER DE CARGA (Overlay) -->
+    <div id="loadingSpinner"
+        class="d-none position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center"
+        style="background: rgba(255,255,255,0.8); z-index: 2000;">
+        <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+            <span class="visually-hidden">Cargando...</span>
+        </div>
+    </div>
+
+    <!-- MODAL GENÉRICO DE BOOTSTRAP -->
+    <div class="modal fade" id="feedbackModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">Título</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modalBody">
+                    Mensaje...
+                </div>
+                <div class="modal-footer">
+                    <!-- El botón "Cerrar" cierra el modal y permite corregir (Rúbrica punto 7) -->
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar y corregir</button>
+                    <!-- Este botón aparecerá solo en éxito para ir al inicio (Rúbrica punto 6) -->
+                    <a href="/" id="modalActionBtn" class="btn btn-primary d-none">Volver al inicio</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </footer>
 
 <!-- Scripts de Bootstrap -->
