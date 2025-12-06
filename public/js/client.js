@@ -49,14 +49,14 @@ document.addEventListener('DOMContentLoaded', () => {
         // Configure Action Button (e.g., "View Recipe")
         if (options.showActionBtn) {
             modalActionBtn.classList.remove('d-none');
-            modalActionBtn.textContent = options.actionText || "Continue";
+            modalActionBtn.textContent = options.actionText || "Continuar";
             modalActionBtn.href = options.actionUrl || '#';
             if (modalCloseBtn) modalCloseBtn.classList.add('d-none'); // Hide close button if action is mandatory
         } else {
             modalActionBtn.classList.add('d-none');
             if (modalCloseBtn) {
                 modalCloseBtn.classList.remove('d-none');
-                modalCloseBtn.textContent = options.closeBtnText || "Close";
+                modalCloseBtn.textContent = options.closeBtnText || "Cerrar";
             }
         }
 
@@ -88,9 +88,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Sync Validation: Uppercase check
                 if (nameValue.length > 0 && nameValue[0] !== nameValue[0].toUpperCase()) {
-                    nameInput.setCustomValidity("The name must start with an uppercase letter.");
+                    nameInput.setCustomValidity("El nombre debe comenzar con mayúscula.");
                     nameInput.classList.add('is-invalid');
                     nameInput.classList.remove('is-valid');
+
+                    // Ensure feedback is visible
+                    const feedbackDiv = nameInput.nextElementSibling;
+                    if (feedbackDiv && feedbackDiv.classList.contains('invalid-feedback')) {
+                        feedbackDiv.textContent = "El nombre debe comenzar con mayúscula.";
+                    }
                     return;
                 } else {
                     nameInput.setCustomValidity(""); // Reset
@@ -113,13 +119,13 @@ document.addEventListener('DOMContentLoaded', () => {
                             const data = await response.json();
 
                             if (data.exists) {
-                                nameInput.setCustomValidity("This recipe name already exists.");
+                                nameInput.setCustomValidity("Este nombre ya existe.");
                                 nameInput.classList.add('is-invalid');
                                 nameInput.classList.remove('is-valid');
                                 // Update feedback text dynamically if element exists
                                 const feedbackDiv = nameInput.nextElementSibling;
                                 if (feedbackDiv && feedbackDiv.classList.contains('invalid-feedback')) {
-                                    feedbackDiv.textContent = "This title is already in use. Please choose another.";
+                                    feedbackDiv.textContent = "Este título ya está en uso. Por favor elige otro.";
                                 }
                             } else {
                                 nameInput.setCustomValidity("");
@@ -177,7 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Image Processing & Preview
             const handleFiles = (file) => {
                 if (!file.type.startsWith('image/')) {
-                    alert("Only image files are allowed.");
+                    showFeedbackModal("Error", "Solo se permiten archivos de imagen.", "error");
                     return;
                 }
 
@@ -189,7 +195,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     previewContainer.innerHTML = `
                         <img src="${e.target.result}" class="img-thumbnail" style="max-width: 200px;">
                         <div class="mt-2">
-                            <button type="button" class="btn btn-sm btn-danger" id="btnRemoveImage">Remove Image</button>
+                            <button type="button" class="btn btn-sm btn-outline-danger" id="btnRemoveImage">
+                                <i class="bi bi-trash"></i> Eliminar imagen
+                            </button>
                         </div>
                     `;
                     previewContainer.classList.remove('d-none');
@@ -229,7 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Disable UI to prevent double submission
             submitBtn.disabled = true;
-            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Processing...';
+            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Procesando...';
             toggleSpinner(true);
 
             try {
@@ -249,14 +257,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 toggleSpinner(false);
 
                 if (response.ok && result.success) {
-                    showFeedbackModal("Success!", result.message, "success", {
+                    showFeedbackModal("¡Éxito!", result.message, "success", {
                         showActionBtn: true,
-                        actionText: "View Recipe",
+                        actionText: "Ver Receta",
                         actionUrl: result.redirectUrl || '/'
                     });
                 } else {
-                    showFeedbackModal("Error", result.message || "Unknown error occurred.", "error", {
-                        closeBtnText: "Close and Fix"
+                    showFeedbackModal("Error", result.message || "Ocurrió un error desconocido.", "error", {
+                        closeBtnText: "Cerrar y Corregir"
                     });
                     // Re-enable button on error to allow retry
                     submitBtn.disabled = false;
@@ -266,7 +274,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } catch (error) {
                 toggleSpinner(false);
                 console.error("Critical Error:", error);
-                alert("Communication error with the server.");
+                showFeedbackModal("Error de Conexión", "No se pudo comunicar con el servidor.", "error");
                 submitBtn.disabled = false;
                 submitBtn.textContent = originalBtnText;
             }
@@ -356,7 +364,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Bootstrap Modal for Confirmation
             const confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
-            document.getElementById('confirmModalBody').textContent = "Are you sure you want to delete this recipe entirely?";
+            document.getElementById('confirmModalBody').textContent = "¿Estás seguro de que quieres borrar esta receta por completo?";
             const confirmBtn = document.getElementById('confirmModalBtn');
 
             confirmBtn.onclick = async () => {
@@ -383,7 +391,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 } catch (err) {
                     console.error(err);
                     toggleSpinner(false);
-                    alert("An error occurred while deleting.");
+                    showFeedbackModal("Error", "Ocurrió un error al intentar borrar.", "error");
                 }
             };
 
@@ -432,8 +440,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     const li = document.createElement('li');
                     li.className = "list-group-item d-flex justify-content-between align-items-center";
                     li.id = `step-${newStep._id}`;
+
+                    // HTML updated with styled buttons
                     li.innerHTML = `
-                        <div class="ms-2 me-auto">
+                        <div class="ms-2 me-auto w-100">
                             <div class="fw-bold step-name">${newStep.name}</div>
                             <span class="step-desc">${newStep.description}</span>
                         </div>
@@ -452,7 +462,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const noStepsMsg = document.getElementById('noStepsMessage');
                     if (noStepsMsg) noStepsMsg.remove();
 
-                    showFeedbackModal("Success!", result.message, "success", { closeBtnText: "OK" });
+                    showFeedbackModal("¡Hecho!", result.message, "success", { closeBtnText: "Aceptar" });
 
                 } else {
                     showFeedbackModal("Error", result.message, "error");
@@ -480,7 +490,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Confirmation Modal
                 const confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
-                document.getElementById('confirmModalBody').textContent = "Are you sure you want to delete this step?";
+                document.getElementById('confirmModalBody').textContent = "¿Estás seguro de que quieres eliminar este paso?";
                 const confirmBtn = document.getElementById('confirmModalBtn');
 
                 confirmBtn.onclick = async () => {
@@ -507,12 +517,12 @@ document.addEventListener('DOMContentLoaded', () => {
                                     const p = document.createElement('p');
                                     p.className = "mt-3 text-muted";
                                     p.id = "noStepsMessage";
-                                    p.textContent = "This recipe has no steps yet.";
+                                    p.textContent = "Esta receta aún no tiene pasos.";
                                     stepsList.parentNode.insertBefore(p, stepsList.nextSibling);
                                 }
                             }, 500);
                         } else {
-                            alert("Error deleting step: " + result.message);
+                            showFeedbackModal("Error", "Error eliminando paso: " + result.message, "error");
                         }
                     } catch (err) { console.error(err); }
                 };
@@ -555,7 +565,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                         // Restore standard view with updated data
                         li.innerHTML = `
-                            <div class="ms-2 me-auto">
+                            <div class="ms-2 me-auto w-100">
                                 <div class="fw-bold step-name">${result.step.name}</div>
                                 <span class="step-desc">${result.step.description}</span>
                             </div>
@@ -569,7 +579,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             </div>
                         `;
                     } else {
-                        alert("Error: " + result.message);
+                        showFeedbackModal("Error", "Error: " + result.message, "error");
                     }
                 } catch (err) {
                     console.error(err);
@@ -596,23 +606,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Store original HTML for cancel action
                 li.dataset.originalHtml = li.innerHTML;
 
-                // Inject Form
+                // Inject Form (Full width style classes)
                 const recipeIdUrl = window.location.pathname.split('/')[2];
                 const actionUrl = `/receta/${recipeIdUrl}/paso/editar/${stepId}`;
 
                 li.innerHTML = `
                     <form action="${actionUrl}" method="POST" class="w-100 edit-step-form needs-validation" novalidate>
-                        <div class="mb-2">
-                            <input type="text" class="form-control form-control-sm" name="stepName" value="${currentName}" required>
-                            <div class="invalid-feedback">Title is required.</div>
+                        <h6 class="mb-3 text-muted border-bottom pb-2">Editar Paso</h6>
+                        
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold text-secondary">Título</label>
+                            <input type="text" class="form-control" name="stepName" value="${currentName}" required>
+                            <div class="invalid-feedback">El título es obligatorio.</div>
                         </div>
-                        <div class="mb-2">
-                            <textarea class="form-control form-control-sm" name="stepDescription" rows="2" required>${currentDesc}</textarea>
-                            <div class="invalid-feedback">Description is required.</div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold text-secondary">Descripción</label>
+                            <textarea class="form-control" name="stepDescription" rows="3" required>${currentDesc}</textarea>
+                            <div class="invalid-feedback">La descripción es obligatoria.</div>
                         </div>
-                        <div class="d-flex justify-content-end gap-2">
-                            <button type="button" class="btn btn-sm btn-dark btn-cancel-edit">Cancel</button>
-                            <button type="submit" class="btn btn-sm btn-dark">Save</button>
+                        
+                        <div class="d-flex justify-content-end gap-2 pt-2">
+                            <button type="button" class="btn btn-sm btn-outline-dark btn-cancel-edit text-white px-3">Cancelar</button>
+                            <button type="submit" class="btn btn-sm btn-dark px-3">Guardar</button>
                         </div>
                     </form>
                 `;

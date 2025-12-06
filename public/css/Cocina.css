@@ -439,7 +439,7 @@ h2 {
 }
 
 .DecorativeImages img:nth-child(2) {
-    transform: translate(225px, 10px);
+    transform: translate(100px, 100px);
 }
 
 /* -- Drag & Drop Zone Styling -- */
@@ -464,36 +464,28 @@ h2 {
     transform: translateY(-5px);
 }
 
-/* --- 8. FEEDBACK PAGES --- */
-.feedback-page {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 3rem 1rem;
+/* --- 8. FEEDBACK PAGES & MODALS --- */
+/* Contrast improvement for the Modal */
+#feedbackModal .modal-content {
+    background-color: #ffffff;
+    /* Pure white background */
+    color: #212529;
+    /* Near-black text for maximum contrast */
+    border: none;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
-.feedback-icon {
-    font-size: 4rem;
-    margin-bottom: 1rem;
+#feedbackModal .modal-header {
+    border-bottom: 1px solid #dee2e6;
+    background-color: #f8f9fa;
+    /* Very light gray header */
+    border-radius: 5px 5px 0 0;
 }
 
-.feedback-title {
-    font-family: var(--font-display);
-    font-weight: bold;
-    font-size: 2.5rem;
-}
-
-.feedback-text {
-    font-size: 1.25rem;
-    max-width: 600px;
-    margin-top: 1rem;
-}
-
-.feedback-icon--error,
-.feedback-title--error {
-    color: var(--bs-danger);
+#feedbackModal .modal-body {
+    font-size: 1.1rem;
+    /* Slightly larger text */
+    padding: 2rem;
 }
 
 /* --- 9. PAGINATION --- */
@@ -540,46 +532,107 @@ h2 {
 
 /* --- 10. DYNAMIC COMPONENTS & ANIMATIONS --- */
 
-/* Step List Alignment Fixes */
-#stepsList .d-flex.gap-2 {
-    align-items: center;
-    flex-shrink: 0;
-    margin-left: 15px;
+/* Style for the Inline edit form (Card Aesthetic) */
+.edit-step-form {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e9ecef;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    animation: fadeIn 0.3s ease-in-out;
 }
 
-#stepsList form {
-    margin: 0;
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.edit-step-form textarea {
+    resize: none;
+}
+
+/* --- STEP BUTTONS (PENCIL AND TRASH CAN) --- */
+
+/* Button container: Ensures perfect vertical alignment with the text */
+#stepsList .d-flex.gap-2 {
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+/* Base style for both buttons (Edit and Delete) */
+#stepsList .btn-edit-step,
+#stepsList .delete-step-form button {
+    width: 40px;
+    /* Fixed width */
+    height: 40px;
+    /* Fixed height (square) */
+    display: flex;
+    /* Flexbox to center the icon */
+    align-items: center;
+    /* Vertical centering of the icon */
+    justify-content: center;
+    /* Horizontal centering of the icon */
     padding: 0;
+    /* No internal padding that shifts the icon */
+    background-color: #fff;
+    /* White background */
+    border-width: 2px;
+    /* Slightly thicker border to make the color visible */
+    border-style: solid;
+    transition: all 0.3s ease;
+}
+
+/* Specific adjustment for the EDIT button (Blue) */
+#stepsList .btn-edit-step {
+    border-color: var(--bs-primary);
+    color: var(--bs-primary);
+}
+
+#stepsList .btn-edit-step:hover {
+    background-color: var(--bs-primary);
+    color: white;
+    transform: translateY(-2px);
+    /* Small jump on hover */
+}
+
+/* Specific adjustment for the DELETE button (Red) */
+#stepsList .delete-step-form button {
+    border-color: var(--bs-danger);
+    color: var(--bs-danger);
+}
+
+#stepsList .delete-step-form button:hover {
+    background-color: var(--bs-danger);
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Margin correction in forms inside lists */
+#stepsList form.delete-step-form {
+    margin: 0;
     display: flex;
 }
 
-#stepsList .btn {
-    min-height: auto !important;
-    width: 38px;
-    height: 38px;
-    padding: 0;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 8px;
-    transition: transform 0.2s ease, background-color 0.2s;
-}
-
-#stepsList .btn i {
-    font-size: 1.1rem;
-    line-height: 1;
-    display: block;
-}
-
-#stepsList .btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-/* Fade Out Animation for JS deletion */
+/* Deletion animation */
 .fade-out {
     opacity: 0;
     transform: translateX(20px);
     transition: opacity 0.5s ease-out, transform 0.5s ease-out;
     pointer-events: none;
+}
+
+/* Ensure that the inline form buttons DO NOT inherit the fixed icon size */
+#stepsList .edit-step-form .btn {
+    width: auto;
+    height: auto;
 }

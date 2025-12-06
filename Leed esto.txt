@@ -6,6 +6,8 @@ Poner 18 recetas de ejemplo con fotos para hacer más visual el scroll infinito
 hacer el README
 
 
+Al añadir receta botón para volver a la página principal
+
 (PROFE)
 
 Preguntar si al borrar un paso hace falta confirmación o no, o si simplemente lo borra de una. 
