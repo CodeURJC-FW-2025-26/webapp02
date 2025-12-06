@@ -142,6 +142,51 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert("Error crítico de comunicación con el servidor");
             }
         }, false);
+
+        // --- IMAGE PREVIEW LOGIC ---
+        const imageInput = document.getElementById('recipeImage');
+        // Crea un div para la preview si no existe en el HTML o úsalo si ya lo tienes
+        if (imageInput) {
+            // Buscar o crear contenedor de preview
+            let previewContainer = document.getElementById('image-preview-container');
+            if (!previewContainer) {
+                previewContainer = document.createElement('div');
+                previewContainer.id = 'image-preview-container';
+                previewContainer.className = 'mt-3 d-none'; // Oculto por defecto
+                imageInput.parentNode.appendChild(previewContainer);
+            }
+
+            imageInput.addEventListener('change', function (event) {
+                const file = event.target.files[0];
+                previewContainer.innerHTML = ''; // Limpiar anterior
+
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        img.className = 'img-thumbnail';
+                        img.style.maxWidth = '200px';
+
+                        // Botón para eliminar imagen
+                        const removeBtn = document.createElement('button');
+                        removeBtn.type = 'button';
+                        removeBtn.className = 'btn btn-sm btn-danger mt-1 d-block';
+                        removeBtn.textContent = 'Eliminar imagen';
+                        removeBtn.onclick = () => {
+                            imageInput.value = ''; // Limpiar input
+                            previewContainer.classList.add('d-none');
+                            previewContainer.innerHTML = '';
+                        };
+
+                        previewContainer.appendChild(img);
+                        previewContainer.appendChild(removeBtn);
+                        previewContainer.classList.remove('d-none');
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
     }
 
     // ============================================================
@@ -344,26 +389,46 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 3. Borrar Paso (Delegación de eventos para que funcione en los nuevos pasos creados)
+    // 3. Borrar Paso (Delegación de eventos con MODAL)
     const stepsList = document.getElementById('stepsList');
     if (stepsList) {
         stepsList.addEventListener('submit', async event => {
             if (event.target.classList.contains('delete-step-form')) {
-                event.preventDefault();
+                event.preventDefault(); // Detener envío
                 const form = event.target;
 
-                if (!confirm("¿Borrar paso?")) return; // Simplificado, usar modal Bootstrap mejor
+                // Instancia del modal existente
+                const confirmModalElement = document.getElementById('confirmModal');
+                const confirmModal = new bootstrap.Modal(confirmModalElement);
 
-                try {
-                    const response = await fetch(form.action, { method: 'POST' });
-                    const result = await response.json();
+                // Personalizar texto
+                document.getElementById('confirmModalBody').textContent = "¿Seguro que quieres eliminar este paso?";
+                const confirmBtn = document.getElementById('confirmModalBtn');
 
-                    if (result.success) {
-                        // Eliminar del DOM (Rúbrica punto 14)
-                        const li = form.closest('li');
-                        li.remove();
-                    }
-                } catch (err) { console.error(err); }
+                // Lógica al confirmar
+                // IMPORTANTE: Sobrescribimos el onclick para que ejecute ESTA acción específica
+                confirmBtn.onclick = async () => {
+                    confirmModal.hide(); // Cerrar modal
+
+                    try {
+                        const response = await fetch(form.action, { method: 'POST' });
+                        const result = await response.json();
+
+                        if (result.success) {
+                            const li = form.closest('li');
+                            li.remove();
+                            // Opcional: Mostrar feedbackModal de éxito breve
+                        } else {
+                            // Mostrar modal de error si falla
+                            const errorModal = new bootstrap.Modal(document.getElementById('feedbackModal'));
+                            document.getElementById('modalTitle').textContent = "Error";
+                            document.getElementById('modalBody').textContent = result.message;
+                            errorModal.show();
+                        }
+                    } catch (err) { console.error(err); }
+                };
+
+                confirmModal.show(); // Mostrar modal
             }
         });
     }
