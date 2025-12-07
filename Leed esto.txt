@@ -1,12 +1,9 @@
 (NOSOTROS)
 
-Poner 18 recetas de ejemplo con fotos para hacer más visual el scroll infinito 
-(hacen falta el equivalente a 3 páginas)
-
 hacer el README: vídeo, ...
 
 
-Al añadir receta botón para volver a la página principal tambien
+Al añadir receta añadir un botón para volver a la página principal también
 
 Al añadir nuevo paso si desconecto el servidor no salta ningun error
 

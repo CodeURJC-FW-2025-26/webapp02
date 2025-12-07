@@ -5,6 +5,51 @@
  * Handles Recipe Forms, Drag & Drop, Infinite Scroll, and Dynamic Step Management via AJAX.
  */
 
+// ============================================================
+//  LOCALIZATION CONSTANTS (UI STRINGS)
+//  Centralized Spanish text for UI/UX.
+// ============================================================
+const UI_STRINGS = {
+    // Buttons & Loading
+    BTN_LOADING: '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Procesando...',
+    BTN_CONTINUE: "Continuar",
+    BTN_CLOSE: "Cerrar",
+    BTN_CLOSE_CORRECT: "Cerrar y Corregir",
+    BTN_VIEW_RECIPE: "Ver Receta",
+    BTN_ACCEPT: "Aceptar",
+    BTN_CANCEL: "Cancelar",
+    BTN_SAVE: "Guardar",
+    BTN_REMOVE_IMG: '<i class="bi bi-trash"></i> Eliminar imagen',
+
+    // Validation Messages
+    VAL_CAPITAL: "El nombre debe comenzar con mayúscula.",
+    VAL_EXISTS_SHORT: "Este nombre ya existe.",
+    VAL_EXISTS_LONG: "Este título ya está en uso. Por favor elige otro.",
+    VAL_IMG_ONLY: "Solo se permiten archivos de imagen.",
+    VAL_TITLE_REQ: "El título es obligatorio.",
+    VAL_DESC_REQ: "La descripción es obligatoria.",
+
+    // Modal Titles & Messages
+    MODAL_SUCCESS: "¡Éxito!",
+    MODAL_DONE: "¡Hecho!",
+    MODAL_ERROR: "Error",
+    MODAL_CONN_TITLE: "Error de Conexión",
+    MODAL_CONN_MSG: "No se pudo comunicar con el servidor.",
+    ERR_UNKNOWN: "Ocurrió un error desconocido.",
+    ERR_DELETE_GENERIC: "Ocurrió un error al intentar borrar.",
+    ERR_DELETE_STEP: "Error eliminando paso: ",
+
+    // Confirmation Prompts
+    CONFIRM_DEL_RECIPE: "¿Estás seguro de que quieres borrar esta receta por completo?",
+    CONFIRM_DEL_STEP: "¿Estás seguro de que quieres eliminar este paso?",
+
+    // Dynamic UI Elements
+    MSG_NO_STEPS: "Esta receta aún no tiene pasos.",
+    HEADING_EDIT_STEP: "Editar Paso",
+    LABEL_TITLE: "Título",
+    LABEL_DESC: "Descripción"
+};
+
 console.log("Client script loaded successfully.");
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -49,14 +94,14 @@ document.addEventListener('DOMContentLoaded', () => {
         // Configure Action Button (e.g., "View Recipe")
         if (options.showActionBtn) {
             modalActionBtn.classList.remove('d-none');
-            modalActionBtn.textContent = options.actionText || "Continuar";
+            modalActionBtn.textContent = options.actionText || UI_STRINGS.BTN_CONTINUE;
             modalActionBtn.href = options.actionUrl || '#';
             if (modalCloseBtn) modalCloseBtn.classList.add('d-none'); // Hide close button if action is mandatory
         } else {
             modalActionBtn.classList.add('d-none');
             if (modalCloseBtn) {
                 modalCloseBtn.classList.remove('d-none');
-                modalCloseBtn.textContent = options.closeBtnText || "Cerrar";
+                modalCloseBtn.textContent = options.closeBtnText || UI_STRINGS.BTN_CLOSE;
             }
         }
 
@@ -88,14 +133,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Sync Validation: Uppercase check
                 if (nameValue.length > 0 && nameValue[0] !== nameValue[0].toUpperCase()) {
-                    nameInput.setCustomValidity("El nombre debe comenzar con mayúscula.");
+                    nameInput.setCustomValidity(UI_STRINGS.VAL_CAPITAL);
                     nameInput.classList.add('is-invalid');
                     nameInput.classList.remove('is-valid');
 
                     // Ensure feedback is visible
                     const feedbackDiv = nameInput.nextElementSibling;
                     if (feedbackDiv && feedbackDiv.classList.contains('invalid-feedback')) {
-                        feedbackDiv.textContent = "El nombre debe comenzar con mayúscula.";
+                        feedbackDiv.textContent = UI_STRINGS.VAL_CAPITAL;
                     }
                     return;
                 } else {
@@ -119,13 +164,13 @@ document.addEventListener('DOMContentLoaded', () => {
                             const data = await response.json();
 
                             if (data.exists) {
-                                nameInput.setCustomValidity("Este nombre ya existe.");
+                                nameInput.setCustomValidity(UI_STRINGS.VAL_EXISTS_SHORT);
                                 nameInput.classList.add('is-invalid');
                                 nameInput.classList.remove('is-valid');
                                 // Update feedback text dynamically if element exists
                                 const feedbackDiv = nameInput.nextElementSibling;
                                 if (feedbackDiv && feedbackDiv.classList.contains('invalid-feedback')) {
-                                    feedbackDiv.textContent = "Este título ya está en uso. Por favor elige otro.";
+                                    feedbackDiv.textContent = UI_STRINGS.VAL_EXISTS_LONG;
                                 }
                             } else {
                                 nameInput.setCustomValidity("");
@@ -183,7 +228,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Image Processing & Preview
             const handleFiles = (file) => {
                 if (!file.type.startsWith('image/')) {
-                    showFeedbackModal("Error", "Solo se permiten archivos de imagen.", "error");
+                    showFeedbackModal(UI_STRINGS.MODAL_ERROR, UI_STRINGS.VAL_IMG_ONLY, "error");
                     return;
                 }
 
@@ -196,7 +241,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <img src="${e.target.result}" class="img-thumbnail" style="max-width: 200px;">
                         <div class="mt-2">
                             <button type="button" class="btn btn-sm btn-outline-danger" id="btnRemoveImage">
-                                <i class="bi bi-trash"></i> Eliminar imagen
+                                ${UI_STRINGS.BTN_REMOVE_IMG}
                             </button>
                         </div>
                     `;
@@ -237,7 +282,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Disable UI to prevent double submission
             submitBtn.disabled = true;
-            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Procesando...';
+            submitBtn.innerHTML = UI_STRINGS.BTN_LOADING;
             toggleSpinner(true);
 
             try {
@@ -257,14 +302,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 toggleSpinner(false);
 
                 if (response.ok && result.success) {
-                    showFeedbackModal("¡Éxito!", result.message, "success", {
+                    showFeedbackModal(UI_STRINGS.MODAL_SUCCESS, result.message, "success", {
                         showActionBtn: true,
-                        actionText: "Ver Receta",
+                        actionText: UI_STRINGS.BTN_VIEW_RECIPE,
                         actionUrl: result.redirectUrl || '/'
                     });
                 } else {
-                    showFeedbackModal("Error", result.message || "Ocurrió un error desconocido.", "error", {
-                        closeBtnText: "Cerrar y Corregir"
+                    showFeedbackModal(UI_STRINGS.MODAL_ERROR, result.message || UI_STRINGS.ERR_UNKNOWN, "error", {
+                        closeBtnText: UI_STRINGS.BTN_CLOSE_CORRECT
                     });
                     // Re-enable button on error to allow retry
                     submitBtn.disabled = false;
@@ -274,10 +319,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } catch (error) {
                 toggleSpinner(false);
                 console.error("Critical Error:", error);
-                showFeedbackModal("Error de Conexión", "No se pudo comunicar con el servidor.", "error");
-                submitBtn.disabled = false;
-                submitBtn.textContent = originalBtnText;
-                // Reactivate the button to allow retries
+                showFeedbackModal(UI_STRINGS.MODAL_CONN_TITLE, UI_STRINGS.MODAL_CONN_MSG, "error");
                 submitBtn.disabled = false;
                 submitBtn.textContent = originalBtnText;
             }
@@ -367,7 +409,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Bootstrap Modal for Confirmation
             const confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
-            document.getElementById('confirmModalBody').textContent = "¿Estás seguro de que quieres borrar esta receta por completo?";
+            document.getElementById('confirmModalBody').textContent = UI_STRINGS.CONFIRM_DEL_RECIPE;
             const confirmBtn = document.getElementById('confirmModalBtn');
 
             confirmBtn.onclick = async () => {
@@ -389,12 +431,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (result.success) {
                         window.location.href = result.redirectUrl;
                     } else {
-                        showFeedbackModal("Error", result.message, "error");
+                        showFeedbackModal(UI_STRINGS.MODAL_ERROR, result.message, "error");
                     }
                 } catch (err) {
                     console.error(err);
                     toggleSpinner(false);
-                    showFeedbackModal("Error", "Ocurrió un error al intentar borrar.", "error");
+                    showFeedbackModal(UI_STRINGS.MODAL_ERROR, UI_STRINGS.ERR_DELETE_GENERIC, "error");
                 }
             };
 
@@ -465,10 +507,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     const noStepsMsg = document.getElementById('noStepsMessage');
                     if (noStepsMsg) noStepsMsg.remove();
 
-                    showFeedbackModal("¡Hecho!", result.message, "success", { closeBtnText: "Aceptar" });
+                    showFeedbackModal(UI_STRINGS.MODAL_DONE, result.message, "success", { closeBtnText: UI_STRINGS.BTN_ACCEPT });
 
                 } else {
-                    showFeedbackModal("Error", result.message, "error");
+                    showFeedbackModal(UI_STRINGS.MODAL_ERROR, result.message, "error");
                 }
 
             } catch (err) {
@@ -493,7 +535,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Confirmation Modal
                 const confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
-                document.getElementById('confirmModalBody').textContent = "¿Estás seguro de que quieres eliminar este paso?";
+                document.getElementById('confirmModalBody').textContent = UI_STRINGS.CONFIRM_DEL_STEP;
                 const confirmBtn = document.getElementById('confirmModalBtn');
 
                 confirmBtn.onclick = async () => {
@@ -520,12 +562,12 @@ document.addEventListener('DOMContentLoaded', () => {
                                     const p = document.createElement('p');
                                     p.className = "mt-3 text-muted";
                                     p.id = "noStepsMessage";
-                                    p.textContent = "Esta receta aún no tiene pasos.";
+                                    p.textContent = UI_STRINGS.MSG_NO_STEPS;
                                     stepsList.parentNode.insertBefore(p, stepsList.nextSibling);
                                 }
                             }, 500);
                         } else {
-                            showFeedbackModal("Error", "Error eliminando paso: " + result.message, "error");
+                            showFeedbackModal(UI_STRINGS.MODAL_ERROR, UI_STRINGS.ERR_DELETE_STEP + result.message, "error");
                         }
                     } catch (err) { console.error(err); }
                 };
@@ -582,7 +624,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             </div>
                         `;
                     } else {
-                        showFeedbackModal("Error", "Error: " + result.message, "error");
+                        showFeedbackModal(UI_STRINGS.MODAL_ERROR, "Error: " + result.message, "error");
                     }
                 } catch (err) {
                     console.error(err);
@@ -615,23 +657,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 li.innerHTML = `
                     <form action="${actionUrl}" method="POST" class="w-100 edit-step-form needs-validation" novalidate>
-                        <h6 class="mb-3 text-muted border-bottom pb-2">Editar Paso</h6>
+                        <h6 class="mb-3 text-muted border-bottom pb-2">${UI_STRINGS.HEADING_EDIT_STEP}</h6>
                         
                         <div class="mb-3">
-                            <label class="form-label small fw-bold text-secondary">Título</label>
+                            <label class="form-label small fw-bold text-secondary">${UI_STRINGS.LABEL_TITLE}</label>
                             <input type="text" class="form-control step-name-input" name="stepName" required>
-                            <div class="invalid-feedback">El título es obligatorio.</div>
+                            <div class="invalid-feedback">${UI_STRINGS.VAL_TITLE_REQ}</div>
                         </div>
                         
                         <div class="mb-3">
-                            <label class="form-label small fw-bold text-secondary">Descripción</label>
+                            <label class="form-label small fw-bold text-secondary">${UI_STRINGS.LABEL_DESC}</label>
                             <textarea class="form-control step-desc-input" name="stepDescription" rows="3" required></textarea>
-                            <div class="invalid-feedback">La descripción es obligatoria.</div>
+                            <div class="invalid-feedback">${UI_STRINGS.VAL_DESC_REQ}</div>
                         </div>
                         
                         <div class="d-flex justify-content-end gap-2 pt-2">
-                            <button type="button" class="btn btn-sm btn-outline-dark btn-cancel-edit text-white px-3">Cancelar</button>
-                            <button type="submit" class="btn btn-sm btn-dark px-3">Guardar</button>
+                            <button type="button" class="btn btn-sm btn-outline-dark btn-cancel-edit text-white px-3">${UI_STRINGS.BTN_CANCEL}</button>
+                            <button type="submit" class="btn btn-sm btn-dark px-3">${UI_STRINGS.BTN_SAVE}</button>
                         </div>
                     </form>
                 `;

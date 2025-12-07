@@ -11,6 +11,44 @@ const PAGE_SIZE = 6; // Number of items per page for pagination/infinite scroll
 // Cache for the collection reference
 let recipesCollection;
 
+// =================================================================
+//  LOCALIZATION CONSTANTS (SERVER MESSAGES)
+//  Centralized Spanish text for server responses & UI rendering.
+// =================================================================
+const SERVER_MESSAGES = {
+    VALIDATION: {
+        REQUIRED_FIELDS: 'Todos los campos son obligatorios.',
+        NAME_CAPITAL: 'El nombre debe comenzar con una letra mayúscula.',
+        DESC_LENGTH: 'La descripción debe tener entre 20 y 500 caracteres.',
+        TIME_POSITIVE: 'El tiempo de preparación debe ser un número positivo.',
+        DUPLICATE_PREFIX: 'Ya existe una receta con el nombre',
+        NAME_IN_USE_SUFFIX: 'ya está en uso.'
+    },
+    SUCCESS: {
+        RECIPE_CREATED_SUFFIX: 'creada con éxito.',
+        RECIPE_UPDATED: 'Receta actualizada con éxito.',
+        RECIPE_DELETED: 'Receta eliminada.',
+        STEP_ADDED: 'Paso añadido exitosamente.',
+        STEP_DELETED: 'Paso eliminado.',
+        STEP_UPDATED: 'Paso actualizado exitosamente.'
+    },
+    ERRORS: {
+        INTERNAL: 'Error Interno del Servidor.',
+        LOAD_RECIPES: 'No se pudieron cargar las recetas.',
+        INVALID_ID: 'ID de receta no válida.',
+        INVALID_ID_SHORT: 'ID no válida.',
+        RECIPE_NOT_FOUND: 'Receta no encontrada.',
+        STEP_NOT_FOUND: 'Paso no encontrado.',
+        MISSING_STEP_DATA: 'Faltan datos del paso.',
+        DATA_INCOMPLETE: 'Datos incompletos.',
+        DELETE_STEP_ERROR: 'Error al eliminar el paso.'
+    },
+    UI: {
+        BACK_HOME: 'Volver al inicio',
+        BACK: 'Volver'
+    }
+};
+
 /**
  * Middleware: Database Initialization Check
  * Ensures the database connection is active before processing requests.
@@ -35,22 +73,22 @@ function validateRecipeInput(body) {
     const { recipeName, description, ingredients, category, difficulty, preparationTime } = body;
 
     if (!recipeName || !description || !ingredients || !category || !difficulty || !preparationTime) {
-        return { valid: false, message: 'Todos los campos son obligatorios.' };
+        return { valid: false, message: SERVER_MESSAGES.VALIDATION.REQUIRED_FIELDS };
     }
 
     const nameTrimmed = recipeName.trim();
     if (nameTrimmed.length === 0 || nameTrimmed[0] !== nameTrimmed[0].toUpperCase()) {
-        return { valid: false, message: 'El nombre debe comenzar con una letra mayúscula.' };
+        return { valid: false, message: SERVER_MESSAGES.VALIDATION.NAME_CAPITAL };
     }
 
     const descTrimmed = description.trim();
     if (descTrimmed.length < 20 || descTrimmed.length > 500) {
-        return { valid: false, message: 'La descripción debe tener entre 20 y 500 caracteres.' };
+        return { valid: false, message: SERVER_MESSAGES.VALIDATION.DESC_LENGTH };
     }
 
     const time = parseInt(preparationTime);
     if (isNaN(time) || time <= 0) {
-        return { valid: false, message: 'El tiempo de preparación debe ser un número positivo.' };
+        return { valid: false, message: SERVER_MESSAGES.VALIDATION.TIME_POSITIVE };
     }
 
     return { valid: true, message: null };
@@ -163,9 +201,9 @@ router.get('/', async (req, res) => {
             return res.status(500).json({ error: "Internal Server Error" });
         }
         res.status(500).render('error', {
-            errorMessage: "No se pudieron cargar las recetas.",
+            errorMessage: SERVER_MESSAGES.ERRORS.LOAD_RECIPES,
             backUrl: '/',
-            backUrlText: 'Volver al inicio'
+            backUrlText: SERVER_MESSAGES.UI.BACK_HOME
         });
     }
 });
@@ -186,7 +224,7 @@ router.get('/error', (req, res) => {
     res.render('error', {
         errorMessage,
         backUrl: backUrl || '/',
-        backUrlText: 'Volver'
+        backUrlText: SERVER_MESSAGES.UI.BACK
     });
 });
 
@@ -239,7 +277,7 @@ router.post('/receta/nueva', upload.single('recipeImage'), async (req, res) => {
         });
 
         if (existingRecipe) {
-            return res.status(400).json({ success: false, message: `Ya existe una receta con el nombre "${recipeName}".` });
+            return res.status(400).json({ success: false, message: `${SERVER_MESSAGES.VALIDATION.DUPLICATE_PREFIX} "${recipeName}".` });
         }
 
         // 3. Construct Object
@@ -259,13 +297,13 @@ router.post('/receta/nueva', upload.single('recipeImage'), async (req, res) => {
 
         res.json({
             success: true,
-            message: `Receta "${newRecipe.name}" creada con éxito.`,
+            message: `Receta "${newRecipe.name}" ${SERVER_MESSAGES.SUCCESS.RECIPE_CREATED_SUFFIX}`,
             redirectUrl: `/receta/${result.insertedId}`
         });
 
     } catch (error) {
         console.error("Server Error (Create Recipe):", error);
-        res.status(500).json({ success: false, message: 'Error Interno del Servidor.' });
+        res.status(500).json({ success: false, message: SERVER_MESSAGES.ERRORS.INTERNAL });
     }
 });
 
@@ -275,13 +313,13 @@ router.post('/receta/nueva', upload.single('recipeImage'), async (req, res) => {
 router.get('/receta/:id', async (req, res) => {
     try {
         if (!ObjectId.isValid(req.params.id)) {
-            return res.status(404).render('error', { errorMessage: 'ID de receta no válida.' });
+            return res.status(404).render('error', { errorMessage: SERVER_MESSAGES.ERRORS.INVALID_ID });
         }
 
         const recipe = await recipesCollection.findOne({ _id: new ObjectId(req.params.id) });
 
         if (!recipe) {
-            return res.status(404).render('error', { errorMessage: 'Receta no encontrada.' });
+            return res.status(404).render('error', { errorMessage: SERVER_MESSAGES.ERRORS.RECIPE_NOT_FOUND });
         }
 
         // Inject recipe_id into steps for template navigation
@@ -293,7 +331,7 @@ router.get('/receta/:id', async (req, res) => {
 
     } catch (error) {
         console.error("Server Error (Get Recipe Detail):", error);
-        res.status(500).render('error', { errorMessage: "Error Interno del Servidor." });
+        res.status(500).render('error', { errorMessage: SERVER_MESSAGES.ERRORS.INTERNAL });
     }
 });
 
@@ -302,11 +340,11 @@ router.get('/receta/:id', async (req, res) => {
  */
 router.get('/receta/editar/:id', async (req, res) => {
     try {
-        if (!ObjectId.isValid(req.params.id)) return res.status(404).render('error', { errorMessage: 'ID no válida' });
+        if (!ObjectId.isValid(req.params.id)) return res.status(404).render('error', { errorMessage: SERVER_MESSAGES.ERRORS.INVALID_ID_SHORT });
 
         const recipe = await recipesCollection.findOne({ _id: new ObjectId(req.params.id) });
 
-        if (!recipe) return res.status(404).render('error', { errorMessage: 'Receta no encontrada.' });
+        if (!recipe) return res.status(404).render('error', { errorMessage: SERVER_MESSAGES.ERRORS.RECIPE_NOT_FOUND });
 
         // Template helpers for Select boxes
         if (recipe.category) recipe[`isCategory${recipe.category.charAt(0).toUpperCase() + recipe.category.slice(1)}`] = true;
@@ -316,7 +354,7 @@ router.get('/receta/editar/:id', async (req, res) => {
 
     } catch (error) {
         console.error("Server Error (Edit Form):", error);
-        res.status(500).render('error', { errorMessage: 'Error Interno del Servidor.' });
+        res.status(500).render('error', { errorMessage: SERVER_MESSAGES.ERRORS.INTERNAL });
     }
 });
 
@@ -327,7 +365,7 @@ router.get('/receta/editar/:id', async (req, res) => {
 router.post('/receta/editar/:id', upload.single('recipeImage'), async (req, res) => {
     try {
         const recipeId = req.params.id;
-        if (!ObjectId.isValid(recipeId)) return res.status(400).json({ success: false, message: 'ID no válida.' });
+        if (!ObjectId.isValid(recipeId)) return res.status(400).json({ success: false, message: SERVER_MESSAGES.ERRORS.INVALID_ID_SHORT });
 
         // 1. Validate Input
         const validation = validateRecipeInput(req.body);
@@ -342,7 +380,7 @@ router.post('/receta/editar/:id', upload.single('recipeImage'), async (req, res)
         });
 
         if (existingRecipe) {
-            return res.status(400).json({ success: false, message: `El nombre "${req.body.recipeName}" ya está en uso.` });
+            return res.status(400).json({ success: false, message: `El nombre "${req.body.recipeName}" ${SERVER_MESSAGES.VALIDATION.NAME_IN_USE_SUFFIX}` });
         }
 
         // 3. Prepare Update Data
@@ -373,13 +411,13 @@ router.post('/receta/editar/:id', upload.single('recipeImage'), async (req, res)
 
         res.json({
             success: true,
-            message: 'Receta actualizada con éxito.',
+            message: SERVER_MESSAGES.SUCCESS.RECIPE_UPDATED,
             redirectUrl: `/receta/${recipeId}`
         });
 
     } catch (error) {
         console.error("Server Error (Update Recipe):", error);
-        res.status(500).json({ success: false, message: 'Error Interno del Servidor.' });
+        res.status(500).json({ success: false, message: SERVER_MESSAGES.ERRORS.INTERNAL });
     }
 });
 
@@ -389,18 +427,18 @@ router.post('/receta/editar/:id', upload.single('recipeImage'), async (req, res)
 router.post('/receta/borrar/:id', async (req, res) => {
     try {
         const recipeId = req.params.id;
-        if (!ObjectId.isValid(recipeId)) return res.status(400).json({ success: false, message: 'ID no válida' });
+        if (!ObjectId.isValid(recipeId)) return res.status(400).json({ success: false, message: SERVER_MESSAGES.ERRORS.INVALID_ID_SHORT });
 
         const result = await recipesCollection.deleteOne({ _id: new ObjectId(recipeId) });
 
         if (result.deletedCount === 1) {
-            res.json({ success: true, message: 'Receta eliminada.', redirectUrl: '/' });
+            res.json({ success: true, message: SERVER_MESSAGES.SUCCESS.RECIPE_DELETED, redirectUrl: '/' });
         } else {
-            res.status(404).json({ success: false, message: 'Receta no encontrada.' });
+            res.status(404).json({ success: false, message: SERVER_MESSAGES.ERRORS.RECIPE_NOT_FOUND });
         }
     } catch (error) {
         console.error("Server Error (Delete Recipe):", error);
-        res.status(500).json({ success: false, message: 'Error Interno del Servidor.' });
+        res.status(500).json({ success: false, message: SERVER_MESSAGES.ERRORS.INTERNAL });
     }
 });
 
@@ -417,7 +455,7 @@ router.post('/receta/:id/paso/nuevo', async (req, res) => {
         const { stepName, stepDescription } = req.body;
 
         if (!stepName || !stepDescription) {
-            return res.status(400).json({ success: false, message: 'Faltan datos del paso.' });
+            return res.status(400).json({ success: false, message: SERVER_MESSAGES.ERRORS.MISSING_STEP_DATA });
         }
 
         const newStep = {
@@ -437,14 +475,14 @@ router.post('/receta/:id/paso/nuevo', async (req, res) => {
 
         res.json({
             success: true,
-            message: 'Paso añadido exitosamente.',
+            message: SERVER_MESSAGES.SUCCESS.STEP_ADDED,
             step: newStep,
             recipeId: recipeId
         });
 
     } catch (error) {
         console.error("Server Error (Add Step):", error);
-        res.status(500).json({ success: false, message: 'Error Interno del Servidor.' });
+        res.status(500).json({ success: false, message: SERVER_MESSAGES.ERRORS.INTERNAL });
     }
 });
 
@@ -460,10 +498,10 @@ router.post('/receta/:id/paso/borrar/:stepId', async (req, res) => {
             { $pull: { steps: { _id: new ObjectId(stepId) } } }
         );
 
-        res.json({ success: true, message: 'Paso eliminado.' });
+        res.json({ success: true, message: SERVER_MESSAGES.SUCCESS.STEP_DELETED });
     } catch (error) {
         console.error("Server Error (Delete Step):", error);
-        res.status(500).json({ success: false, message: 'Error al eliminar el paso.' });
+        res.status(500).json({ success: false, message: SERVER_MESSAGES.ERRORS.DELETE_STEP_ERROR });
     }
 });
 
@@ -475,16 +513,16 @@ router.get('/receta/:id/paso/editar/:stepId', async (req, res) => {
         const { id, stepId } = req.params;
         const recipe = await recipesCollection.findOne({ _id: new ObjectId(id) });
 
-        if (!recipe) return res.status(404).render('error', { errorMessage: 'Receta no encontrada.' });
+        if (!recipe) return res.status(404).render('error', { errorMessage: SERVER_MESSAGES.ERRORS.RECIPE_NOT_FOUND });
 
         const step = recipe.steps ? recipe.steps.find(s => s._id.toString() === stepId) : null;
-        if (!step) return res.status(404).render('error', { errorMessage: 'Paso no encontrado.' });
+        if (!step) return res.status(404).render('error', { errorMessage: SERVER_MESSAGES.ERRORS.STEP_NOT_FOUND });
 
         res.render('editarPaso', { recipe, step });
 
     } catch (error) {
         console.error("Server Error (Get Step Form):", error);
-        res.status(500).render('error', { errorMessage: 'Error Interno del Servidor.' });
+        res.status(500).render('error', { errorMessage: SERVER_MESSAGES.ERRORS.INTERNAL });
     }
 });
 
@@ -497,7 +535,7 @@ router.post('/receta/:id/paso/editar/:stepId', async (req, res) => {
         const { stepName, stepDescription } = req.body;
 
         if (!stepName?.trim() || !stepDescription?.trim()) {
-            return res.status(400).json({ success: false, message: 'Datos incompletos.' });
+            return res.status(400).json({ success: false, message: SERVER_MESSAGES.ERRORS.DATA_INCOMPLETE });
         }
 
         await recipesCollection.updateOne(
@@ -512,7 +550,7 @@ router.post('/receta/:id/paso/editar/:stepId', async (req, res) => {
 
         res.json({
             success: true,
-            message: 'Paso actualizado exitosamente.',
+            message: SERVER_MESSAGES.SUCCESS.STEP_UPDATED,
             step: {
                 name: stepName.trim(),
                 description: stepDescription.trim()
@@ -521,7 +559,7 @@ router.post('/receta/:id/paso/editar/:stepId', async (req, res) => {
 
     } catch (error) {
         console.error("Server Error (Update Step):", error);
-        res.status(500).json({ success: false, message: 'Error Interno del Servidor.' });
+        res.status(500).json({ success: false, message: SERVER_MESSAGES.ERRORS.INTERNAL });
     }
 });
 

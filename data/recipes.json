@@ -1,270 +1,745 @@
 [
     {
         "name": "Pulpo a la Gallega",
-        "description": "Un plato clásico de la gastronomía gallega, perfecto como tapa o plato principal. Su secreto reside en la cocción perfecta del pulpo y la calidad del pimentón.",
+        "description": "El estandarte de la gastronomía gallega. Un plato que combina la firmeza justa del cefalópodo con la suavidad de la patata, todo bañado en oro líquido y pimentón de la Vera.",
         "category": "entrante",
         "preparation_time": 50,
         "difficulty": "media",
         "image": "pulpo.jpg",
-        "ingredients": "1 pulpo de 2 kg \n 4 patatas gallegas grandes (cachelos)\n Pimenton de la Vera (dulce y picante)\n Sal gorda (al gusto).",
+        "ingredients": "1 pulpo de 2 kg (previamente congelado)\n4 patatas gallegas grandes (cachelos)\nAceite de Oliva Virgen Extra (abundante)\nPimentón de la Vera (mezcla dulce y picante)\nSal gorda o sal en escamas",
         "steps": [
             {
                 "order": 1,
-                "name": "Descongelar",
-                "description": "Descongela el pulpo en la nevera 24 horas antes."
+                "name": "Preparación previa",
+                "description": "Es crucial descongelar el pulpo en la nevera 24 horas antes para romper las fibras y que quede tierno. Lávalo bien con agua fría."
             },
             {
                 "order": 2,
-                "name": "Asustar y cocer",
-                "description": "Pon a hervir agua y 'asusta' el pulpo 3 veces antes de cocerlo durante 30-40 minutos."
+                "name": "Asustar el pulpo",
+                "description": "Pon una olla grande con agua a hervir (sin sal). Cuando rompa a hervir, agarra el pulpo por la cabeza y mételo y sácalo del agua 3 veces seguidas. Esto evita que se pele la piel."
             },
             {
                 "order": 3,
-                "name": "Cortar",
-                "description": "Pela y corta las patatas en rodajas. Corta el pulpo con tijeras."
+                "name": "Cocción exacta",
+                "description": "Deja cocer el pulpo unos 35-40 minutos (aprox. 18-20 min por kg). Pincha la parte más gruesa del tentáculo; debe entrar suave. Deja reposar en el agua caliente 15 minutos más."
             },
             {
                 "order": 4,
-                "name": "Emplatar",
-                "description": "Monta el plato: base de patatas, pulpo, aceite, sal gorda y pimentón."
+                "name": "Emplatado tradicional",
+                "description": "Corta el pulpo con tijeras en rodajas de 1 cm. Dispón sobre una base de patatas cocidas (en el mismo agua del pulpo). Riega generosamente con aceite, espolvorea pimentón y finaliza con sal gorda."
             }
         ]
     },
     {
-        "name": "Spagueti a la Boloñesa",
-        "description": "Un favorito de la cocina italiana que gusta a grandes y pequeños. La clave es un sofrito lento y una buena carne.",
+        "name": "Espaguetis a la Boloñesa",
+        "description": "Un clásico italiano reconfortante. El secreto no es la pasta, sino el 'ragù': una cocción lenta y amorosa que transforma la carne y el tomate en una salsa profunda y sabrosa.",
         "category": "principal",
         "preparation_time": 45,
         "difficulty": "facil",
         "image": "spagueti.jpg",
-        "ingredients": "400 g de Espaguetis\n500 g de Carne picada\n800 g de Tomate triturado \n1 Cebolla mediana\n2 Zanahorias\n1 rama de Apio\nQueso Parmesano\nPimienta negra (al gusto)",
+        "ingredients": "400g de Espaguetis de grano duro\n500g de Carne picada (mezcla ternera y cerdo)\n800g de Tomate triturado natural\n1 Cebolla dulce\n2 Zanahorias\n1 rama de Apio\n100ml de Vino tinto\nQueso Parmesano Reggiano",
         "steps": [
             {
                 "order": 1,
-                "name": "Preparar sofrito",
-                "description": "Picar finamente cebolla, zanahoria y apio y sofreír a fuego lento."
+                "name": "El Sofrito base",
+                "description": "Pica la cebolla, la zanahoria y el apio en 'brunoise' (cubos muy pequeños). Sofríelos en aceite de oliva a fuego medio-bajo hasta que estén tiernos y transparentes."
             },
             {
                 "order": 2,
-                "name": "Cocinar la carne",
-                "description": "Añadir la carne picada, dorar y luego agregar tomate triturado y vino tinto."
+                "name": "Dorar la carne",
+                "description": "Sube el fuego, añade la carne picada y cocínala rompiéndola con una cuchara de madera hasta que esté bien dorada. Vierte el vino tinto y deja evaporar el alcohol."
             },
             {
                 "order": 3,
-                "name": "Cocinar la salsa",
-                "description": "Salpimentar al gusto. Bajar el fuego al mínimo, tapar parcialmente y dejar cocer la salsa lentamente (chup-chup) durante al menos 20-30 minutos para que espese y se concentren los sabores."
+                "name": "Chup-chup",
+                "description": "Incorpora el tomate triturado, sal y pimienta. Baja el fuego al mínimo, tapa parcialmente y cocina durante al menos 30 minutos (idealmente 1 hora) para concentrar sabores."
             },
             {
                 "order": 4,
-                "name": "Cocer los espaguetis",
-                "description": "Mientras la salsa termina de hacerse, cocer los espaguetis en abundante agua con sal. Seguir el tiempo del paquete para que queden 'al dente'."
-            },
-            {
-                "order": 5,
-                "name": "Emplatar",
-                "description": "Escurrir bien la pasta. Servir una cama de espaguetis, cubrir con la salsa boloñesa y espolvorear generosamente con queso Parmesano rallado."
+                "name": "Pasta al dente",
+                "description": "Cuece la pasta en abundante agua salada siguiendo el tiempo del paquete menos 1 minuto. Escurre y mezcla inmediatamente con la salsa caliente. Sirve con parmesano recién rallado."
             }
         ]
     },
     {
-        "name": "Flan de Huevo Casero",
-        "description": "El postre tradicional por excelencia. Suave, cremoso y con un delicioso caramelo líquido. Imposible resistirse.",
+        "name": "Flan de Huevo Tradicional",
+        "description": "El postre de la abuela por excelencia. Una textura sedosa que se deshace en la boca, coronada por un caramelo oscuro y brillante. Simpleza y perfección.",
         "category": "postre",
         "preparation_time": 60,
         "difficulty": "facil",
         "image": "flan.jpg",
-        "ingredients": "6 Huevos \n1 Litro de Leche entera\n150 g de Azúcar\n100 g de Azúcar (para el caramelo)\n1 cucharadita de extracto de Vainilla (opcional)",
+        "ingredients": "6 Huevos L\n1 Litro de Leche entera\n150g de Azúcar blanco (para el flan)\n100g de Azúcar y unas gotas de agua (para el caramelo)\n1 vaina de Vainilla o piel de limón",
         "steps": [
             {
                 "order": 1,
-                "name": "Hacer el caramelo",
-                "description": "Derretir azúcar en un cazo a fuego bajo hasta obtener un caramelo dorado y verter en el molde."
+                "name": "El Caramelo",
+                "description": "En un cazo, calienta los 100g de azúcar con unas gotas de agua a fuego medio. No remuevas, solo mueve el cazo. Cuando tenga color ámbar oscuro, viértelo rápidamente en el fondo de las flaneras."
             },
             {
                 "order": 2,
-                "name": "Mezclar y hornear",
-                "description": "Batir huevos, leche y azúcar. Verter en el molde y hornear al baño maría."
+                "name": "La Mezcla",
+                "description": "Infusiona la leche con la vainilla (opcional). Bate los huevos con el azúcar suavemente (sin generar mucha espuma para evitar agujeros en el flan) y añade la leche tibia poco a poco."
             },
             {
                 "order": 3,
-                "name": "Enfriar",
-                "description": "Una vez horneado (al pinchar con un palillo, sale limpio), sacar el molde del baño maría y dejar enfriar a temperatura ambiente."
+                "name": "Baño María",
+                "description": "Llena los moldes y colócalos en una bandeja profunda con agua caliente (que cubra la mitad de los moldes). Hornea a 160°C durante 45-50 minutos."
             },
             {
                 "order": 4,
-                "name": "Refrigerar y desenmoldar",
-                "description": "Cuando esté frío, meter el flan en la nevera (refrigerador) un mínimo de 4 horas, o mejor toda la noche. Para desmoldar, pasar un cuchillo fino por los bordes y voltear sobre un plato."
+                "name": "Reposo vital",
+                "description": "Deja enfriar a temperatura ambiente y refrigera mínimo 4 horas (mejor toda la noche). El frío asentará la textura y disolverá el caramelo para formar la salsa."
             }
         ]
     },
     {
-        "name": "Crema de Zanahoria",
-        "description": "Una crema suave, saludable y llena de sabor. Ideal para una cena ligera o como primer plato reconfortante.",
+        "name": "Crema de Zanahoria y Jengibre",
+        "description": "Una crema vibrante, saludable y con un toque sofisticado. El dulzor de la zanahoria se equilibra perfectamente con el picante fresco del jengibre.",
         "category": "entrante",
         "preparation_time": 30,
         "difficulty": "facil",
         "image": "cremaZanahoria.jpg",
-        "ingredients": "500 g de Zanahorias\n1 Puerro \n1 Cebolla mediana\n750 ml - 1 Litro de Caldo de verduras\n100 ml de Nata para cocinar(opcional)\nPimienta negra (al gusto)",
+        "ingredients": "500g de Zanahorias frescas\n1 Puerro (solo la parte blanca)\n1 trozo de Jengibre fresco (2 cm)\n750ml de Caldo de verduras casero\n100ml de Leche de coco o Nata (opcional)\nSemillas de calabaza para decorar",
         "steps": [
             {
                 "order": 1,
-                "name": "Sofreír las verduras",
-                "description": "Pochar cebolla y puerro, luego añadir las zanahorias en rodajas y rehogar."
+                "name": "Rehogar verduras",
+                "description": "Limpia y trocea el puerro y las zanahorias. En una olla con aceite o mantequilla, rehoga el puerro 5 minutos sin que se dore. Añade la zanahoria y el jengibre rallado."
             },
             {
                 "order": 2,
-                "name": "Cocer y triturar",
-                "description": "Cubrir con caldo de verduras, cocer hasta que la zanahoria esté tierna y triturar finamente."
+                "name": "Cocción",
+                "description": "Cubre con el caldo de verduras. Lleva a ebullición, baja el fuego y cocina tapado unos 20 minutos hasta que la zanahoria esté muy tierna."
             },
             {
                 "order": 3,
-                "name": "Afinar la textura",
-                "description": "Devolver la crema a la olla. Añadir un chorrito de nata (crema de leche) o leche evaporada al gusto para darle cremosidad."
+                "name": "Triturado fino",
+                "description": "Tritura con batidora de potencia máxima hasta obtener una textura velouté. Si quieres un acabado de restaurante, pásala por un chino o colador fino."
             },
             {
                 "order": 4,
-                "name": "Rectificar y servir",
-                "description": "Probar la crema y ajustar de sal y pimienta negra al gusto. Servir caliente, opcionalmente con un chorrito de aceite de oliva."
+                "name": "Toque final",
+                "description": "Añade la leche de coco o nata para dar cremosidad, rectifica de sal y pimienta. Sirve con un hilo de aceite virgen extra y semillas tostadas."
             }
         ]
     },
     {
         "name": "Tarta de Queso La Viña",
-        "description": "Famosa por su exterior tostado y su interior increíblemente cremoso. Una tarta de queso diferente y adictiva.",
+        "description": "Famosa mundialmente, esta tarta vasca rompe las reglas: horneada a alta temperatura para quemar la superficie mientras el interior se mantiene cremoso y casi líquido.",
         "category": "postre",
         "preparation_time": 55,
         "difficulty": "media",
         "image": "tartaQueso.jpg",
-        "ingredients": "1 kg de Queso crema (tipo Philadelphia)\n500 ml de Nata para montar\n400 g de Azúcar\n5 Huevos \n1 cucharada sopera de Harina de trigo",
+        "ingredients": "1 kg de Queso crema (tipo Philadelphia)\n500ml de Nata para montar (35% M.G.)\n400g de Azúcar blanco\n5 Huevos L\n1 cucharada sopera colmada de Harina de trigo",
         "steps": [
             {
                 "order": 1,
-                "name": "Mezclar ingredientes",
-                "description": "Batir queso crema, nata, azúcar, huevos y una cucharada de harina hasta obtener una mezcla homogénea."
+                "name": "Preparar el molde",
+                "description": "Precalienta el horno a 210°C. Moja una hoja de papel de horno, arrúgala y forra un molde desmontable de 24-26cm. Esto le dará ese borde rústico característico."
             },
             {
                 "order": 2,
-                "name": "Hornear a alta temperatura",
-                "description": "Verter en un molde con papel de horno y hornear a 200°C hasta que esté bien dorada por fuera."
+                "name": "Mezcla sin aire",
+                "description": "Mezclar el queso con el azúcar con suavidad. Añadir los huevos uno a uno, luego la harina tamizada y finalmente la nata. No batas en exceso, no queremos meter aire."
             },
             {
                 "order": 3,
-                "name": "Reposo en el horno",
-                "description": "Apagar el horno y dejar la tarta dentro con la puerta entreabierta durante 10-15 minutos. Sacar y dejar enfriar completamente a temperatura ambiente."
+                "name": "Horneado intenso",
+                "description": "Hornea unos 40-45 minutos. La superficie debe estar muy tostada (casi negra) y al mover el molde, el centro debe bailar como un flan (efecto 'tembleque')."
             },
             {
                 "order": 4,
-                "name": "Refrigerar y servir",
-                "description": "Una vez fría, refrigerar en la nevera al menos 4 horas (idealmente de un día para otro). Desmoldar y servir. Está mejor a temperatura ambiente."
+                "name": "Enfriado lento",
+                "description": "Es fundamental dejar enfriar dentro del molde a temperatura ambiente durante varias horas antes de meter a la nevera. Se degusta mejor atemperada."
             }
         ]
     },
     {
-        "name": "Salmón al Horno con Verduras",
-        "description": "Una receta sana, rápida y deliciosa. El salmón queda jugoso y las verduras asadas son el acompañamiento perfecto.",
+        "name": "Salmón al Horno en Papillote",
+        "description": "La técnica del papillote cocina el pescado en sus propios jugos, garantizando un resultado jugoso, saludable y lleno de aromas que se liberan al abrir el paquete.",
         "category": "principal",
         "preparation_time": 25,
         "difficulty": "facil",
         "image": "salmon.jpg",
-        "ingredients": "2 lomos de Salmón (unos 150g cada uno)\n1 Pimiento rojo\n1 Pimiento verde (o amarillo)\n1 Cebolla morada (o blanca)\n1 Calabacín\nPimienta negra (al gusto)",
+        "ingredients": "2 lomos de Salmón fresco (180g c/u)\n1 Calabacín pequeño\n1 Zanahoria\n1 Puerro\nRodajas de limón\nEneldo fresco\nVino blanco (opcional)",
         "steps": [
             {
                 "order": 1,
-                "name": "Preparar la base",
-                "description": "Cortar verduras variadas (pimiento, cebolla, calabacín) y ponerlas en una bandeja de horno con aceite y sal."
+                "name": "Juliana de verduras",
+                "description": "Corta el calabacín, la zanahoria y el puerro en tiras finas (juliana). Saltéalas 2 minutos en la sartén solo para que pierdan rigidez."
             },
             {
                 "order": 2,
-                "name": "Hornear el salmón",
-                "description": "Colocar el lomo de salmón sobre las verduras y hornear todo junto durante 15-20 minutos a 180°C."
+                "name": "Montar el paquete",
+                "description": "Corta dos cuadrados grandes de papel de horno o aluminio. Haz una cama con las verduras, coloca el salmón encima, salpimienta y añade una rodaja de limón y eneldo."
             },
             {
                 "order": 3,
-                "name": "Servir",
-                "description": "Comprobar que el salmón está en su punto (jugoso por dentro). Servir inmediatamente el lomo de salmón sobre su cama de verduras asadas."
+                "name": "Sellado hermético",
+                "description": "Rocía con un chorrito de vino o aceite. Cierra el papel haciendo pliegues en los bordes para que quede hermético y el vapor no escape."
+            },
+            {
+                "order": 4,
+                "name": "Horneado breve",
+                "description": "Hornea a 200°C durante 10-12 minutos. El papel se hinchará. Sirve el paquete cerrado para que el comensal disfrute del aroma al abrirlo."
             }
         ]
     },
     {
-        "name": "Patatas Bravas",
-        "description": "La tapa más icónica de España. Patatas fritas crujientes por fuera y tiernas por dentro, con una salsa picante irresistible.",
+        "name": "Patatas Bravas Auténticas",
+        "description": "Más que unas patatas fritas con salsa. Buscamos el contraste entre el interior harinoso y el exterior crujiente, coronado con una salsa brava casera con carácter.",
         "category": "entrante",
         "preparation_time": 40,
         "difficulty": "media",
         "image": "patatasBravas.jpg",
-        "ingredients": "500 g de Patatas\nAceite de oliva (para freír)\n2 dientes de Ajo\n1 cucharada de Pimentón de la Vera (picante)\n1 cucharadita de Pimentón dulce (opcional)\n1 cucharada de Harina de trigo\n200 ml de Caldo de verduras (o pollo)",
+        "ingredients": "500g de Patatas agrias (especiales para freír)\nAceite de oliva suave para freír\nCaldo de jamón o pollo (250ml)\n1 cucharada de Pimentón de la Vera picante\n1 cucharada de Pimentón dulce\n1 cucharada de Harina\nAceite de Oliva Virgen Extra",
         "steps": [
             {
                 "order": 1,
-                "name": "Freír las patatas",
-                "description": "Cortar las patatas en cubos irregulares y freírlas primero a baja temperatura y luego a alta para que queden perfectas."
+                "name": "El corte y confitado",
+                "description": "Corta las patatas en cubos irregulares de bocado 'cascando' la patata. Fríelas en aceite a fuego medio-bajo (120°C) durante 10-12 min hasta que estén tiernas pero no doradas. Retira y enfría."
             },
             {
                 "order": 2,
-                "name": "Preparar la salsa brava",
-                "description": "Hacer un sofrito con ajo, añadir pimentón picante, harina y caldo de pollo, y cocinar hasta espesar."
+                "name": "La Salsa Brava",
+                "description": "En una sartén con AOVE, sofríe los pimentones con cuidado de no quemarlos. Añade la harina y túestala. Incorpora el caldo caliente poco a poco, varilleando hasta conseguir una velouté espesa y picante."
             },
             {
                 "order": 3,
-                "name": "Montaje y Servir",
-                "description": "Escurrir bien las patatas fritas, colocarlas en un plato o cazuelita y salsear generosamente con la salsa brava bien caliente."
+                "name": "Segunda fritura",
+                "description": "Sube el aceite al máximo (190°C). Introduce las patatas confitadas y fríe hasta que estén muy doradas y crujientes. Este choque térmico es el secreto."
+            },
+            {
+                "order": 4,
+                "name": "Servicio",
+                "description": "Escurre bien el aceite, sala las patatas y nápalas inmediatamente con la salsa brava caliente. Sirve al instante."
             }
         ]
     },
     {
-        "name": "Burrito de Frijoles Vegano",
-        "description": "Un burrito lleno de sabor, nutritivo y 100% vegetal. Perfecto para una comida rápida, saludable y contundente.",
+        "name": "Burrito Vegano Completo",
+        "description": "Una explosión de proteínas vegetales y sabor mexicano. Frijoles negros, arroz especiado y verduras frescas envueltos en una tortilla caliente.",
         "category": "vegano",
         "preparation_time": 20,
         "difficulty": "facil",
         "image": "burrito.jpg",
-        "ingredients": "4 Tortillas de trigo grandes\n400 g de Frijoles negros (cocidos)\n200 g de Arroz cocido\n1 Pimiento rojo\n1 Cebolla morada\n150 g de Maíz dulce \n1 cucharadita de Comino en polvo\n1 cucharadita de Pimentón dulce\nSal y Pimienta al gusto",
+        "ingredients": "4 Tortillas de trigo XL\n400g de Frijoles negros cocidos\n200g de Arroz integral o blanco cocido\n1 Aguacate maduro (Guacamole)\nPico de gallo (tomate, cebolla, cilantro, lima)\nEspecias: Comino, Cilantro, Chile en polvo",
         "steps": [
             {
                 "order": 1,
-                "name": "Saltear el relleno",
-                "description": "Saltear pimiento, cebolla y maíz. Añadir frijoles negros, arroz cocido y especias al gusto."
+                "name": "Base proteica",
+                "description": "En una sartén, saltea los frijoles escurridos con el comino y el chile. Puedes aplastarlos un poco para crear una pasta que una los ingredientes."
             },
             {
                 "order": 2,
-                "name": "Montar y calentar",
-                "description": "Rellenar tortillas de trigo con la mezcla, enrollar y calentar en una sartén por ambos lados."
+                "name": "Frescor",
+                "description": "Prepara un pico de gallo picando tomate, cebolla morada y cilantro muy finos, aliñados con mucha lima. Machaca el aguacate con sal."
             },
             {
                 "order": 3,
-                "name": "Servir",
-                "description": "Servir el burrito inmediatamente mientras está caliente. Opcional: acompañar con guacamole o salsa picante."
+                "name": "Montaje estratégico",
+                "description": "Calienta la tortilla ligeramente. Coloca una base de arroz, luego los frijoles, el aguacate y el pico de gallo. No llenes en exceso para poder cerrar."
+            },
+            {
+                "order": 4,
+                "name": "Sellado",
+                "description": "Cierra los extremos hacia dentro y enrolla apretando bien. Pasa el burrito (por el lado del cierre) por la plancha caliente para sellarlo y que quede crujiente."
             }
         ]
     },
     {
-        "name": "Pollo al Curry",
-        "description": "Un plato exótico y aromático que te transportará a la India. Cremoso, especiado y absolutamente delicioso con arroz basmati.",
+        "name": "Pollo Tikka Masala",
+        "description": "Un viaje de especias. Pollo marinado en yogur y especias, cocinado luego en una salsa cremosa de tomate y coco. Aromático, colorido y delicioso.",
         "category": "principal",
         "preparation_time": 35,
         "difficulty": "media",
-        "image": "polloCurry.jpg",
-        "ingredients": "500 g de Pechuga de pollo \n1 Cebolla grande\n400 ml de Leche de coco \n2-3 cucharadas de Curry en polvo (al gusto)\nPimienta negra (al gusto)\nOpcional: Arroz basmati (para acompañar)",
+        "image": "polloTikka.jpg",
+        "ingredients": "500g de Contramuslos de pollo (más jugosos)\n1 Yogur griego natural\n400ml de Leche de coco\n2 cucharadas de Garam Masala o Curry de calidad\n1 trozo de jengibre fresco\nCilantro fresco\nArroz Basmati",
         "steps": [
             {
                 "order": 1,
-                "name": "Dorar el pollo",
-                "description": "Cortar el pollo en dados, salpimentar y dorar en una sartén con un poco de aceite."
+                "name": "Marinado express",
+                "description": "Corta el pollo en dados. Mézclalo con el yogur y la mitad de las especias. Si tienes tiempo, deja reposar 30 min. Si no, cocina directamente."
             },
             {
                 "order": 2,
-                "name": "Hacer la salsa",
-                "description": "En la misma sartén, sofreír cebolla, añadir curry en polvo, leche de coco y cocinar hasta que la salsa espese."
+                "name": "Sellado",
+                "description": "Dora el pollo a fuego fuerte en una sartén profunda o wok para sellar los jugos. Retira y reserva."
             },
             {
                 "order": 3,
-                "name": "Combinar y Cocinar",
-                "description": "Incorporar los dados de pollo dorado a la salsa. Dejar que todo cocine junto  a fuego bajo durante 5-10 minutos para que el pollo se impregne bien."
+                "name": "La Salsa",
+                "description": "En la misma sartén, sofríe cebolla, ajo y jengibre rallado. Añade el resto de especias para 'despertarlas' con el calor. Vierte la leche de coco y reduce."
             },
             {
                 "order": 4,
-                "name": "Servir",
-                "description": "Rectificar de sal si es necesario. Servir el pollo al curry bien caliente, acompañado de arroz basmati."
+                "name": "Integración",
+                "description": "Devuelve el pollo a la salsa y cocina a fuego lento 10 minutos. Termina con mucho cilantro fresco picado y sirve sobre arroz basmati aromático."
+            }
+        ]
+    },
+    {
+        "name": "Risotto de Setas y Trufa",
+        "description": "La elegancia italiana en un plato. Arroz carnaroli cocinado pacientemente, mantecado con mantequilla y parmesano para una cremosidad inigualable.",
+        "category": "principal",
+        "preparation_time": 40,
+        "difficulty": "media",
+        "image": "risotto.jpg",
+        "ingredients": "300g Arroz Arborio o Carnaroli\n300g Setas variadas (boletus, champiñón)\n1 Litro de Caldo de Pollo o Verduras (caliente)\n100ml Vino blanco seco\n50g Mantequilla fría\n50g Queso Parmesano\nAceite de Trufa (opcional)",
+        "steps": [
+            {
+                "order": 1,
+                "name": "Sofreír base",
+                "description": "Saltea las setas en aceite y resérvalas. En la misma olla, pocha una chalota muy fina. Añade el arroz y 'nácalo' (tuéstalo) hasta que el grano esté transparente."
+            },
+            {
+                "order": 2,
+                "name": "Desglasar",
+                "description": "Añade el vino blanco y deja que se evapore el alcohol completamente mientras remueves."
+            },
+            {
+                "order": 3,
+                "name": "Cocción gradual",
+                "description": "Añade el caldo caliente cazo a cazo. No añadas el siguiente hasta que el arroz haya absorbido el anterior. Remueve constantemente para liberar el almidón (aprox 18 min)."
+            },
+            {
+                "order": 4,
+                "name": "Mantecar",
+                "description": "Retira del fuego. Añade la mantequilla fría en cubos y el parmesano. Remueve enérgicamente para emulsionar. Añade las setas y unas gotas de aceite de trufa."
+            }
+        ]
+    },
+    {
+        "name": "Gazpacho Andaluz",
+        "description": "La sopa fría más famosa del mundo. Vitaminas en estado puro, refrescante y perfecta para el verano. La clave: tomates muy maduros y buen aceite.",
+        "category": "entrante",
+        "preparation_time": 15,
+        "difficulty": "facil",
+        "image": "gazpacho.jpg",
+        "ingredients": "1kg Tomates pera muy maduros\n1 Pimiento verde italiano\n1 Pepino\n1 diente de Ajo (sin el germen)\n50ml Vinagre de Jerez\n100ml Aceite de Oliva Virgen Extra\nSal al gusto",
+        "steps": [
+            {
+                "order": 1,
+                "name": "Troceado",
+                "description": "Lava bien todas las verduras. Trocea los tomates, el pimiento y el pepino (puedes pelarlo si quieres, o dejar un poco de piel). Pon todo en un bol grande."
+            },
+            {
+                "order": 2,
+                "name": "Maceración (Truco pro)",
+                "description": "Añade el vinagre, la sal y el aceite. Mezcla y deja reposar en la nevera 1 hora. Esto hará que los sabores se mezclen antes de triturar."
+            },
+            {
+                "order": 3,
+                "name": "Triturado y Emulsión",
+                "description": "Tritura todo a máxima potencia hasta que quede muy fino. Al triturar con el aceite, el gazpacho emulsionará y quedará naranja y cremoso."
+            },
+            {
+                "order": 4,
+                "name": "Refinado",
+                "description": "Pasa por un colador fino o chino para quitar pieles y semillas. Sirve muy frío, acompañado de trocitos de verdura o picatostes."
+            }
+        ]
+    },
+    {
+        "name": "Brownie de Chocolate y Nueces",
+        "description": "Denso, húmedo y con una capa crujiente por encima. Este brownie americano es el paraíso para los amantes del chocolate negro.",
+        "category": "postre",
+        "preparation_time": 40,
+        "difficulty": "facil",
+        "image": "brownie.jpg",
+        "ingredients": "200g Chocolate negro (70% cacao)\n165g Mantequilla\n3 Huevos L\n165g Azúcar moreno (clave para la humedad)\n85g Harina de trigo\n100g Nueces peladas\nUna pizca de sal",
+        "steps": [
+            {
+                "order": 1,
+                "name": "Fundir",
+                "description": "Derrite el chocolate junto con la mantequilla al baño maría o en el microondas (intervalos cortos) hasta obtener una crema brillante."
+            },
+            {
+                "order": 2,
+                "name": "Batido ligero",
+                "description": "Bate los huevos con el azúcar hasta que blanqueen un poco. Añade la mezcla de chocolate (que no esté ardiendo) e integra."
+            },
+            {
+                "order": 3,
+                "name": "Secos",
+                "description": "Incorpora la harina tamizada y la sal. Mezcla con espátula (no batidora) solo hasta que no veas harina. Añade las nueces troceadas."
+            },
+            {
+                "order": 4,
+                "name": "Horneado",
+                "description": "Vierte en molde cuadrado forrado. Hornea a 180°C durante 20-25 minutos. Al pinchar, debe salir manchado (si sale limpio, te has pasado y estará seco)."
+            }
+        ]
+    },
+    {
+        "name": "Tacos al Pastor",
+        "description": "El rey de la comida callejera mexicana. Cerdo adobado con achiote y especias, servido con piña asada, cebolla y cilantro. ¡Puro sabor!",
+        "category": "principal",
+        "preparation_time": 60,
+        "difficulty": "media",
+        "image": "tacos.jpg",
+        "ingredients": "500g Lomo de cerdo en filetes finos\n3 chiles guajillo hidratados\n50g Pasta de Achiote\nZumo de 1 naranja y 1 piña\n1/2 Piña natural\nTortillas de maíz\nCilantro y cebolla picada",
+        "steps": [
+            {
+                "order": 1,
+                "name": "El Adobo",
+                "description": "Tritura los chiles, el achiote, el zumo de naranja, vinagre, ajo, orégano y comino. Marina la carne con esta mezcla mínimo 2 horas."
+            },
+            {
+                "order": 2,
+                "name": "Cocción",
+                "description": "En una sartén muy caliente con poco aceite, cocina la carne marinada cortada en tiras finas hasta que esté bien dorada y caramelizada."
+            },
+            {
+                "order": 3,
+                "name": "La Piña",
+                "description": "Asa rodajas de piña en la plancha hasta que se caramelicen. Córtalas en trocitos pequeños."
+            },
+            {
+                "order": 4,
+                "name": "Armado",
+                "description": "Calienta las tortillas. Sirve una buena porción de carne, corona con piña, cebolla cruda, cilantro y un chorrito de lima."
+            }
+        ]
+    },
+    {
+        "name": "Ensalada César Original",
+        "description": "Olvídate de las versiones de comida rápida. La auténtica César se hace emulsionando la salsa al momento, con anchoas, yema de huevo y parmesano.",
+        "category": "entrante",
+        "preparation_time": 20,
+        "difficulty": "facil",
+        "image": "cesar.jpg",
+        "ingredients": "1 Lechuga Romana (crujiente)\n1 Pechuga de pollo a la plancha (opcional)\nPicatostes de pan (Croutons)\nQueso Parmesano en lascas\nSalsa: 1 yema, 4 anchoas, 1 cdta mostaza, limón, aceite suave, salsa Perrins",
+        "steps": [
+            {
+                "order": 1,
+                "name": "La Salsa (El alma)",
+                "description": "Machaca las anchoas hasta hacer una pasta. Mezcla con yema, mostaza y limón. Añade el aceite en hilo mientras bates para montar como una mayonesa. Termina con parmesano rallado."
+            },
+            {
+                "order": 2,
+                "name": "Los Croutons",
+                "description": "Corta pan de hogaza en cubos. Saltéalos en una sartén con mantequilla y ajo hasta que estén dorados y crujientes."
+            },
+            {
+                "order": 3,
+                "name": "El Pollo",
+                "description": "Salpimienta la pechuga y cocínala a la plancha para que quede dorada por fuera y jugosa por dentro. Córtala en tiras."
+            },
+            {
+                "order": 4,
+                "name": "Mezcla final",
+                "description": "En un bol grande, pon la lechuga lavada y seca. Añade la mitad de la salsa y mezcla con las manos. Sirve y decora con el pollo, croutons y lascas de parmesano."
+            }
+        ]
+    },
+    {
+        "name": "Lasaña de Carne Clásica",
+        "description": "Capas de pasta, boloñesa casera, bechamel suave y queso gratinado. Un plato de domingo laborioso pero que merece cada minuto invertido.",
+        "category": "principal",
+        "preparation_time": 90,
+        "difficulty": "media",
+        "image": "lasana.jpg",
+        "ingredients": "Placas de Lasaña\nSalsa Boloñesa (ver receta espaguetis)\nBechamel: 50g mantequilla, 50g harina, 700ml leche, nuez moscada\nQueso Mozzarella y Parmesano",
+        "steps": [
+            {
+                "order": 1,
+                "name": "La Bechamel",
+                "description": "Derrite mantequilla, añade harina y tuesta 2 min (roux). Añade leche caliente poco a poco removiendo con varillas para evitar grumos. Cocina 10 min hasta espesar."
+            },
+            {
+                "order": 2,
+                "name": "Montaje: Base",
+                "description": "En una fuente de horno, pon un poco de tomate o bechamel en el fondo para que no se pegue. Coloca la primera capa de pasta."
+            },
+            {
+                "order": 3,
+                "name": "Capas",
+                "description": "Cubre la pasta con boloñesa, un poco de bechamel y queso. Repite la operación 3 o 4 veces."
+            },
+            {
+                "order": 4,
+                "name": "Gratinado final",
+                "description": "La última capa debe ser solo pasta cubierta totalmente de bechamel y mucho queso. Hornea a 200°C unos 20-30 min hasta que esté dorada y burbujeante."
+            }
+        ]
+    },
+    {
+        "name": "Hummus Casero",
+        "description": "Suave, cremoso y perfecto para dipear. Este paté de garbanzos es un básico saludable que supera a cualquier versión de supermercado.",
+        "category": "vegano",
+        "preparation_time": 10,
+        "difficulty": "facil",
+        "image": "hummus.jpg",
+        "ingredients": "400g Garbanzos cocidos de calidad\n1 cucharada grande de Tahini (pasta de sésamo)\nZumo de medio limón\n1 diente de Ajo (sin germen)\n1 cucharadita de Comino\nAceite de Oliva y Pimentón para decorar",
+        "steps": [
+            {
+                "order": 1,
+                "name": "Preparar garbanzos",
+                "description": "Lava muy bien los garbanzos bajo el grifo hasta que deje de salir espuma. Escurre bien."
+            },
+            {
+                "order": 2,
+                "name": "Procesado",
+                "description": "Pon los garbanzos, tahini, ajo, limón, comino y un poco de sal en el procesador. Tritura."
+            },
+            {
+                "order": 3,
+                "name": "Textura perfecta",
+                "description": "Ve añadiendo agua muy fría (casi helada) cucharada a cucharada mientras bates. Esto blanqueará el hummus y lo hará increíblemente cremoso y aireado."
+            },
+            {
+                "order": 4,
+                "name": "Presentación",
+                "description": "Sirve en un plato hondo haciendo surcos con una cuchara. Riega con buen aceite de oliva, espolvorea pimentón y acompaña de pan de pita o crudités."
+            }
+        ]
+    },
+    {
+        "name": "Paella Valenciana (Mixta)",
+        "description": "El icono español. Arroz en su punto exacto, sabor a azafrán y el imprescindible 'socarrat' (arroz tostado) en el fondo.",
+        "category": "principal",
+        "preparation_time": 60,
+        "difficulty": "dificil",
+        "image": "paella.jpg",
+        "ingredients": "400g Arroz Bomba\nPollo y Conejo troceados\nJudía verde plana (Bajoqueta) y Garrofón\nTomate rallado\nAzafrán en hebras\nCaldo de pollo o agua (doble que arroz)",
+        "steps": [
+            {
+                "order": 1,
+                "name": "El Sofrito de carne",
+                "description": "Nivela la paella. Fríe la carne con aceite y sal a fuego medio hasta que esté muy dorada. Aparta la carne a los bordes y sofríe la verdura en el centro."
+            },
+            {
+                "order": 2,
+                "name": "Tomate y Pimentón",
+                "description": "Añade el tomate rallado al centro y reduce hasta que pierda el agua. Añade pimentón dulce y remueve rápido para que no se queme."
+            },
+            {
+                "order": 3,
+                "name": "El Caldo",
+                "description": "Añade el caldo (o agua) y el azafrán. Deja hervir 5 minutos para que coja sabor. Reparte el arroz uniformemente. A partir de aquí, NO se remueve más."
+            },
+            {
+                "order": 4,
+                "name": "Cocción y Socarrat",
+                "description": "Cocina 10 min a fuego fuerte y 8 a fuego bajo. Al final, sube el fuego 1 minuto para tostar el fondo (socarrat). Deja reposar 5 min tapado con un paño."
+            }
+        ]
+    },
+    {
+        "name": "Maki Sushi de Salmón",
+        "description": "Atrévete con la cocina japonesa. Rollitos de arroz avinagrado rellenos de salmón fresco y aguacate, envueltos en alga nori crujiente.",
+        "category": "principal",
+        "preparation_time": 50,
+        "difficulty": "dificil",
+        "image": "sushi.jpg",
+        "ingredients": "Arroz para Sushi (grano corto)\nVinagre de arroz, azúcar y sal (para el 'sushizu')\nAlga Nori\nSalmón fresco (previamente congelado 48h)\nAguacate\nSalsa de soja y Wasabi",
+        "steps": [
+            {
+                "order": 1,
+                "name": "Lavar el arroz",
+                "description": "Lava el arroz en un bol frotando suavemente y cambiando el agua hasta 6 o 7 veces, hasta que el agua salga transparente. Esto es vital."
+            },
+            {
+                "order": 2,
+                "name": "Cocer y Aderezar",
+                "description": "Cuece el arroz (misma cantidad de agua que de arroz). Una vez listo, pásalo a una fuente de madera y mezcla con el vinagre de sushi mientras lo abanicas para enfriarlo."
+            },
+            {
+                "order": 3,
+                "name": "Enrollar (Makisu)",
+                "description": "Coloca el alga nori (parte rugosa arriba) sobre la esterilla. Extiende una capa fina de arroz. Pon el salmón y aguacate en el centro. Enrolla apretando con la esterilla."
+            },
+            {
+                "order": 4,
+                "name": "Corte",
+                "description": "Moja la hoja de un cuchillo muy afilado. Corta el rollo por la mitad, y luego en 6 u 8 piezas iguales. Sirve con soja y jengibre."
+            }
+        ]
+    },
+    {
+        "name": "Tiramisú Auténtico",
+        "description": "Sin nata, solo mascarpone. Un postre italiano de capas de bizcochos bañados en café intenso y una crema de mascarpone y huevo etérea.",
+        "category": "postre",
+        "preparation_time": 30,
+        "difficulty": "media",
+        "image": "tiramisu.jpg",
+        "ingredients": "500g Queso Mascarpone\n4 Huevos L (separados yemas y claras)\n100g Azúcar\nBizcochos de Soletilla (Savoiardi)\n300ml Café espresso fuerte (frío)\nCacao puro en polvo",
+        "steps": [
+            {
+                "order": 1,
+                "name": "La crema (Sabayón)",
+                "description": "Bate las yemas con la mitad del azúcar hasta que blanqueen. Añade el mascarpone y mezcla hasta que esté cremoso y sin grumos."
+            },
+            {
+                "order": 2,
+                "name": "El aire",
+                "description": "Monta las claras a punto de nieve firme con el resto del azúcar. Incorpóralas a la mezcla de queso con movimientos envolventes para no perder el aire."
+            },
+            {
+                "order": 3,
+                "name": "Montaje",
+                "description": "Moja los bizcochos en el café (vuelta y vuelta, que no se empapen demasiado). Haz una capa de bizcochos en el molde, cubre con crema, y repite."
+            },
+            {
+                "order": 4,
+                "name": "Reposo y Cacao",
+                "description": "Refrigera mínimo 4 horas para que coja cuerpo. Justo antes de servir, espolvorea una capa generosa de cacao puro por encima con un colador."
+            }
+        ]
+    },
+    {
+        "name": "Huevos Rotos con Jamón",
+        "description": "Placer sencillo. Patatas fritas caseras, huevos con puntilla y la yema líquida que, al romperse, crea una salsa natural con el jamón ibérico.",
+        "category": "entrante",
+        "preparation_time": 25,
+        "difficulty": "facil",
+        "image": "huevosRotos.jpg",
+        "ingredients": "4 Patatas grandes\n4 Huevos frescos de campo\n100g Jamón Ibérico de calidad\nAceite de Oliva suave para freír\nSal",
+        "steps": [
+            {
+                "order": 1,
+                "name": "Patatas panadera",
+                "description": "Pela y corta las patatas en rodajas o bastones. Fríelas en abundante aceite caliente hasta que estén doradas pero tiernas por dentro."
+            },
+            {
+                "order": 2,
+                "name": "El Huevo perfecto",
+                "description": "En el mismo aceite (muy caliente), fríe los huevos. Buscamos clara cuajada con bordes crujientes (puntilla) y yema totalmente líquida."
+            },
+            {
+                "order": 3,
+                "name": "Montaje",
+                "description": "Coloca las patatas escurridas en una fuente. Pon los huevos encima y sala ligeramente. Cubre con las lonchas de jamón ibérico (el calor de los huevos sudará la grasa del jamón)."
+            },
+            {
+                "order": 4,
+                "name": "La Rotura",
+                "description": "Lleva a la mesa y, con cuchillo y tenedor, rompe los huevos sobre las patatas, mezclando la yema líquida con todo el conjunto. ¡A comer!"
+            }
+        ]
+    },
+    {
+        "name": "Pad Thai de Langostinos",
+        "description": "El plato callejero tailandés más famoso. Fideos de arroz salteados en wok con una salsa agridulce de tamarindo, cacahuetes y lima.",
+        "category": "principal",
+        "preparation_time": 30,
+        "difficulty": "media",
+        "image": "padthai.jpg",
+        "ingredients": "200g Tallarines de arroz\n12 Langostinos crudos\n2 Huevos\nBrotes de soja frescos\nCacahuetes tostados picados\nSalsa: 2 cdas Pasta de Tamarindo, 2 cdas Salsa de Pescado, 1 cda Azúcar palma/moreno",
+        "steps": [
+            {
+                "order": 1,
+                "name": "Hidratar fideos",
+                "description": "Pon los fideos de arroz en agua tibia (no hirviendo) durante 30 min hasta que estén flexibles pero duros. Se terminarán de hacer en el wok."
+            },
+            {
+                "order": 2,
+                "name": "Wok a tope",
+                "description": "Calienta el wok. Saltea los langostinos y resérvalos. Añade un poco de aceite y haz un revuelto rápido con los huevos."
+            },
+            {
+                "order": 3,
+                "name": "Salteado",
+                "description": "Añade los fideos escurridos y la salsa (mezcla de tamarindo, azúcar y salsa de pescado). Saltea rápido; los fideos absorberán la salsa y se ablandarán."
+            },
+            {
+                "order": 4,
+                "name": "Toppings",
+                "description": "Reincorpora los langostinos y los brotes de soja. Sirve con mucho cacahuete picado, chile en polvo y un gajo de lima para exprimir al momento."
+            }
+        ]
+    },
+    {
+        "name": "Ceviche Peruano Clásico",
+        "description": "Pescado crudo 'cocinado' en frío con zumo de lima. Un plato fresco, picante y lleno de matices cítricos. La 'Leche de Tigre' te revivirá.",
+        "category": "entrante",
+        "preparation_time": 20,
+        "difficulty": "media",
+        "image": "ceviche.jpg",
+        "ingredients": "500g Pescado blanco fresco (Corvina o Lenguado)\n8-10 Limas (el zumo)\n1 Cebolla morada\nCilantro fresco\nAjí limo o guindilla fresca\nMaíz cancha y Boniato cocido para acompañar",
+        "steps": [
+            {
+                "order": 1,
+                "name": "Corte y Frío",
+                "description": "Mantén el pescado muy frío. Córtalo en cubos de 2cm. Ponlos en un bol frotado previamente con un trozo de ají y ajo."
+            },
+            {
+                "order": 2,
+                "name": "Curado rápido",
+                "description": "Añade sal y mezcla. Exprime las limas al momento sobre el pescado (sin apurar hasta la piel para que no amargue). Añade el ají picado y cilantro."
+            },
+            {
+                "order": 3,
+                "name": "La Cebolla",
+                "description": "Corta la cebolla en pluma (tiras muy finas) y lávala en agua helada para quitar el picor fuerte. Añádela al pescado."
+            },
+            {
+                "order": 4,
+                "name": "Servir ya",
+                "description": "Mezcla todo. Deja reposar solo 2-3 minutos. El pescado debe estar blanco por fuera y crudo por dentro. Sirve con boniato cocido y maíz frito."
+            }
+        ]
+    },
+    {
+        "name": "Ratatouille Provenzal",
+        "description": "Un guiso de verduras francés visualmente precioso y saludable. Láminas de verduras asadas lentamente sobre una base de tomate aromático.",
+        "category": "vegano",
+        "preparation_time": 60,
+        "difficulty": "media",
+        "image": "ratatouille.jpg",
+        "ingredients": "1 Calabacín\n1 Berenjena\n2 Tomates rama\nSalsa de tomate casera (base)\nHierbas provenzales (tomillo, romero)\nAceite de Oliva Virgen Extra",
+        "steps": [
+            {
+                "order": 1,
+                "name": "Mandolina",
+                "description": "Corta el calabacín, la berenjena y el tomate en rodajas del mismo grosor (muy finas, 2-3mm). Usa mandolina si es posible."
+            },
+            {
+                "order": 2,
+                "name": "La Cama",
+                "description": "En una fuente de horno redonda o rectangular, extiende una capa generosa de salsa de tomate casera condimentada con hierbas."
+            },
+            {
+                "order": 3,
+                "name": "El Arte",
+                "description": "Coloca las rodajas de verduras alternas (calabacín, berenjena, tomate) en espiral o filas, superponiéndolas un poco como si fueran fichas de dominó."
+            },
+            {
+                "order": 4,
+                "name": "Horneado tapado",
+                "description": "Rocía con aceite, sal y hierbas. Cubre con papel de horno (con un agujero en el centro) y hornea a 160°C durante 45-60 min hasta que estén tiernas pero mantengan la forma."
+            }
+        ]
+    },
+    {
+        "name": "Croquetas de Jamón",
+        "description": "El medidor de un buen cocinero. Bechamel cremosa pero firme para poder bolear, tropezones de jamón ibérico y un rebozado fino y crujiente.",
+        "category": "entrante",
+        "preparation_time": 90,
+        "difficulty": "dificil",
+        "image": "croquetas.jpg",
+        "ingredients": "150g Jamón Ibérico picado\n800ml Leche entera (infusionada con el hueso de jamón si es posible)\n80g Mantequilla\n80g Harina\nHuevo y Pan rallado para rebozar\nNuez moscada",
+        "steps": [
+            {
+                "order": 1,
+                "name": "Roux con sabor",
+                "description": "Derrite la mantequilla y sofríe el jamón picado para que suelte la grasa. Añade la harina y cocínala 3-4 minutos removiendo para quitar el sabor a crudo."
+            },
+            {
+                "order": 2,
+                "name": "Bechamel paciente",
+                "description": "Ve añadiendo la leche caliente poco a poco sin dejar de remover con varillas. Cocina la masa a fuego medio durante 15-20 minutos hasta que se despegue de las paredes."
+            },
+            {
+                "order": 3,
+                "name": "Reposo en frío",
+                "description": "Pasa la masa a una fuente, tapa con film 'a piel' (tocando la masa) y refrigera mínimo 8 horas. La masa debe estar dura para poder manejarla."
+            },
+            {
+                "order": 4,
+                "name": "Boleado y Fritura",
+                "description": "Forma las croquetas, pásalas por huevo batido y pan rallado. Fríe en aceite abundante y muy caliente (180°C) pocas unidades a la vez para que no se abran."
             }
         ]
     }

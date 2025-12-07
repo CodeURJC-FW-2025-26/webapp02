@@ -10,12 +10,14 @@
    5.  Main Index (Banner, Search, Categories, Grid)
    6.  Recipe Detail View
    7.  Forms (Add/Edit Recipe, Drop Zone)
-   8.  Feedback Pages (Error/Success)
+   8.  Feedback Pages (Error/Success/Modals)
    9.  Pagination
-   10. Dynamic Components (Step List, Animations)
+   10. Dynamic Components (Step List, Animations, Spinner)
    ========================================================================== */
 
-/* --- 1. VARIABLES & RESET --- */
+/* ==========================================================================
+   1. VARIABLES & RESET
+   ========================================================================== */
 :root {
     /* Color Palette */
     --bg-primary: #F8E7A5;
@@ -38,7 +40,9 @@
     --font-display: "DM Serif Display", serif;
 }
 
-/* --- 2. GLOBAL LAYOUT --- */
+/* ==========================================================================
+   2. GLOBAL LAYOUT
+   ========================================================================== */
 body {
     display: flex;
     flex-direction: column;
@@ -60,7 +64,9 @@ h2 {
     font-style: normal;
 }
 
-/* --- 3. HEADER (NAVBAR) --- */
+/* ==========================================================================
+   3. HEADER (NAVBAR)
+   ========================================================================== */
 .navbar {
     min-height: 60px;
 }
@@ -130,7 +136,9 @@ h2 {
     /* Keeps layout balanced */
 }
 
-/* --- 4. FOOTER --- */
+/* ==========================================================================
+   4. FOOTER
+   ========================================================================== */
 .professional-footer {
     background: var(--bg-dark);
     color: #adb5bd;
@@ -197,7 +205,9 @@ h2 {
     margin: 0;
 }
 
-/* --- 5. MAIN PAGE (INDEX) --- */
+/* ==========================================================================
+   5. MAIN PAGE (INDEX)
+   ========================================================================== */
 
 /* Category Filters */
 .category-buttons {
@@ -299,7 +309,9 @@ h2 {
     box-shadow: var(--shadow-card);
 }
 
-/* --- 6. RECIPE DETAIL PAGE --- */
+/* ==========================================================================
+   6. RECIPE DETAIL PAGE
+   ========================================================================== */
 .recipe-container {
     width: 80%;
     margin: 40px auto;
@@ -372,7 +384,9 @@ h2 {
     width: 100%;
 }
 
-/* --- 7. FORMS (ADD/EDIT) & DROP ZONE --- */
+/* ==========================================================================
+   7. FORMS (ADD/EDIT) & DROP ZONE
+   ========================================================================== */
 .AddRecipe {
     padding-top: 20px;
 }
@@ -398,7 +412,6 @@ h2 {
 .buttons {
     display: flex;
     margin-left: 150px;
-    /* Adjust based on layout needs */
     padding: 20px 0 50px 0;
 }
 
@@ -464,7 +477,9 @@ h2 {
     transform: translateY(-5px);
 }
 
-/* --- 8. FEEDBACK PAGES & MODALS --- */
+/* ==========================================================================
+   8. FEEDBACK PAGES & MODALS
+   ========================================================================== */
 /* Contrast improvement for the Modal */
 #feedbackModal .modal-content {
     background-color: #ffffff;
@@ -488,7 +503,9 @@ h2 {
     padding: 2rem;
 }
 
-/* --- 9. PAGINATION --- */
+/* ==========================================================================
+   9. PAGINATION
+   ========================================================================== */
 .pagination {
     margin-top: 40px;
 }
@@ -530,7 +547,9 @@ h2 {
     color: var(--bg-dark);
 }
 
-/* --- 10. DYNAMIC COMPONENTS & ANIMATIONS --- */
+/* ==========================================================================
+   10. DYNAMIC COMPONENTS (STEP LIST, ANIMATIONS)
+   ========================================================================== */
 
 /* Style for the Inline edit form (Card Aesthetic) */
 .edit-step-form {
