@@ -3,10 +3,23 @@
 Poner 18 recetas de ejemplo con fotos para hacer más visual el scroll infinito 
 (hacen falta el equivalente a 3 páginas)
 
-hacer el README
+hacer el README: vídeo, ...
 
 
-Al añadir receta botón para volver a la página principal
+Al añadir receta botón para volver a la página principal tambien
+
+Al añadir nuevo paso si desconecto el servidor no salta ningun error
+
+Al borrer un paso poner spinner y mensaje de error si falla
+
+Comprobar que al editar una receta y borrar la imagen se borra del servidor
+
+Comprobar que durante todas las operaciones en segundo plano se muestra un indicador de
+procesamiento (spinner)
+
+Inglés
+
+Código duplicado¿?
 
 (PROFE)
 
@@ -14,6 +27,7 @@ Preguntar si al borrar un paso hace falta confirmación o no, o si simplemente l
 En el enunciado no menciona cuadro de diálogo
 Preguntar si al crear una receta con éxito muestra mensaje de éxito con botón para ir a la receta o simplemente 
 redirige a la receta sin mensaje, directo. El enunciado no menciona cuadro.
+Preguntar si cuando una receta no tiene imagen la previsualización muestra un campo vacío
 
 
 
@@ -25,4 +39,7 @@ Hacer toda la vista de la página más profesional, más interactiva. Dándole u
 cambiando los colores, estructurando mejor el display de la página de detalle, añadiendo un vídeo de fondo en la página principal/imágenes rotativas
 tipo tarjeta para las recetas, poniendo mejores fotos, profundizando en las recetas, se puede hacer todo mucho más pro.
 
-Ayúdame a limpiar todos los archivos de mi proyecto. Dime cuáles puedo eliminar ya (para la práctica 3, que es la final). Cuáles puedo mejorar (como el archivo cocina.css que seguramente se pueda simplificar). En general, quiero llegar a la versión más profesional de mi proyecto
+(DEFENSA)
+
+Preparar la demo de la aplicación (datos e imágenes de ejemplo, lista de pasos
+para mostrar cada funcionalidad, etc)

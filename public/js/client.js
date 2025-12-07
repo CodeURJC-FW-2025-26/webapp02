@@ -277,6 +277,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 showFeedbackModal("Error de Conexión", "No se pudo comunicar con el servidor.", "error");
                 submitBtn.disabled = false;
                 submitBtn.textContent = originalBtnText;
+                // Reactivate the button to allow retries
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalBtnText;
             }
         }, false);
     }
@@ -606,7 +609,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Store original HTML for cancel action
                 li.dataset.originalHtml = li.innerHTML;
 
-                // Inject Form (Full width style classes)
+                // Inject Form (Full width style classes) WITHOUT putting dirty values directly in HTML attributes
                 const recipeIdUrl = window.location.pathname.split('/')[2];
                 const actionUrl = `/receta/${recipeIdUrl}/paso/editar/${stepId}`;
 
@@ -616,13 +619,13 @@ document.addEventListener('DOMContentLoaded', () => {
                         
                         <div class="mb-3">
                             <label class="form-label small fw-bold text-secondary">Título</label>
-                            <input type="text" class="form-control" name="stepName" value="${currentName}" required>
+                            <input type="text" class="form-control step-name-input" name="stepName" required>
                             <div class="invalid-feedback">El título es obligatorio.</div>
                         </div>
                         
                         <div class="mb-3">
                             <label class="form-label small fw-bold text-secondary">Descripción</label>
-                            <textarea class="form-control" name="stepDescription" rows="3" required>${currentDesc}</textarea>
+                            <textarea class="form-control step-desc-input" name="stepDescription" rows="3" required></textarea>
                             <div class="invalid-feedback">La descripción es obligatoria.</div>
                         </div>
                         
@@ -632,6 +635,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         </div>
                     </form>
                 `;
+                // ASSIGN VALUES SAFELY VIA JS PROPERTIES
+                // This prevents quotation marks from breaking the HTML
+                li.querySelector('.step-name-input').value = currentName;
+                li.querySelector('.step-desc-input').value = currentDesc;
             }
 
             // Cancel Edit Mode
