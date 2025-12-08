@@ -285,6 +285,13 @@ h2 {
     font-size: 18px;
     position: absolute;
     right: 0;
+    transition: background-color 0.3s ease;
+}
+
+/* New rule for the Hover state of the Add Recipe button */
+.banner .btn:hover {
+    background-color: var(--bg-dark-hover);
+    color: white;
 }
 
 /* Grid & Cards */
@@ -351,14 +358,11 @@ h2 {
 }
 
 /* Detail Buttons overrides */
-/* MODIFICADO: Aplicamos solo border-radius general,
-   pero permitimos que los colores de Bootstrap (danger, success, secondary)
-   funcionen correctamente sin ser sobrescritos a azul oscuro */
 .recipe-container .btn {
     border-radius: var(--btn-radius);
 }
 
-/* Asegurar contraste en el botón de éxito (Volver) */
+/* Ensure contrast on the success (Back) button */
 .recipe-container .btn.text-white:hover {
     color: white !important;
 }
