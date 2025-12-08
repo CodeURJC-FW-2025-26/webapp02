@@ -4,16 +4,19 @@ import express from 'express';
 import { db } from '../database.js';
 import { ObjectId } from 'mongodb';
 import upload from '../multerConfig.js';
+import { unlink } from 'fs/promises'; // Module to delete files
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
 
+const __dirname = dirname(fileURLToPath(import.meta.url));
 const router = express.Router();
-const PAGE_SIZE = 6; // Number of items per page for pagination/infinite scroll
+const PAGE_SIZE = 6;
 
 // Cache for the collection reference
 let recipesCollection;
 
 // =================================================================
 //  LOCALIZATION CONSTANTS (SERVER MESSAGES)
-//  Centralized Spanish text for server responses & UI rendering.
 // =================================================================
 const SERVER_MESSAGES = {
     VALIDATION: {
@@ -51,7 +54,6 @@ const SERVER_MESSAGES = {
 
 /**
  * Middleware: Database Initialization Check
- * Ensures the database connection is active before processing requests.
  */
 router.use((req, res, next) => {
     if (!recipesCollection) {
@@ -65,9 +67,26 @@ router.use((req, res, next) => {
 // =================================================================
 
 /**
+ * Helper to physically delete an image from the server.
+ * Prevents deleting the default 'logo.jpg'.
+ * @param {string} filename 
+ */
+async function deleteImageFile(filename) {
+    if (!filename || filename === 'logo.jpg') return; // Protect default image
+
+    try {
+        // Construct path: src/routes/../../uploads -> root/uploads
+        const filePath = join(__dirname, '../../uploads', filename);
+        await unlink(filePath);
+        console.log(`[File System] Deleted old image: ${filename}`);
+    } catch (error) {
+        // Log warning but don't crash app if file is missing
+        console.warn(`[File System] Warning: Could not delete image ${filename}: ${error.message}`);
+    }
+}
+
+/**
  * Validates recipe input data.
- * @param {object} body - The request body containing form data.
- * @returns {object} - { valid: boolean, message: string|null }
  */
 function validateRecipeInput(body) {
     const { recipeName, description, ingredients, category, difficulty, preparationTime } = body;
@@ -100,16 +119,12 @@ function validateRecipeInput(body) {
 
 /**
  * API: Check if a recipe title exists.
- * Used for asynchronous client-side validation.
  */
 router.get('/api/check-title', async (req, res) => {
     try {
         const { title, id } = req.query;
-
-        // Regex for case-insensitive exact match
         const query = { name: { $regex: `^${title.trim()}$`, $options: 'i' } };
 
-        // Exclude current ID if we are in "Edit" mode
         if (id && ObjectId.isValid(id)) {
             query._id = { $ne: new ObjectId(id) };
         }
@@ -125,14 +140,12 @@ router.get('/api/check-title', async (req, res) => {
 
 /**
  * HOME PAGE (Index)
- * Supports both standard HTML rendering and JSON responses for Infinite Scroll.
  */
 router.get('/', async (req, res) => {
     try {
         const page = parseInt(req.query.page) || 1;
         const skip = (page - 1) * PAGE_SIZE;
 
-        // Build Search Filter
         const filter = {};
         if (req.query.search) {
             filter.name = { $regex: req.query.search, $options: 'i' };
@@ -141,7 +154,6 @@ router.get('/', async (req, res) => {
             filter.category = req.query.category;
         }
 
-        // Execute Queries
         const [recipes, totalRecipes] = await Promise.all([
             recipesCollection.find(filter).skip(skip).limit(PAGE_SIZE).toArray(),
             recipesCollection.countDocuments(filter)
@@ -150,14 +162,10 @@ router.get('/', async (req, res) => {
         const totalPages = Math.ceil(totalRecipes / PAGE_SIZE);
         const nextPage = page < totalPages ? page + 1 : null;
 
-        // --- JSON Mode (AJAX Infinite Scroll) ---
         if (req.query.format === 'json') {
             return res.json({ recipes, nextPage });
         }
 
-        // --- HTML Mode (Initial Load) ---
-
-        // Determine active category state for UI highlighting
         const categoryStates = {
             all: !req.query.category,
             entrante: req.query.category === 'entrante',
@@ -166,10 +174,8 @@ router.get('/', async (req, res) => {
             vegano: req.query.category === 'vegano'
         };
 
-        // Generate pagination logic for SEO/Fallback
         const pagesForTemplate = [];
         if (totalPages > 1) {
-            // Logic to show limited page numbers (e.g., 1, ... 4, 5, 6 ...)
             const window = 2;
             for (let i = 1; i <= totalPages; i++) {
                 if (i === 1 || i === totalPages || (i >= page - window && i <= page + window)) {
@@ -210,12 +216,9 @@ router.get('/', async (req, res) => {
 
 /**
  * GENERIC ERROR PAGE HANDLER
- * Displays errors stored in session (Flash pattern).
  */
 router.get('/error', (req, res) => {
     const { errorMessage, backUrl } = req.session;
-
-    // Clear session errors after reading
     delete req.session.errorMessage;
     delete req.session.backUrl;
 
@@ -237,16 +240,14 @@ router.get('/error', (req, res) => {
  */
 router.get('/receta/nueva', (req, res) => {
     const formData = req.session.formData || {};
-    delete req.session.formData; // Clear temp data
+    delete req.session.formData;
 
-    // Helper for selecting dropdowns in the template
     const recipeData = {
         ...formData,
         [`isCategory${(formData.category || '').charAt(0).toUpperCase() + (formData.category || '').slice(1)}`]: true,
         [`isDifficulty${(formData.difficulty || '').charAt(0).toUpperCase() + (formData.difficulty || '').slice(1)}`]: true
     };
 
-    // Map fields to match edit structure
     const recipe = {
         name: recipeData.recipeName,
         description: recipeData.description,
@@ -263,15 +264,12 @@ router.get('/receta/nueva', (req, res) => {
  */
 router.post('/receta/nueva', upload.single('recipeImage'), async (req, res) => {
     try {
-        // 1. Validate Input
         const validation = validateRecipeInput(req.body);
         if (!validation.valid) {
             return res.status(400).json({ success: false, message: validation.message });
         }
 
         const { recipeName } = req.body;
-
-        // 2. Check Duplicate (Double check on server side)
         const existingRecipe = await recipesCollection.findOne({
             name: { $regex: `^${recipeName.trim()}$`, $options: 'i' }
         });
@@ -280,7 +278,6 @@ router.post('/receta/nueva', upload.single('recipeImage'), async (req, res) => {
             return res.status(400).json({ success: false, message: `${SERVER_MESSAGES.VALIDATION.DUPLICATE_PREFIX} "${recipeName}".` });
         }
 
-        // 3. Construct Object
         const newRecipe = {
             name: recipeName.trim(),
             description: req.body.description.trim(),
@@ -288,11 +285,10 @@ router.post('/receta/nueva', upload.single('recipeImage'), async (req, res) => {
             category: req.body.category,
             difficulty: req.body.difficulty,
             preparation_time: parseInt(req.body.preparationTime),
-            image: req.file ? req.file.filename : 'logo.jpg', // Default image
+            image: req.file ? req.file.filename : 'logo.jpg',
             steps: []
         };
 
-        // 4. Insert
         const result = await recipesCollection.insertOne(newRecipe);
 
         res.json({
@@ -322,7 +318,6 @@ router.get('/receta/:id', async (req, res) => {
             return res.status(404).render('error', { errorMessage: SERVER_MESSAGES.ERRORS.RECIPE_NOT_FOUND });
         }
 
-        // Inject recipe_id into steps for template navigation
         if (recipe.steps) {
             recipe.steps.forEach(step => step.recipe_id = recipe._id);
         }
@@ -346,7 +341,6 @@ router.get('/receta/editar/:id', async (req, res) => {
 
         if (!recipe) return res.status(404).render('error', { errorMessage: SERVER_MESSAGES.ERRORS.RECIPE_NOT_FOUND });
 
-        // Template helpers for Select boxes
         if (recipe.category) recipe[`isCategory${recipe.category.charAt(0).toUpperCase() + recipe.category.slice(1)}`] = true;
         if (recipe.difficulty) recipe[`isDifficulty${recipe.difficulty.charAt(0).toUpperCase() + recipe.difficulty.slice(1)}`] = true;
 
@@ -360,20 +354,24 @@ router.get('/receta/editar/:id', async (req, res) => {
 
 /**
  * POST: Update Recipe Logic
- * Handles updates including file uploads and image deletion flag.
+ * Handles updates including file uploads and deletion of old images.
  */
 router.post('/receta/editar/:id', upload.single('recipeImage'), async (req, res) => {
     try {
         const recipeId = req.params.id;
         if (!ObjectId.isValid(recipeId)) return res.status(400).json({ success: false, message: SERVER_MESSAGES.ERRORS.INVALID_ID_SHORT });
 
-        // 1. Validate Input
+        // 1. Fetch current recipe FIRST (to know what the old image was)
+        const currentRecipe = await recipesCollection.findOne({ _id: new ObjectId(recipeId) });
+        if (!currentRecipe) return res.status(404).json({ success: false, message: SERVER_MESSAGES.ERRORS.RECIPE_NOT_FOUND });
+
+        // 2. Validate Input
         const validation = validateRecipeInput(req.body);
         if (!validation.valid) {
             return res.status(400).json({ success: false, message: validation.message });
         }
 
-        // 2. Check Duplicate Name (Exclude self)
+        // 3. Check Duplicate Name (Exclude self)
         const existingRecipe = await recipesCollection.findOne({
             name: { $regex: `^${req.body.recipeName.trim()}$`, $options: 'i' },
             _id: { $ne: new ObjectId(recipeId) }
@@ -383,7 +381,7 @@ router.post('/receta/editar/:id', upload.single('recipeImage'), async (req, res)
             return res.status(400).json({ success: false, message: `El nombre "${req.body.recipeName}" ${SERVER_MESSAGES.VALIDATION.NAME_IN_USE_SUFFIX}` });
         }
 
-        // 3. Prepare Update Data
+        // 4. Prepare Update Data
         const updateData = {
             name: req.body.recipeName.trim(),
             description: req.body.description.trim(),
@@ -393,21 +391,30 @@ router.post('/receta/editar/:id', upload.single('recipeImage'), async (req, res)
             preparation_time: parseInt(req.body.preparationTime)
         };
 
-        // --- IMPROVED IMAGE LOGIC ---
-        if (req.file) {
-            // Case A: New file uploaded -> Replace image
-            updateData.image = req.file.filename;
-        } else if (req.body.removeImageFlag === "true") {
-            // Case B: User requested deletion -> Reset to default
-            updateData.image = 'logo.jpg';
-        }
-        // Case C: No file + Flag false -> Keep existing image (Do nothing)
+        // 5. Image Logic & Cleanup
+        let oldImageToDelete = null;
 
-        // 4. Perform Update
+        if (req.file) {
+            // Case A: New file uploaded -> Replace image & mark old for deletion
+            updateData.image = req.file.filename;
+            oldImageToDelete = currentRecipe.image;
+        } else if (req.body.removeImageFlag === "true") {
+            // Case B: User requested deletion -> Reset to default & mark old for deletion
+            updateData.image = 'logo.jpg';
+            oldImageToDelete = currentRecipe.image;
+        }
+        // Case C: No change -> Keep existing image
+
+        // 6. Perform Update
         await recipesCollection.updateOne(
             { _id: new ObjectId(recipeId) },
             { $set: updateData }
         );
+
+        // 7. Delete old image physically (if exists and is not default)
+        if (oldImageToDelete) {
+            await deleteImageFile(oldImageToDelete);
+        }
 
         res.json({
             success: true,
@@ -423,15 +430,25 @@ router.post('/receta/editar/:id', upload.single('recipeImage'), async (req, res)
 
 /**
  * POST: Delete Recipe Logic
+ * Deletes the recipe from DB and removes the associated image file.
  */
 router.post('/receta/borrar/:id', async (req, res) => {
     try {
         const recipeId = req.params.id;
         if (!ObjectId.isValid(recipeId)) return res.status(400).json({ success: false, message: SERVER_MESSAGES.ERRORS.INVALID_ID_SHORT });
 
-        const result = await recipesCollection.deleteOne({ _id: new ObjectId(recipeId) });
+        // 1. Find recipe to get image name
+        const recipe = await recipesCollection.findOne({ _id: new ObjectId(recipeId) });
 
-        if (result.deletedCount === 1) {
+        if (recipe) {
+            // 2. Delete from DB
+            await recipesCollection.deleteOne({ _id: new ObjectId(recipeId) });
+
+            // 3. Delete image from disk
+            if (recipe.image) {
+                await deleteImageFile(recipe.image);
+            }
+
             res.json({ success: true, message: SERVER_MESSAGES.SUCCESS.RECIPE_DELETED, redirectUrl: '/' });
         } else {
             res.status(404).json({ success: false, message: SERVER_MESSAGES.ERRORS.RECIPE_NOT_FOUND });
@@ -464,7 +481,6 @@ router.post('/receta/:id/paso/nuevo', async (req, res) => {
             description: stepDescription.trim()
         };
 
-        // Calculate Order (Append to end)
         const recipe = await recipesCollection.findOne({ _id: new ObjectId(recipeId) }, { projection: { steps: 1 } });
         newStep.order = (recipe.steps || []).length + 1;
 

@@ -1,40 +1,26 @@
 (NOSOTROS)
 
-hacer el README: vídeo, ...
+hacer el README: vídeo, commits, ...
 
-
-Al añadir receta añadir un botón para volver a la página principal también
-
-Al añadir nuevo paso si desconecto el servidor no salta ningun error
-
-Al borrer un paso poner spinner y mensaje de error si falla
-
-Comprobar que al editar una receta y borrar la imagen se borra del servidor
-
-Comprobar que durante todas las operaciones en segundo plano se muestra un indicador de
-procesamiento (spinner)
-
-Inglés
-
-Código duplicado¿?
 
 (PROFE)
 
 Preguntar si al borrar un paso hace falta confirmación o no, o si simplemente lo borra de una. 
 En el enunciado no menciona cuadro de diálogo
-Preguntar si al crear una receta con éxito muestra mensaje de éxito con botón para ir a la receta o simplemente 
-redirige a la receta sin mensaje, directo. El enunciado no menciona cuadro.
+
+Preguntar si al crear una receta con éxito muestra mensaje de éxito con botón para 
+ir a la receta o simplemente redirige a la receta sin mensaje, directo.
+El enunciado no menciona cuadro de dialogo (modal).
+
 Preguntar si cuando una receta no tiene imagen la previsualización muestra un campo vacío
-
-
 
 (OPCIONAL)
 
-Poner imágenes de mejor calidad en todo para que la web se vea mejor.
-
-Hacer toda la vista de la página más profesional, más interactiva. Dándole una buena modificación se puede hacer la web más chula: 
-cambiando los colores, estructurando mejor el display de la página de detalle, añadiendo un vídeo de fondo en la página principal/imágenes rotativas
-tipo tarjeta para las recetas, poniendo mejores fotos, profundizando en las recetas, se puede hacer todo mucho más pro.
+Chavales, podemos hacer toda la vista de la página más profesional, más interactiva. 
+Dándole una buena modificación se puede hacer la web más chula: 
+cambiando los colores, estructurando mejor el display de la página de detalle,
+añadiendo un vídeo de fondo en la página principal/imágenes rotativas
+tipo tarjeta para las recetas, se puede hacer todo mucho más pro.
 
 (DEFENSA)
 

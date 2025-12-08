@@ -16,6 +16,7 @@ const UI_STRINGS = {
     BTN_CLOSE: "Cerrar",
     BTN_CLOSE_CORRECT: "Cerrar y Corregir",
     BTN_VIEW_RECIPE: "Ver Receta",
+    BTN_GO_HOME: "Volver al Inicio",
     BTN_ACCEPT: "Aceptar",
     BTN_CANCEL: "Cancelar",
     BTN_SAVE: "Guardar",
@@ -38,6 +39,7 @@ const UI_STRINGS = {
     ERR_UNKNOWN: "Ocurrió un error desconocido.",
     ERR_DELETE_GENERIC: "Ocurrió un error al intentar borrar.",
     ERR_DELETE_STEP: "Error eliminando paso: ",
+    ERR_UPDATE_STEP: "Error actualizando paso: ",
 
     // Confirmation Prompts
     CONFIRM_DEL_RECIPE: "¿Estás seguro de que quieres borrar esta receta por completo?",
@@ -74,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
      * @param {string} title - Modal Title.
      * @param {string} message - Body text.
      * @param {string} type - 'success' or 'error' (determines color).
-     * @param {object} options - Configuration for buttons { showActionBtn, actionUrl, actionText, closeBtnText }.
+     * @param {object} options - Configuration for buttons { showActionBtn, actionUrl, actionText, showSecondaryBtn, secondaryText, secondaryUrl, closeBtnText }.
      */
     const showFeedbackModal = (title, message, type, options = {}) => {
         const modalEl = document.getElementById('feedbackModal');
@@ -91,17 +93,37 @@ document.addEventListener('DOMContentLoaded', () => {
         modalBody.textContent = message;
         modalTitle.className = type === 'success' ? "modal-title text-success" : "modal-title text-danger";
 
-        // Configure Action Button (e.g., "View Recipe")
+        // 1. Configure Primary Action Button (e.g., "View Recipe")
         if (options.showActionBtn) {
             modalActionBtn.classList.remove('d-none');
             modalActionBtn.textContent = options.actionText || UI_STRINGS.BTN_CONTINUE;
             modalActionBtn.href = options.actionUrl || '#';
-            if (modalCloseBtn) modalCloseBtn.classList.add('d-none'); // Hide close button if action is mandatory
         } else {
             modalActionBtn.classList.add('d-none');
-            if (modalCloseBtn) {
+        }
+
+        // 2. Configure Secondary Button (e.g., "Close" OR "Go Home")
+        if (modalCloseBtn) {
+            if (options.showSecondaryBtn) {
+                // Case A: Custom Secondary Action (e.g. Go Home)
+                modalCloseBtn.classList.remove('d-none');
+                modalCloseBtn.textContent = options.secondaryText || UI_STRINGS.BTN_CLOSE;
+
+                // If a URL is provided, redirect on click. Otherwise, standard close behavior.
+                if (options.secondaryUrl) {
+                    modalCloseBtn.onclick = () => window.location.href = options.secondaryUrl;
+                } else {
+                    modalCloseBtn.onclick = null; // Default Bootstrap dismiss
+                }
+
+            } else if (options.showActionBtn) {
+                // Case B: Primary action exists, but no secondary requested -> Hide secondary to force primary
+                modalCloseBtn.classList.add('d-none');
+            } else {
+                // Case C: No primary action -> Show standard Close button
                 modalCloseBtn.classList.remove('d-none');
                 modalCloseBtn.textContent = options.closeBtnText || UI_STRINGS.BTN_CLOSE;
+                modalCloseBtn.onclick = null; // Default Bootstrap dismiss
             }
         }
 
@@ -303,9 +325,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (response.ok && result.success) {
                     showFeedbackModal(UI_STRINGS.MODAL_SUCCESS, result.message, "success", {
+                        // Primary Button: View Recipe
                         showActionBtn: true,
                         actionText: UI_STRINGS.BTN_VIEW_RECIPE,
-                        actionUrl: result.redirectUrl || '/'
+                        actionUrl: result.redirectUrl || '/',
+
+                        // Secondary Button: Go to Home
+                        showSecondaryBtn: true,
+                        secondaryText: UI_STRINGS.BTN_GO_HOME,
+                        secondaryUrl: '/'
                     });
                 } else {
                     showFeedbackModal(UI_STRINGS.MODAL_ERROR, result.message || UI_STRINGS.ERR_UNKNOWN, "error", {
@@ -516,6 +544,8 @@ document.addEventListener('DOMContentLoaded', () => {
             } catch (err) {
                 console.error(err);
                 toggleSpinner(false);
+                // FIXED: Now properly displaying error modal on connection failure
+                showFeedbackModal(UI_STRINGS.MODAL_CONN_TITLE, UI_STRINGS.MODAL_CONN_MSG, "error");
             }
         });
     }
@@ -540,6 +570,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 confirmBtn.onclick = async () => {
                     confirmModal.hide();
+                    toggleSpinner(true); // <--- SPINNER SHOW (Added here)
 
                     try {
                         const response = await fetch(form.action, { method: 'POST' });
@@ -547,6 +578,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             throw new Error("Invalid server response deleting step.");
                         }
                         const result = await response.json();
+                        toggleSpinner(false); // <--- SPINNER HIDE (Success path)
 
                         if (result.success) {
                             // Animation: Fade out
@@ -569,7 +601,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         } else {
                             showFeedbackModal(UI_STRINGS.MODAL_ERROR, UI_STRINGS.ERR_DELETE_STEP + result.message, "error");
                         }
-                    } catch (err) { console.error(err); }
+                    } catch (err) {
+                        console.error(err);
+                        toggleSpinner(false); // <--- SPINNER HIDE (Error path)
+                        // FIXED: Added error feedback for deletion failure
+                        showFeedbackModal(UI_STRINGS.MODAL_CONN_TITLE, UI_STRINGS.MODAL_CONN_MSG, "error");
+                    }
                 };
 
                 confirmModal.show();
@@ -629,6 +666,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 } catch (err) {
                     console.error(err);
                     toggleSpinner(false);
+                    // FIXED: Added error feedback for inline edit failure
+                    showFeedbackModal(UI_STRINGS.MODAL_CONN_TITLE, UI_STRINGS.MODAL_CONN_MSG, "error");
                 }
             }
         });

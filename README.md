@@ -245,6 +245,53 @@ The 5 files I have worked on the most are:
 
 Enhance user experience (UX) by introducing dynamic client-side behavior using JavaScript, AJAX (Fetch API), and DOM manipulation, reducing page reloads.
 
+---
+
+### Execution Instructions
+
+The execution process remains consistent with previous practices, ensuring a smooth transition.
+
+1. **Prerequisites:** Ensure **Node.js** (v18+) and **MongoDB** (v5+) are installed and running.
+2. **Installation:** Run `npm install` in the project root to install dependencies (if not already installed).
+3. **Database:** Make sure the MongoDB service is active. The application will automatically seed the database with the data from `data/recipes.json` if the collection is empty.
+4. **Start:** Run `npm start` to launch the server.
+5. **Access:** Open your browser at `http://localhost:3000`.
+
+---
+
+### File Description (Updated for Practice 3)
+
+In this practice, the focus shifted heavily towards **Client-Side Logic** and **UX improvements**.
+
+- **`public/js/client.js`**: **(New)** This is the core engine of Practice 3. It handles:
+  - **AJAX Requests:** Uses `fetch` for creating, editing, and deleting recipes/steps without page reloads.
+  - **DOM Manipulation:** Dynamically updates the recipe grid (Infinite Scroll) and the steps list (adding/removing `<li>` elements) instantly.
+  - **Validation:** Implements real-time custom validation (e.g., checking if a title starts with uppercase) and asynchronous validation (checking for duplicate titles via API).
+  - **UI Feedback:** Manages the loading `spinner` and the generic Bootstrap `feedbackModal`.
+  - **Drag & Drop:** Handles the file input logic to allow dragging images onto the form.
+
+- **`src/routes/main.js`**: **(Modified)**
+  - Updated to support **JSON responses** for Infinite Scroll (`format=json`).
+  - Implemented the `/api/check-title` endpoint for asynchronous validation.
+  - Added logic to physically **delete old images** from the server (`fs/promises`) when a recipe is edited or deleted, preventing storage clutter.
+
+- **`src/views/partials/footer.html`**: **(Modified)**
+  - Now acts as the container for global UI components: the **Loading Spinner overlay** and the **Generic Feedback Modal**. This ensures they are available on every page without code duplication.
+
+- **`src/views/Index.html`**: **(Modified)**
+  - Removed manual pagination links.
+  - Added the `#scroll-spinner` and hidden inputs to manage the state of the Infinite Scroll.
+
+- **`src/views/AñadirReceta.html`**: **(Modified)**
+  - Restructured the image input to support a **Drag & Drop zone**.
+  - Added Bootstrap `needs-validation` classes and `invalid-feedback` containers for client-side error display.
+
+- **`src/views/detalleReceta.html`**: **(Modified)**
+  - Added specific IDs (`#stepsList`, `#deleteRecipeForm`) to allow JavaScript to intercept form submissions and button clicks for AJAX processing.
+  - Prepared the steps list for **Inline Editing**.
+
+---
+
 ### Features Implemented
 
 1. **Infinite Scroll:**
@@ -268,12 +315,95 @@ Enhance user experience (UX) by introducing dynamic client-side behavior using J
     - **Inline Editing:** Recipe steps can be edited directly within the list. The text transforms into a form, and updates are saved via AJAX.
     - **Dynamic Deletion:** Steps can be removed instantly without a full page reload, utilizing DOM manipulation to update the UI.
 
-### Files Description (Updated)
+### Functionalities Implemented (LA CAMBIAMOS DESPUÉS, ES LO MISMO QUE ARRIBA)
 
-- `public/js/client.js`: The core logic for all client-side interactivity (validations, AJAX, DOM manipulation).
-- `src/routes/main.js`: Updated to support JSON responses for API calls (`format=json`) and handle asynchronous validation requests.
-- `AñadirReceta.html`: Updated structure to support Drag & Drop and hidden input flags.
+1. **Infinite Scroll:** Pagination has been replaced. New recipes load automatically as the user scrolls to the bottom of the main page.
+2. **AJAX Forms & CRUD:** Creating, Editing, and Deleting recipes now occurs asynchronously. The user is notified via a modal, and redirects happen only when necessary.
+3. **Dynamic Step Management:**
+    - **Add:** Steps are added to the list instantly.
+    - **Delete:** Steps are removed from the DOM with a fade-out animation.
+    - **Inline Edit:** Users can edit a step directly in the list (the text transforms into a form) without leaving the detail page.
+4. **Advanced Validation:** Forms provide immediate feedback. We check for capitalization, length, and duplicates (server-side check via AJAX) before submission.
+5. **Robust Image Handling:** Drag & Drop support for uploads, instant preview, and automatic server cleanup of unused images.
+6. **UX Feedback:** A full-screen spinner appears during background operations, and a modal confirms actions or reports errors (including connection failures).
 
-### Team Participation
+---
 
-**(Soon)**
+### Demonstration Video
+
+The video demonstrating all Practice 3 functionalities (Infinite scroll, AJAX forms, Drag & Drop, etc.) is available at:
+
+[INSERT VIDEO LINK HERE]
+
+---
+
+### Members Participation
+
+#### Fernán Rama Hombreiro
+
+**Description of tasks:**
+[Write a brief paragraph describing what you did. Example: I updated the main.js backend to handle image deletion and implemented the inline editing logic for the steps...]
+
+**5 most important commits:**
+
+1. [Commit Message](Link to commit)
+2. [Commit Message](Link to commit)
+3. [Commit Message](Link to commit)
+4. [Commit Message](Link to commit)
+5. [Commit Message](Link to commit)
+
+**Top 5 files worked on:**
+
+1. [File Name](Link to file)
+2. [File Name](Link to file)
+3. [File Name](Link to file)
+4. [File Name](Link to file)
+5. [File Name](Link to file)
+
+---
+
+#### Rubén Torres Rivero
+
+**Description of tasks:**
+[Write a brief paragraph describing what you did. Example: I focused on implementing the drag and drop functionality in the forms and adjusting the CSS animations for the steps list...]
+
+**5 most important commits:**
+
+1. [Commit Message](Link to commit)
+2. [Commit Message](Link to commit)
+3. [Commit Message](Link to commit)
+4. [Commit Message](Link to commit)
+5. [Commit Message](Link to commit)
+
+**Top 5 files worked on:**
+
+1. [File Name](Link to file)
+2. [File Name](Link to file)
+3. [File Name](Link to file)
+4. [File Name](Link to file)
+5. [File Name](Link to file)
+
+---
+
+#### Izan Calle Feijoo
+
+**Description of tasks:**
+[Write a brief paragraph describing what you did. Example: I worked on the client.js logic for handling the Infinite Scroll and the global Feedback Modal...]
+
+**5 most important commits:**
+
+1. [Commit Message](Link to commit)
+2. [Commit Message](Link to commit)
+3. [Commit Message](Link to commit)
+4. [Commit Message](Link to commit)
+5. [Commit Message](Link to commit)
+
+**Top 5 files worked on:**
+
+1. [File Name](Link to file)
+2. [File Name](Link to file)
+3. [File Name](Link to file)
+4. [File Name](Link to file)
+5. [File Name](Link to file)
+
+---
