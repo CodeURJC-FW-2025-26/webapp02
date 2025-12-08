@@ -368,6 +368,8 @@ router.post('/receta/editar/:id', upload.single('recipeImage'), async (req, res)
         // 2. Validate Input
         const validation = validateRecipeInput(req.body);
         if (!validation.valid) {
+            // If an image was uploaded but the form is invalid, it deletes it
+            if (req.file) await deleteImageFile(req.file.filename);
             return res.status(400).json({ success: false, message: validation.message });
         }
 

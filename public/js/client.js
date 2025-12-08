@@ -67,7 +67,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const toggleSpinner = (show) => {
         const spinner = document.getElementById('loadingSpinner');
         if (spinner) {
-            show ? spinner.classList.remove('d-none') : spinner.classList.add('d-none');
+            if (show) {
+                spinner.classList.remove('d-none');
+                document.body.style.overflow = 'hidden'; // Blocks the scroll
+            } else {
+                spinner.classList.add('d-none');
+                document.body.style.overflow = ''; // Unblocks the scroll
+            }
         }
     };
 
