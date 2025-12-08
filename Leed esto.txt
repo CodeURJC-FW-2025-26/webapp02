@@ -1,8 +1,5 @@
 (NOSOTROS)
 
-colores de los botones de la pagina de detalle 
-botón volver a principal con texto blanco siempre 
-
 hacer el README: vídeo, commits, ...
 
 
