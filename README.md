@@ -310,22 +310,12 @@ In this practice, the focus shifted heavily towards **Client-Side Logic** and **
 4. **Drag & Drop Image Upload:**
     - Users can drag an image file from their desktop directly onto the form.
     - A JavaScript `FileReader` provides an instant preview of the image before uploading.
+    - Also implemented an automatic server cleanup of unused images.
 
 5. **Dynamic Step Management:**
     - **Inline Editing:** Recipe steps can be edited directly within the list. The text transforms into a form, and updates are saved via AJAX.
-    - **Dynamic Deletion:** Steps can be removed instantly without a full page reload, utilizing DOM manipulation to update the UI.
-
-### Functionalities Implemented (LA CAMBIAMOS DESPUÉS, ES LO MISMO QUE ARRIBA)
-
-1. **Infinite Scroll:** Pagination has been replaced. New recipes load automatically as the user scrolls to the bottom of the main page.
-2. **AJAX Forms & CRUD:** Creating, Editing, and Deleting recipes now occurs asynchronously. The user is notified via a modal, and redirects happen only when necessary.
-3. **Dynamic Step Management:**
     - **Add:** Steps are added to the list instantly.
-    - **Delete:** Steps are removed from the DOM with a fade-out animation.
-    - **Inline Edit:** Users can edit a step directly in the list (the text transforms into a form) without leaving the detail page.
-4. **Advanced Validation:** Forms provide immediate feedback. We check for capitalization, length, and duplicates (server-side check via AJAX) before submission.
-5. **Robust Image Handling:** Drag & Drop support for uploads, instant preview, and automatic server cleanup of unused images.
-6. **UX Feedback:** A full-screen spinner appears during background operations, and a modal confirms actions or reports errors (including connection failures).
+    - **Dynamic Deletion:** Steps can be removed instantly without a full page reload, utilizing DOM manipulation to update the UI also showing a fade-out animation.
 
 ---
 
