@@ -717,7 +717,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         </div>
                         
                         <div class="d-flex justify-content-end gap-2 pt-2">
-                            <button type="button" class="btn btn-sm btn-outline-dark btn-cancel-edit text-white px-3">${UI_STRINGS.BTN_CANCEL}</button>
+                            <button type="button" class="btn btn-sm btn-dark btn-cancel-edit px-3">${UI_STRINGS.BTN_CANCEL}</button>
                             <button type="submit" class="btn btn-sm btn-dark px-3">${UI_STRINGS.BTN_SAVE}</button>
                         </div>
                     </form>
