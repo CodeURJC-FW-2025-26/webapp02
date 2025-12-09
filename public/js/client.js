@@ -382,7 +382,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const category = document.getElementById('initial-category')?.value || '';
 
             try {
-                // Build URL
+                // Build URL with query parameters
                 let url = `/?page=${nextPage}&format=json`;
                 if (search) url += `&search=${encodeURIComponent(search)}`;
                 if (category) url += `&category=${encodeURIComponent(category)}`;
@@ -397,17 +397,36 @@ document.addEventListener('DOMContentLoaded', () => {
                 const data = await response.json();
 
                 if (data.recipes && data.recipes.length > 0) {
+                    // Iterate and append NEW Flip Card Structure (Button Only Link)
                     data.recipes.forEach(recipe => {
                         const col = document.createElement('div');
-                        col.className = 'col-12 col-sm-6 col-lg-4 recipe-card-container';
+                        // Maintain layout and animation classes
+                        col.className = 'col-12 col-sm-6 col-lg-4 recipe-card-container mb-4';
+
+                        // Inject the full Flip Card HTML structure
                         col.innerHTML = `
-                            <a href='/receta/${recipe._id}'>
-                                <img src="/uploads/${recipe.image}" alt="${recipe.name}">
-                            </a>
-                            <h3>${recipe.name}</h3>
+                            <div class="flip-card">
+                                <div class="flip-card-inner">
+                                    
+                                    <div class="flip-card-front">
+                                        <img src="/uploads/${recipe.image}" alt="${recipe.name}" class="img-fluid h-100 w-100 object-fit-cover rounded">
+                                        <div class="card-gradient-overlay"></div>
+                                        <h3 class="card-front-title">${recipe.name}</h3>
+                                    </div>
+
+                                    <div class="flip-card-back">
+                                        <h3>${recipe.name}</h3>
+                                        <p class="recipe-short-desc">${recipe.description}</p>
+                                        <a href="/receta/${recipe._id}" class="btn btn-visual">Ver Receta Completa</a>
+                                    </div>
+
+                                </div>
+                            </div>
                         `;
                         recipeGrid.appendChild(col);
                     });
+
+                    // Update the next page cursor
                     nextPageInput.value = data.nextPage || '';
                 } else {
                     nextPageInput.value = '';

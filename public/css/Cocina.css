@@ -13,6 +13,7 @@
    8.  Feedback Pages (Error/Success/Modals)
    9.  Pagination
    10. Dynamic Components (Step List, Animations, Spinner)
+   11. Flip Cards (3D Animation)
    ========================================================================== */
 
 /* ==========================================================================
@@ -235,14 +236,23 @@ h2 {
     color: var(--text-light);
 }
 
-/* Banner & Search */
+/* Banner & Search (UPDATED WITH PARALLAX) */
 .banner {
-    background: var(--bg-primary);
-    padding: 0 60px 25px 60px;
+    padding: 80px 60px;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    /* Parallax Background */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/tabla.jpg');
+    background-attachment: fixed;
+    /* Creates the parallax effect */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 .search-container {
@@ -271,10 +281,13 @@ h2 {
 
 .banner-title {
     font-family: var(--font-display);
-    color: var(--text-dark);
+    color: white;
+    /* Changed to white for contrast against dark background */
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
     font-size: 40px;
     font-weight: bold;
     margin: 0;
+    margin-bottom: 20px;
 }
 
 .banner .btn {
@@ -298,7 +311,8 @@ h2 {
 .container {
     width: 80%;
     margin: 20px auto 40px auto;
-    background-color: var(--bg-card);
+    background-color: transparent;
+    /* Changed from card bg to transparent for the grid container */
     border-radius: 10px;
 }
 
@@ -307,7 +321,8 @@ h2 {
     font-size: 20px;
 }
 
-.container img {
+/* This applies to standard images inside container, not the flip cards */
+.container>img {
     width: 100%;
     height: 200px;
     border-radius: 10px;
@@ -684,4 +699,158 @@ h2 {
 #stepsList .edit-step-form .btn {
     width: auto;
     height: auto;
+}
+
+/* ==========================================================================
+   11. FLIP CARDS (3D ANIMATION & STABLE BUTTON FIX)
+   ========================================================================== */
+
+/* Main container */
+.flip-card {
+    background-color: transparent;
+    width: 100%;
+    height: 350px;
+    perspective: 1000px;
+    z-index: 1;
+    /* Ensures proper stacking in the grid */
+}
+
+/* Inner container */
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform-style: preserve-3d;
+    border-radius: 15px;
+    box-shadow: var(--shadow-card);
+}
+
+/* Hover Action */
+.flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+/* Common Styles */
+.flip-card-front,
+.flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    border-radius: 15px;
+    overflow: hidden;
+    /* FIX: This ensures smooth edges during rotation */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* --- FRONT FACE --- */
+.flip-card-front {
+    background-color: var(--bg-card);
+    color: black;
+    z-index: 2;
+    /* Front is strictly on top initially */
+}
+
+.flip-card-front img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.card-gradient-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+    z-index: 1;
+}
+
+.card-front-title {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    width: 100%;
+    color: white;
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    z-index: 2;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    padding: 0 15px;
+    /* FIX: Push title slightly forward to prevent flickering */
+    transform: translateZ(20px);
+}
+
+/* --- BACK FACE (THE FIX IS HERE) --- */
+.flip-card-back {
+    background-color: var(--bg-dark);
+    transform: rotateY(180deg);
+
+    /* FIX 1: Enable 3D space inside the back face */
+    transform-style: preserve-3d;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* FIX 2: Push content forward (Z-axis) so mouse detects it properly */
+.flip-card-back h3 {
+    font-family: var(--font-display);
+    margin-bottom: 15px;
+    color: var(--bg-primary);
+    font-size: 1.5rem;
+    transform: translateZ(30px);
+    /* Floats 30px above card */
+}
+
+.recipe-short-desc {
+    font-size: 0.9rem;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: 25px;
+    color: #e0e0e0;
+    transform: translateZ(30px);
+    /* Floats 30px above card */
+}
+
+/* --- VISUAL BUTTON STYLE --- */
+.btn-visual {
+    background: linear-gradient(45deg, var(--bg-primary), #ffc107);
+    color: var(--bg-dark);
+    font-weight: bold;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 50px;
+    box-shadow: 0 4px 15px rgba(248, 231, 165, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.85rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    text-decoration: none;
+    display: inline-block;
+
+    /* FIX 3: Push button furthest forward */
+    transform: translateZ(50px);
+
+    /* Ensure it captures pointer events */
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+.btn-visual:hover {
+    /* Maintain the Z-depth on hover, adding scale */
+    transform: translateZ(50px) scale(1.1);
+    box-shadow: 0 6px 20px rgba(248, 231, 165, 0.6);
+    color: var(--bg-dark);
 }

@@ -39,9 +39,26 @@
                {{#recipes}}
                <!-- Loop: This will repeat for each recipe in the 'recipes' array -->
                <!-- Modified: Added class 'recipe-card-container' for consistency with dynamically created cards -->
-               <div class="col-12 col-sm-6 col-lg-4 recipe-card-container">
-                    <a href='/receta/{{_id}}'><img src="/uploads/{{image}}" alt="{{name}}"></a>
-                    <h3>{{name}}</h3>
+               <div class="col-12 col-sm-6 col-lg-4 recipe-card-container mb-4">
+
+                    <div class="flip-card">
+                         <div class="flip-card-inner">
+
+                              <div class="flip-card-front">
+                                   <img src="/uploads/{{image}}" alt="{{name}}"
+                                        class="img-fluid h-100 w-100 object-fit-cover rounded">
+                                   <div class="card-gradient-overlay"></div>
+                                   <h3 class="card-front-title">{{name}}</h3>
+                              </div>
+
+                              <div class="flip-card-back">
+                                   <h3>{{name}}</h3>
+                                   <p class="recipe-short-desc">{{description}}</p>
+                                   <a href="/receta/{{_id}}" class="btn btn-visual">Ver Receta Completa</a>
+                              </div>
+                         </div>
+                    </div>
+
                </div>
                {{/recipes}}
 

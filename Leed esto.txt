@@ -2,10 +2,6 @@
 
 hacer el README: vídeo, commits, ...
 
-Modificar las imágenes del index para que sean tarjetas flotantes 
-que se den la vuelta y muestren la descripción de dicha receta 
-al pasar el cursor por encima, volviendo a la imagen después.
-
 
 (OPCIONAL)
 
