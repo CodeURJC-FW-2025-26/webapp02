@@ -72,7 +72,7 @@ router.use((req, res, next) => {
  * @param {string} filename 
  */
 async function deleteImageFile(filename) {
-    if (!filename || filename === 'logo.jpg') return; // Protect default image
+    if (!filename || filename === 'logo.jpg' || filename === 'vacio.jpg') return; // Protect default image
 
     try {
         // Construct path: src/routes/../../uploads -> root/uploads
@@ -285,7 +285,7 @@ router.post('/receta/nueva', upload.single('recipeImage'), async (req, res) => {
             category: req.body.category,
             difficulty: req.body.difficulty,
             preparation_time: parseInt(req.body.preparationTime),
-            image: req.file ? req.file.filename : 'logo.jpg',
+            image: req.file ? req.file.filename : 'vacio.jpg',
             steps: []
         };
 
@@ -402,7 +402,7 @@ router.post('/receta/editar/:id', upload.single('recipeImage'), async (req, res)
             oldImageToDelete = currentRecipe.image;
         } else if (req.body.removeImageFlag === "true") {
             // Case B: User requested deletion -> Reset to default & mark old for deletion
-            updateData.image = 'logo.jpg';
+            updateData.image = 'vacio.jpg';
             oldImageToDelete = currentRecipe.image;
         }
         // Case C: No change -> Keep existing image

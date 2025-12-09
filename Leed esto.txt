@@ -2,12 +2,9 @@
 
 hacer el README: vídeo, commits, ...
 
-Poner imagen de plato vacío
-Al añadir una receta que te lleve directamente a ella
-
 Modificar las imágenes del index para que sean tarjetas flotantes 
-que se den la vuelta y muestren la descripción de dicha receta al pasar el cursor por encima,
-volviendo a la imagen después
+que se den la vuelta y muestren la descripción de dicha receta 
+al pasar el cursor por encima, volviendo a la imagen después.
 
 
 (OPCIONAL)
