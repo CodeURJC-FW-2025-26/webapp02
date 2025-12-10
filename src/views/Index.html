@@ -78,64 +78,6 @@
           </div>
      </section>
 
-     <!-- Pagination -->
-     <!-- We only show pagination if there are recipes -->
-     {{#recipes.length}} {{! Solo mostramos la paginación si el array de recetas no está vacío }}
-     <!-- Modified: Added 'd-none' class to hide manual pagination as we are using Infinite Scroll -->
-     <nav aria-label="Paginación de recetas" class="d-flex justify-content-center mb-5 d-none">
-          <ul class="pagination">
-
-               <!-- "Anterior" Button -->
-               {{#hasPrevPage}}
-               <li class="page-item">
-                    <a class="page-link" href="/?page={{prevPage}}&search={{searchQuery}}&category={{categoryQuery}}"
-                         aria-label="Anterior">
-                         <span aria-hidden="true">&laquo;</span>
-                    </a>
-               </li>
-               {{/hasPrevPage}}
-               {{^hasPrevPage}}
-               <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true" aria-label="Anterior">
-                         <span aria-hidden="true">&laquo;</span>
-                    </a>
-               </li>
-               {{/hasPrevPage}}
-
-               <!-- Numeric Page Buttons (dynamically generated) -->
-               {{#pagesForTemplate}}
-               {{^isEllipsis}}
-               <li class="page-item {{#isCurrent}}active{{/isCurrent}}">
-                    <a class="page-link"
-                         href="/?page={{page}}&search={{searchQuery}}&category={{categoryQuery}}">{{page}}</a>
-               </li>
-               {{/isEllipsis}}
-               {{#isEllipsis}}
-               <li class="page-item disabled"><span class="page-link">...</span></li>
-               {{/isEllipsis}}
-               {{/pagesForTemplate}}
-
-
-               <!-- "Siguiente" Button -->
-               {{#hasNextPage}}
-               <li class="page-item">
-                    <a class="page-link" href="/?page={{nextPage}}&search={{searchQuery}}&category={{categoryQuery}}"
-                         aria-label="Siguiente">
-                         <span aria-hidden="true">&raquo;</span>
-                    </a>
-               </li>
-               {{/hasNextPage}}
-               {{^hasNextPage}}
-               <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true" aria-label="Siguiente">
-                         <span aria-hidden="true">&raquo;</span>
-                    </a>
-               </li>
-               {{/hasNextPage}}
-          </ul>
-     </nav>
-     {{/recipes.length}}
-
      <!-- NEW: Hidden inputs to store state for Infinite Scroll JS -->
      <input type="hidden" id="initial-search" value="{{searchQuery}}">
      <input type="hidden" id="initial-category" value="{{categoryQuery}}">

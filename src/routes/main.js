@@ -174,29 +174,10 @@ router.get('/', async (req, res) => {
             vegano: req.query.category === 'vegano'
         };
 
-        const pagesForTemplate = [];
-        if (totalPages > 1) {
-            const window = 2;
-            for (let i = 1; i <= totalPages; i++) {
-                if (i === 1 || i === totalPages || (i >= page - window && i <= page + window)) {
-                    pagesForTemplate.push({ page: i, isCurrent: i === page, isEllipsis: false });
-                } else if (pagesForTemplate.length > 0 && !pagesForTemplate[pagesForTemplate.length - 1].isEllipsis && pagesForTemplate[pagesForTemplate.length - 1].page < i - 1) {
-                    pagesForTemplate.push({ isEllipsis: true });
-                }
-            }
-        }
-
         res.render('index', {
             recipes,
-            currentPage: page,
-            totalPages,
-            hasPrevPage: page > 1,
-            hasNextPage: page < totalPages,
-            prevPage: page - 1,
-            nextPage: page + 1,
             searchQuery: req.query.search,
             categoryQuery: req.query.category,
-            pagesForTemplate,
             categoryStates,
             initialNextPage: nextPage
         });
