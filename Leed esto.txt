@@ -5,11 +5,8 @@ hacer el README: vídeo, commits, ...
 
 (OPCIONAL)
 
-Chavales, podemos hacer toda la vista de la página más profesional, más interactiva. 
-Dándole una buena modificación se puede hacer la web más chula: 
-cambiando los colores, estructurando mejor el display de la página de detalle,
-añadiendo un vídeo de fondo en la página principal/imágenes rotativas
-tipo tarjeta para las recetas, se puede hacer todo mucho más pro.
+Estructurar mejor la página de detalle
+Añadir un vídeo de fondo en la página principal
 
 (DEFENSA)
 
