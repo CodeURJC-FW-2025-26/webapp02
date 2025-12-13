@@ -492,10 +492,18 @@ router.post('/receta/:id/paso/borrar/:stepId', async (req, res) => {
     try {
         const { id, stepId } = req.params;
 
-        await recipesCollection.updateOne(
+        if (!ObjectId.isValid(id) || !ObjectId.isValid(stepId)){
+            return res.status(400).json({ success: false, message: SERVER_MESSAGES.ERRORS.INVALID_ID});
+        }
+
+       const result = await recipesCollection.updateOne(
             { _id: new ObjectId(id) },
             { $pull: { steps: { _id: new ObjectId(stepId) } } }
         );
+
+        if (result.modifiedCount === 0) {
+            return res.status(404).json({success:false, message:SERVER_MESSAGES.ERRORS.STEP_NOT_FOUND});
+        }
 
         res.json({ success: true, message: SERVER_MESSAGES.SUCCESS.STEP_DELETED });
     } catch (error) {
