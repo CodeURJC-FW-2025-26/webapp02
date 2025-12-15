@@ -117,26 +117,7 @@ function validateRecipeInput(body) {
 //  GENERAL ROUTES & API
 // =================================================================
 
-/**
- * API: Check if a recipe title exists.
- */
-router.get('/api/check-title', async (req, res) => {
-    try {
-        const { title, id } = req.query;
-        const query = { name: { $regex: `^${title.trim()}$`, $options: 'i' } };
 
-        if (id && ObjectId.isValid(id)) {
-            query._id = { $ne: new ObjectId(id) };
-        }
-
-        const existingRecipe = await recipesCollection.findOne(query);
-        res.json({ exists: !!existingRecipe });
-
-    } catch (error) {
-        console.error("Server Error (Check Title):", error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-});
 
 /**
  * HOME PAGE (Index)
@@ -492,17 +473,17 @@ router.post('/receta/:id/paso/borrar/:stepId', async (req, res) => {
     try {
         const { id, stepId } = req.params;
 
-        if (!ObjectId.isValid(id) || !ObjectId.isValid(stepId)){
-            return res.status(400).json({ success: false, message: SERVER_MESSAGES.ERRORS.INVALID_ID});
+        if (!ObjectId.isValid(id) || !ObjectId.isValid(stepId)) {
+            return res.status(400).json({ success: false, message: SERVER_MESSAGES.ERRORS.INVALID_ID });
         }
 
-       const result = await recipesCollection.updateOne(
+        const result = await recipesCollection.updateOne(
             { _id: new ObjectId(id) },
             { $pull: { steps: { _id: new ObjectId(stepId) } } }
         );
 
         if (result.modifiedCount === 0) {
-            return res.status(404).json({success:false, message:SERVER_MESSAGES.ERRORS.STEP_NOT_FOUND});
+            return res.status(404).json({ success: false, message: SERVER_MESSAGES.ERRORS.STEP_NOT_FOUND });
         }
 
         res.json({ success: true, message: SERVER_MESSAGES.SUCCESS.STEP_DELETED });
