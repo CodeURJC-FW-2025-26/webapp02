@@ -117,7 +117,26 @@ function validateRecipeInput(body) {
 //  GENERAL ROUTES & API
 // =================================================================
 
+/**
+ * API: Check if a recipe title exists.
+ */
+router.get('/api/check-title', async (req, res) => {
+    try {
+        const { title, id } = req.query;
+        const query = { name: { $regex: `^${title.trim()}$`, $options: 'i' } };
 
+        if (id && ObjectId.isValid(id)) {
+            query._id = { $ne: new ObjectId(id) };
+        }
+
+        const existingRecipe = await recipesCollection.findOne(query);
+        res.json({ exists: !!existingRecipe });
+
+    } catch (error) {
+        console.error("Server Error (Check Title):", error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
 
 /**
  * HOME PAGE (Index)
