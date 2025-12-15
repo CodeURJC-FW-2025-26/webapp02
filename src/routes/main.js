@@ -162,10 +162,9 @@ router.get('/', async (req, res) => {
         const totalPages = Math.ceil(totalRecipes / PAGE_SIZE);
         const nextPage = page < totalPages ? page + 1 : null;
 
-        res.render('index', {
-            recipes,
-            searchQuery: req.query.search,
-        });
+        if (req.query.format === 'json') {
+            return res.json({ recipes, nextPage });
+        }
 
         const categoryStates = {
             all: !req.query.category,
