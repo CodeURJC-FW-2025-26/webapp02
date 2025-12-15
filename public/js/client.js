@@ -327,21 +327,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 const result = await response.json();
-                toggleSpinner(false);
 
                 if (response.ok && result.success) {
-                    showFeedbackModal(UI_STRINGS.MODAL_SUCCESS, result.message, "success", {
-                        // Primary Button: View Recipe
-                        showActionBtn: true,
-                        actionText: UI_STRINGS.BTN_VIEW_RECIPE,
-                        actionUrl: result.redirectUrl || '/',
-
-                        // Secondary Button: Go to Home
-                        showSecondaryBtn: true,
-                        secondaryText: UI_STRINGS.BTN_GO_HOME,
-                        secondaryUrl: '/'
-                    });
+                    window.location.href=result.redirectUrl || '/';
                 } else {
+                    toggleSpinner(false);
                     showFeedbackModal(UI_STRINGS.MODAL_ERROR, result.message || UI_STRINGS.ERR_UNKNOWN, "error", {
                         closeBtnText: UI_STRINGS.BTN_CLOSE_CORRECT
                     });
