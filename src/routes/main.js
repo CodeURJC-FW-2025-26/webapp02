@@ -472,12 +472,7 @@ router.post('/receta/:id/paso/nuevo', async (req, res) => {
             { $push: { steps: newStep } }
         );
 
-        res.json({
-            success: true,
-            message: SERVER_MESSAGES.SUCCESS.STEP_ADDED,
-            step: newStep,
-            recipeId: recipeId
-        });
+        res.redirect(`/receta/${recipeId}`);
 
     } catch (error) {
         console.error("Server Error (Add Step):", error);
