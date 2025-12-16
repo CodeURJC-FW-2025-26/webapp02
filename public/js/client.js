@@ -5,10 +5,8 @@
  * Handles Recipe Forms, Drag & Drop, Infinite Scroll, and Dynamic Step Management via AJAX.
  */
 
-// ============================================================
 //  LOCALIZATION CONSTANTS (UI STRINGS)
-//  Centralized Spanish text for UI/UX.
-// ============================================================
+
 const UI_STRINGS = {
     // Buttons & Loading
     BTN_LOADING: '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Procesando...',
@@ -56,14 +54,11 @@ console.log("Client script loaded successfully.");
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // ============================================================
     //  HELPER FUNCTIONS (UI & UTILITIES)
-    // ============================================================
 
-    /**
-     * Toggles the full-screen loading spinner.
-     * @param {boolean} show - True to show, false to hide.
-     */
+     /* Toggles the full-screen loading spinner.
+     * @param {boolean} show - True to show, false to hide. */
+    
     const toggleSpinner = (show) => {
         const spinner = document.getElementById('loadingSpinner');
         if (spinner) {
@@ -77,13 +72,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    /**
-     * Displays the generic Bootstrap Feedback Modal.
+     /* Displays the generic Bootstrap Feedback Modal.
      * @param {string} title - Modal Title.
      * @param {string} message - Body text.
      * @param {string} type - 'success' or 'error' (determines color).
-     * @param {object} options - Configuration for buttons { showActionBtn, actionUrl, actionText, showSecondaryBtn, secondaryText, secondaryUrl, closeBtnText }.
-     */
+     * @param {object} options - Configuration for buttons { showActionBtn, actionUrl, actionText, showSecondaryBtn, secondaryText, secondaryUrl, closeBtnText }.*/
+
     const showFeedbackModal = (title, message, type, options = {}) => {
         const modalEl = document.getElementById('feedbackModal');
         if (!modalEl) return; // Safety check
@@ -136,9 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
         modal.show();
     };
 
-    // ============================================================
     //  MODULE 1: RECIPE FORM MANAGEMENT (CREATE / EDIT)
-    // ============================================================
 
     const recipeForm = document.getElementById('recipeForm');
 
@@ -350,9 +342,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }, false);
     }
 
-    // ============================================================
     //  MODULE 2: INFINITE SCROLL (INDEX PAGE)
-    // ============================================================
 
     const recipeGrid = document.getElementById('recipe-grid');
 
@@ -440,9 +430,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ============================================================
     //  MODULE 3: DETAIL PAGE (RECIPE DELETE & STEPS)
-    // ============================================================
 
     // 3.1 Delete Entire Recipe
     const deleteRecipeBtn = document.getElementById('btnDeleteRecipe');
@@ -550,8 +538,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     const noStepsMsg = document.getElementById('noStepsMessage');
                     if (noStepsMsg) noStepsMsg.remove();
 
-                    showFeedbackModal(UI_STRINGS.MODAL_DONE, result.message, "success", { closeBtnText: UI_STRINGS.BTN_ACCEPT });
-
                 } else {
                     showFeedbackModal(UI_STRINGS.MODAL_ERROR, result.message, "error");
                 }
@@ -565,9 +551,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ============================================================
     //  MODULE 4: DYNAMIC STEP MANAGEMENT (DELETE & EDIT INLINE)
-    // ============================================================
 
     const stepsList = document.getElementById('stepsList');
     if (stepsList) {

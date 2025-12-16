@@ -241,10 +241,6 @@ The 5 files I have worked on the most are:
 
 ## Practice 3: Client-Side Interactivity
 
-### Goal
-
-Enhance user experience (UX) by introducing dynamic client-side behavior using JavaScript, AJAX (Fetch API), and DOM manipulation, reducing page reloads.
-
 ---
 
 ### Execution Instructions
@@ -292,6 +288,12 @@ In this practice, the focus shifted heavily towards **Client-Side Logic** and **
 
 ---
 
+### Demonstration video
+
+The video demonstrating the functionality is available at: <https://youtu.be/jlzwdeV-7k4?si=HGbX2cgponRvMJBi>
+
+---
+
 ### Features Implemented
 
 1. **Infinite Scroll:**
@@ -331,7 +333,6 @@ The video demonstrating all Practice 3 functionalities (Infinite scroll, AJAX fo
 
 #### Fernán Rama Hombreiro
 
-**Description of tasks:**  
 For Practice 3, I focused on adapting the backend architecture to support dynamic client-side interactions. My main tasks included refactoring the root endpoint to serve JSON data for the Infinite Scroll, creating a dedicated API endpoint for asynchronous validation (checking duplicate titles), and implementing the file system logic to physically delete unused images from the server when recipes are modified or removed.
 
 **5 most important commits:**
@@ -355,45 +356,44 @@ For Practice 3, I focused on adapting the backend architecture to support dynami
 #### Rubén Torres Rivero
 
 **Description of tasks:**
-[Write a brief paragraph describing what you did. Example: I focused on implementing the drag and drop functionality in the forms and adjusting the CSS animations for the steps list...]
+In Practice 3, my main focus was on the User Interface (UI) and DOM structure required for the new client-side features. I implemented the *HTML structure for the Drag & Drop* zone in the recipe form, integrated *Bootstrap's client-side validation* classes (needs-validation) across all forms, and redesigned the footer to include the global *Loading Spinner* and *Feedback Modal*. Additionally, I refactored the recipe step list in the Detail View to support inline editing and AJAX updates
 
 **5 most important commits:**
 
-1. [Commit Message](Link to commit)
-2. [Commit Message](Link to commit)
-3. [Commit Message](Link to commit)
-4. [Commit Message](Link to commit)
-5. [Commit Message](Link to commit)
+1. [Implement Drag & Drop UI zone in Add Recipe form](https://github.com/CodeURJC-FW-2025-26/webapp02/commit/61d87066d6ea28b3c526d0e37f4ddb9bfe7c24ca)
+2. [Add global loading spinner and generic modal structure to footer](https://github.com/CodeURJC-FW-2025-26/webapp02/commit/386f3849f60c35111ca973ae9b654d77e818f906)
+3. [Refactor Index view to support Infinite Scroll state management](https://github.com/CodeURJC-FW-2025-26/webapp02/commit/368f826120879bfa7c59da054e4f18fbd8a48ef7)
+4. [Update Detail view DOM with specific IDs for dynamic AJAX manipulation](https://github.com/CodeURJC-FW-2025-26/webapp02/commit/ed2cfd43fe61e9c3c0841e14533b7cc920bc79d1)
+5. [Add CSS animations for dynamic content loading and form transitions](https://github.com/CodeURJC-FW-2025-26/webapp02/commit/0e993cfaac318f7bd0675ec7f99c1b4a67ba402d)
 
 **Top 5 files worked on:**
 
-1. [File Name](Link to file)
-2. [File Name](Link to file)
-3. [File Name](Link to file)
-4. [File Name](Link to file)
-5. [File Name](Link to file)
+1. [src/views/AñadirReceta.html](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/views/A%C3%B1adirReceta.html)
+2. [src/views/partials/footer.html](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/views/partials/footer.html)
+3. [src/views/detalleReceta.html](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/views/detalleReceta.html)
+4. [src/views/Index.html](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/views/Index.html)
+5. [public/css/Cocina.css](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/public/css/Cocina.css)
 
 ---
 
 #### Izan Calle Feijoo
 
-**Description of tasks:**
-[Write a brief paragraph describing what you did. Example: I worked on the client.js logic for handling the Infinite Scroll and the global Feedback Modal...]
+For Practice 3, I was responsible for the core *Client-Side JavaScript logic* to replace full-page reloads with dynamic interactions. I developed the client.js module entirely, implementing the *Fetch API* integration for *Infinite Scroll, dynamic **AJAX form submissions* (for both recipes and steps), and the *Drag & Drop* file handling logic. I also implemented the client-side validation logic (synchronous and asynchronous) and orchestrated the global *User Feedback system* (Spinner and Modals) to ensure a responsive UX.
 
 **5 most important commits:**
 
-1. [Commit Message](Link to commit)
-2. [Commit Message](Link to commit)
-3. [Commit Message](Link to commit)
-4. [Commit Message](Link to commit)
-5. [Commit Message](Link to commit)
+1. [Implement infinite scroll logic using fetch API and DOM injction](https://github.com/CodeURJC-FW-2025-26/webapp02/commit/cf344deaeea8e07eafd6081611a4441ce2dd7375)
+2. [initialize client structure and UI helpers (spinner and modal logic](https://github.com/CodeURJC-FW-2025-26/webapp02/commit/eda70960c7adec7c05b1d1fc70e83a51d84fc65d)
+3. [add real time validation and async duplicate title check](https://github.com/CodeURJC-FW-2025-26/webapp02/commit/84f016593063fd834a354f93ba85671978e374c3)
+4. [implement drag and drop event listeners and image preview via FileReader](https://github.com/CodeURJC-FW-2025-26/webapp02/commit/2045ec7ff531940720aa2a644a26b95b05b45469)
+5. [Enable dynamic step management (add, delete and inline edit) with AJAX](https://github.com/CodeURJC-FW-2025-26/webapp02/commit/f84c495538817c6639aecb9313c394472f760d34)
 
 **Top 5 files worked on:**
 
-1. [File Name](Link to file)
-2. [File Name](Link to file)
-3. [File Name](Link to file)
-4. [File Name](Link to file)
-5. [File Name](Link to file)
+1. [public/js/client.js](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/public/js/client.js)
+2. [src/views/partials/footer.html](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/views/partials/footer.html)
+3. [src/views/Index.html](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/views/Index.html)
+4. [src/views/detalleReceta.html](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/views/detalleReceta.html)
+5. [src/views/AñadirReceta.html](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/views/A%C3%B1adirReceta.html)
 
 ---
