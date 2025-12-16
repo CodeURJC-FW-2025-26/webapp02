@@ -69,19 +69,7 @@
                </div>
                {{/recipes}}
           </div>
-
-          <!-- NEW: Spinner for Infinite Scroll (Hidden by default with d-none) -->
-          <div id="scroll-spinner" class="text-center my-4 d-none">
-               <div class="spinner-border text-dark" role="status">
-                    <span class="visually-hidden">Cargando más recetas...</span>
-               </div>
-          </div>
      </section>
-
-     <!-- NEW: Hidden inputs to store state for Infinite Scroll JS -->
-     <input type="hidden" id="initial-search" value="{{searchQuery}}">
-     <input type="hidden" id="initial-category" value="{{categoryQuery}}">
-     <input type="hidden" id="next-page" value="{{initialNextPage}}">
 
 </main>
 
