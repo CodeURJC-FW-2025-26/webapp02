@@ -287,61 +287,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (initialRemoveBtn) initialRemoveBtn.addEventListener('click', clearImage);
         }
 
-        // 1.4 Main Form Submission
-        recipeForm.addEventListener('submit', async event => {
-            event.preventDefault();
-            event.stopPropagation();
-
-            if (!recipeForm.checkValidity()) {
-                recipeForm.classList.add('was-validated');
-                return;
-            }
-
-            const submitBtn = recipeForm.querySelector('button[type="submit"]');
-            const originalBtnText = submitBtn.textContent;
-
-            // Disable UI to prevent double submission
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = UI_STRINGS.BTN_LOADING;
-            toggleSpinner(true);
-
-            try {
-                const formData = new FormData(recipeForm);
-                const url = recipeForm.getAttribute('action');
-
-                const response = await fetch(url, {
-                    method: 'POST',
-                    body: formData
-                });
-
-                if (!response.headers.get("content-type")?.includes("application/json")) {
-                    throw new Error("Invalid server response. HTML received instead of JSON.");
-                }
-
-                const result = await response.json();
-
-                if (response.ok && result.success) {
-                    window.location.href=result.redirectUrl || '/';
-                } else {
-                    toggleSpinner(false);
-                    showFeedbackModal(UI_STRINGS.MODAL_ERROR, result.message || UI_STRINGS.ERR_UNKNOWN, "error", {
-                        closeBtnText: UI_STRINGS.BTN_CLOSE_CORRECT
-                    });
-                    // Re-enable button on error to allow retry
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = originalBtnText;
-                }
-
-            } catch (error) {
-                toggleSpinner(false);
-                console.error("Critical Error:", error);
-                showFeedbackModal(UI_STRINGS.MODAL_CONN_TITLE, UI_STRINGS.MODAL_CONN_MSG, "error");
-                submitBtn.disabled = false;
-                submitBtn.textContent = originalBtnText;
-            }
-        }, false);
-    }
-
     //  MODULE 2: INFINITE SCROLL (INDEX PAGE)
 
     const recipeGrid = document.getElementById('recipe-grid');
