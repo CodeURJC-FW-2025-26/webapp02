@@ -241,10 +241,6 @@ The 5 files I have worked on the most are:
 
 ## Practice 3: Client-Side Interactivity
 
-### Goal
-
-Enhance user experience (UX) by introducing dynamic client-side behavior using JavaScript, AJAX (Fetch API), and DOM manipulation, reducing page reloads.
-
 ---
 
 ### Execution Instructions
@@ -331,7 +327,6 @@ The video demonstrating all Practice 3 functionalities (Infinite scroll, AJAX fo
 
 #### Fernán Rama Hombreiro
 
-**Description of tasks:**  
 For Practice 3, I focused on adapting the backend architecture to support dynamic client-side interactions. My main tasks included refactoring the root endpoint to serve JSON data for the Infinite Scroll, creating a dedicated API endpoint for asynchronous validation (checking duplicate titles), and implementing the file system logic to physically delete unused images from the server when recipes are modified or removed.
 
 **5 most important commits:**
@@ -359,11 +354,11 @@ In Practice 3, my main focus was on the User Interface (UI) and DOM structure re
 
 **5 most important commits:**
 
-1. [Commit Message](Link to commit)
-2. [Commit Message](Link to commit)
-3. [Commit Message](Link to commit)
-4. [Commit Message](Link to commit)
-5. [Commit Message](Link to commit)
+1. [Implement Drag & Drop UI zone in Add Recipe form](https://github.com/CodeURJC-FW-2025-26/webapp02/commit/61d87066d6ea28b3c526d0e37f4ddb9bfe7c24ca)
+2. [Add global loading spinner and generic modal structure to footer](https://github.com/CodeURJC-FW-2025-26/webapp02/commit/386f3849f60c35111ca973ae9b654d77e818f906)
+3. [Refactor Index view to support Infinite Scroll state management](https://github.com/CodeURJC-FW-2025-26/webapp02/commit/368f826120879bfa7c59da054e4f18fbd8a48ef7)
+4. [Update Detail view DOM with specific IDs for dynamic AJAX manipulation](https://github.com/CodeURJC-FW-2025-26/webapp02/commit/ed2cfd43fe61e9c3c0841e14533b7cc920bc79d1)
+5. [Add CSS animations for dynamic content loading and form transitions](https://github.com/CodeURJC-FW-2025-26/webapp02/commit/0e993cfaac318f7bd0675ec7f99c1b4a67ba402d)
 
 **Top 5 files worked on:**
 
@@ -377,7 +372,6 @@ In Practice 3, my main focus was on the User Interface (UI) and DOM structure re
 
 #### Izan Calle Feijoo
 
-**Description of tasks:**
 [Write a brief paragraph describing what you did. Example: I worked on the client.js logic for handling the Infinite Scroll and the global Feedback Modal...]
 
 **5 most important commits:**
