@@ -323,7 +323,7 @@ In this practice, the focus shifted heavily towards **Client-Side Logic** and **
 
 The video demonstrating all Practice 3 functionalities (Infinite scroll, AJAX forms, Drag & Drop, etc.) is available at:
 
-[INSERT VIDEO LINK HERE]
+[Practice 3 Video](google.com)
 
 ---
 
