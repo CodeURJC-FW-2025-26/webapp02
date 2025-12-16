@@ -331,24 +331,24 @@ The video demonstrating all Practice 3 functionalities (Infinite scroll, AJAX fo
 
 #### Fernán Rama Hombreiro
 
-**Description of tasks:**
-[Write a brief paragraph describing what you did. Example: I updated the main.js backend to handle image deletion and implemented the inline editing logic for the steps...]
+**Description of tasks:**  
+For Practice 3, I focused on adapting the backend architecture to support dynamic client-side interactions. My main tasks included refactoring the root endpoint to serve JSON data for the Infinite Scroll, creating a dedicated API endpoint for asynchronous validation (checking duplicate titles), and implementing the file system logic to physically delete unused images from the server when recipes are modified or removed.
 
 **5 most important commits:**
 
-1. [Commit Message](Link to commit)
-2. [Commit Message](Link to commit)
-3. [Commit Message](Link to commit)
-4. [Commit Message](Link to commit)
-5. [Commit Message](Link to commit)
+1. [API implementation for asynchronous title validation](https://github.com/CodeURJC-FW-2025-26/webapp02/commit/f580a2b526bae87bf57b0e50aae2e0966655bba8)
+2. [Refactor index route to support JSON format for Infinite Scroll](https://github.com/CodeURJC-FW-2025-26/webapp02/commit/8076258775fa9a45797eb4530ddaefa6d425bb6e)
+3. [Implement server-side logic for physical image deletion](https://github.com/CodeURJC-FW-2025-26/webapp02/commit/7ec1f0ff46642ed824d94c20b9433ec4f4242b1c)
+4. [Commit MessageUpdate step creation logic to return JSON responses](https://github.com/CodeURJC-FW-2025-26/webapp02/commit/2ec1fac4f3fe4ce9fa26198c7e23481d82a52193)
+5. [Fix image update logic to handle removal flags correctly](https://github.com/CodeURJC-FW-2025-26/webapp02/commit/5c0d2560793e85174b7858a35f60816b72f59f7c)
 
 **Top 5 files worked on:**
 
-1. [File Name](Link to file)
-2. [File Name](Link to file)
-3. [File Name](Link to file)
-4. [File Name](Link to file)
-5. [File Name](Link to file)
+1. [src/routes/main.js](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/routes/main.js)
+2. [src/app.js](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/app.js)
+3. [src/multerConfig.js](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/multerConfig.js)
+4. [src/database.js](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/database.js)
+5. [src/views/AñadirReceta.html](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/views/A%C3%B1adirReceta.html)
 
 ---
 
