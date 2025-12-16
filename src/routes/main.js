@@ -4,6 +4,8 @@ import express from 'express';
 import { db } from '../database.js';
 import { ObjectId } from 'mongodb';
 import upload from '../multerConfig.js';
+import { unlink } from 'fs/promises'; // Module to delete files
+import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -64,7 +66,24 @@ router.use((req, res, next) => {
 //  HELPER FUNCTIONS
 // =================================================================
 
+/**
+ * Helper to physically delete an image from the server.
+ * Prevents deleting the default 'logo.jpg'.
+ * @param {string} filename 
+ */
+async function deleteImageFile(filename) {
+    if (!filename || filename === 'logo.jpg' || filename === 'vacio.jpg') return; // Protect default image
 
+    try {
+        // Construct path: src/routes/../../uploads -> root/uploads
+        const filePath = join(__dirname, '../../uploads', filename);
+        await unlink(filePath);
+        console.log(`[File System] Deleted old image: ${filename}`);
+    } catch (error) {
+        // Log warning but don't crash app if file is missing
+        console.warn(`[File System] Warning: Could not delete image ${filename}: ${error.message}`);
+    }
+}
 
 /**
  * Validates recipe input data.
