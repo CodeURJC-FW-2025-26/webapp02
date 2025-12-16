@@ -288,6 +288,12 @@ In this practice, the focus shifted heavily towards **Client-Side Logic** and **
 
 ---
 
+### Demonstration video
+
+The video demonstrating the functionality is available at: <https://youtu.be/jlzwdeV-7k4?si=HGbX2cgponRvMJBi>
+
+---
+
 ### Features Implemented
 
 1. **Infinite Scroll:**
