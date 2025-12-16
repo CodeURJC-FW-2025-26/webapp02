@@ -142,7 +142,205 @@ document.addEventListener('DOMContentLoaded', () => {
             recipeId = actionUrl.split('/').pop();
         }
 
+        // 1.2 Real-time Title Validation (Debounced AJAX)
+        const nameInput = document.getElementById('recipeName');
+        let debounceTimeout = null;
 
+        if (nameInput) {
+            nameInput.addEventListener('input', () => {
+                const nameValue = nameInput.value.trim();
+                clearTimeout(debounceTimeout);
+
+                // Sync Validation: Uppercase check
+                if (nameValue.length > 0 && nameValue[0] !== nameValue[0].toUpperCase()) {
+                    nameInput.setCustomValidity(UI_STRINGS.VAL_CAPITAL);
+                    nameInput.classList.add('is-invalid');
+                    nameInput.classList.remove('is-valid');
+
+                    // Ensure feedback is visible
+                    const feedbackDiv = nameInput.nextElementSibling;
+                    if (feedbackDiv && feedbackDiv.classList.contains('invalid-feedback')) {
+                        feedbackDiv.textContent = UI_STRINGS.VAL_CAPITAL;
+                    }
+                    return;
+                } else {
+                    nameInput.setCustomValidity(""); // Reset
+                    nameInput.classList.remove('is-invalid');
+                }
+
+                // Async Validation: Check duplicates
+                if (nameValue.length > 0) {
+                    debounceTimeout = setTimeout(async () => {
+                        try {
+                            const params = new URLSearchParams({ title: nameValue });
+                            if (recipeId) params.append('id', recipeId);
+
+                            const response = await fetch(`/api/check-title?${params.toString()}`);
+
+                            if (!response.headers.get("content-type")?.includes("application/json")) {
+                                throw new Error("Invalid server response (Not JSON)");
+                            }
+
+                            const data = await response.json();
+
+                            if (data.exists) {
+                                nameInput.setCustomValidity(UI_STRINGS.VAL_EXISTS_SHORT);
+                                nameInput.classList.add('is-invalid');
+                                nameInput.classList.remove('is-valid');
+                                // Update feedback text dynamically if element exists
+                                const feedbackDiv = nameInput.nextElementSibling;
+                                if (feedbackDiv && feedbackDiv.classList.contains('invalid-feedback')) {
+                                    feedbackDiv.textContent = UI_STRINGS.VAL_EXISTS_LONG;
+                                }
+                            } else {
+                                nameInput.setCustomValidity("");
+                                nameInput.classList.remove('is-invalid');
+                                nameInput.classList.add('is-valid');
+                            }
+                        } catch (error) {
+                            console.error("Error validating title:", error);
+                        }
+                    }, 500); // 500ms debounce
+                }
+            });
+        }
+
+        // 1.3 Image Drag & Drop Logic
+        const dropZone = document.getElementById('drop-zone');
+        const imageInput = document.getElementById('recipeImage');
+        const previewContainer = document.getElementById('image-preview-container');
+        const removeImageFlag = document.getElementById('removeImageFlag');
+
+        if (dropZone && imageInput) {
+
+            // Highlight helpers
+            const highlight = () => dropZone.classList.add('bg-light', 'border-primary');
+            const unhighlight = () => dropZone.classList.remove('bg-light', 'border-primary');
+
+            // Event Listeners for Drop Zone
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropZone.addEventListener(eventName, (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }, false);
+            });
+
+            ['dragenter', 'dragover'].forEach(evt => dropZone.addEventListener(evt, highlight, false));
+            ['dragleave', 'drop'].forEach(evt => dropZone.addEventListener(evt, unhighlight, false));
+
+            // Handle Drop
+            dropZone.addEventListener('drop', (e) => {
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    imageInput.files = files; // Assign files to the hidden input
+                    handleFiles(files[0]);
+                }
+            });
+
+            // Handle Click (opens file explorer)
+            dropZone.addEventListener('click', () => imageInput.click());
+
+            // Handle Standard Input Change
+            imageInput.addEventListener('change', function () {
+                if (this.files.length > 0) handleFiles(this.files[0]);
+            });
+
+            // Image Processing & Preview
+            const handleFiles = (file) => {
+                if (!file.type.startsWith('image/')) {
+                    showFeedbackModal(UI_STRINGS.MODAL_ERROR, UI_STRINGS.VAL_IMG_ONLY, "error");
+                    return;
+                }
+
+                // Reset delete flag if user uploads a new one
+                if (removeImageFlag) removeImageFlag.value = "false";
+
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    previewContainer.innerHTML = `
+                        <img src="${e.target.result}" class="img-thumbnail" style="max-width: 200px;">
+                        <div class="mt-2">
+                            <button type="button" class="btn btn-sm btn-outline-danger" id="btnRemoveImage">
+                                ${UI_STRINGS.BTN_REMOVE_IMG}
+                            </button>
+                        </div>
+                    `;
+                    previewContainer.classList.remove('d-none');
+
+                    // Re-bind delete button
+                    document.getElementById('btnRemoveImage').addEventListener('click', clearImage);
+                };
+                reader.readAsDataURL(file);
+            };
+
+            // Clear Image Logic
+            const clearImage = (e) => {
+                e.stopPropagation(); // Prevent bubbling to dropZone click
+                imageInput.value = '';
+                previewContainer.innerHTML = '';
+                previewContainer.classList.add('d-none');
+                if (removeImageFlag) removeImageFlag.value = "true"; // Signal backend to delete DB reference
+            };
+
+            // Bind initial delete button if it exists (edit mode)
+            const initialRemoveBtn = document.getElementById('btnRemoveImage');
+            if (initialRemoveBtn) initialRemoveBtn.addEventListener('click', clearImage);
+        }
+
+        // 1.4 Main Form Submission
+        recipeForm.addEventListener('submit', async event => {
+            event.preventDefault();
+            event.stopPropagation();
+
+            if (!recipeForm.checkValidity()) {
+                recipeForm.classList.add('was-validated');
+                return;
+            }
+
+            const submitBtn = recipeForm.querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn.textContent;
+
+            // Disable UI to prevent double submission
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = UI_STRINGS.BTN_LOADING;
+            toggleSpinner(true);
+
+            try {
+                const formData = new FormData(recipeForm);
+                const url = recipeForm.getAttribute('action');
+
+                const response = await fetch(url, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.headers.get("content-type")?.includes("application/json")) {
+                    throw new Error("Invalid server response. HTML received instead of JSON.");
+                }
+
+                const result = await response.json();
+
+                if (response.ok && result.success) {
+                    window.location.href=result.redirectUrl || '/';
+                } else {
+                    toggleSpinner(false);
+                    showFeedbackModal(UI_STRINGS.MODAL_ERROR, result.message || UI_STRINGS.ERR_UNKNOWN, "error", {
+                        closeBtnText: UI_STRINGS.BTN_CLOSE_CORRECT
+                    });
+                    // Re-enable button on error to allow retry
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = originalBtnText;
+                }
+
+            } catch (error) {
+                toggleSpinner(false);
+                console.error("Critical Error:", error);
+                showFeedbackModal(UI_STRINGS.MODAL_CONN_TITLE, UI_STRINGS.MODAL_CONN_MSG, "error");
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalBtnText;
+            }
+        }, false);
+    }
 
     //  MODULE 2: INFINITE SCROLL (INDEX PAGE)
 
