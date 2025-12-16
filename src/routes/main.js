@@ -374,7 +374,30 @@ router.post('/receta/editar/:id', upload.single('recipeImage'), async (req, res)
             preparation_time: parseInt(req.body.preparationTime)
         };
 
+        // 5. Image Logic & Cleanup
+        let oldImageToDelete = null;
 
+        if (req.file) {
+            // Case A: New file uploaded -> Replace image & mark old for deletion
+            updateData.image = req.file.filename;
+            oldImageToDelete = currentRecipe.image;
+        } else if (req.body.removeImageFlag === "true") {
+            // Case B: User requested deletion -> Reset to default & mark old for deletion
+            updateData.image = 'vacio.jpg';
+            oldImageToDelete = currentRecipe.image;
+        }
+        // Case C: No change -> Keep existing image
+
+        // 6. Perform Update
+        await recipesCollection.updateOne(
+            { _id: new ObjectId(recipeId) },
+            { $set: updateData }
+        );
+
+        // 7. Delete old image physically (if exists and is not default)
+        if (oldImageToDelete) {
+            await deleteImageFile(oldImageToDelete);
+        }
 
         res.json({
             success: true,
