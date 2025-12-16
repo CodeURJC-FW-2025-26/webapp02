@@ -550,8 +550,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     const noStepsMsg = document.getElementById('noStepsMessage');
                     if (noStepsMsg) noStepsMsg.remove();
 
-                    showFeedbackModal(UI_STRINGS.MODAL_DONE, result.message, "success", { closeBtnText: UI_STRINGS.BTN_ACCEPT });
-
                 } else {
                     showFeedbackModal(UI_STRINGS.MODAL_ERROR, result.message, "error");
                 }
