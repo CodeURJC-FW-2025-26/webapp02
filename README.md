@@ -288,12 +288,6 @@ In this practice, the focus shifted heavily towards **Client-Side Logic** and **
 
 ---
 
-### Demonstration video
-
-The video demonstrating the functionality is available at: <https://youtu.be/jlzwdeV-7k4?si=HGbX2cgponRvMJBi>
-
----
-
 ### Features Implemented
 
 1. **Infinite Scroll:**
@@ -325,7 +319,7 @@ The video demonstrating the functionality is available at: <https://youtu.be/jlz
 
 The video demonstrating all Practice 3 functionalities (Infinite scroll, AJAX forms, Drag & Drop, etc.) is available at:
 
-[Practice 3 Video](google.com)
+[Practice 3 Video](https://youtu.be/jlzwdeV-7k4?si=HGbX2cgponRvMJBi)
 
 ---
 
@@ -378,7 +372,7 @@ In Practice 3, my main focus was on the User Interface (UI) and DOM structure re
 
 #### Izan Calle Feijoo
 
-For Practice 3, I was responsible for the core *Client-Side JavaScript logic* to replace full-page reloads with dynamic interactions. I developed the client.js module entirely, implementing the *Fetch API* integration for *Infinite Scroll, dynamic **AJAX form submissions* (for both recipes and steps), and the *Drag & Drop* file handling logic. I also implemented the client-side validation logic (synchronous and asynchronous) and orchestrated the global *User Feedback system* (Spinner and Modals) to ensure a responsive UX.
+For Practice 3, I was responsible for the core *Client-Side JavaScript logic* to replace full-page reloads with dynamic interactions. I developed the client.js module entirely, implementing the *Fetch API* integration for *Infinite Scroll, dynamic**AJAX form submissions* (for both recipes and steps), and the *Drag & Drop* file handling logic. I also implemented the client-side validation logic (synchronous and asynchronous) and orchestrated the global *User Feedback system* (Spinner and Modals) to ensure a responsive UX.
 
 **5 most important commits:**
 
