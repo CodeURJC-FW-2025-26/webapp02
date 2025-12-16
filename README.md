@@ -362,11 +362,11 @@ In Practice 3, my main focus was on the User Interface (UI) and DOM structure re
 
 **Top 5 files worked on:**
 
-1. [File Name](Link to file)
-2. [File Name](Link to file)
-3. [File Name](Link to file)
-4. [File Name](Link to file)
-5. [File Name](Link to file)
+1. [src/views/AñadirReceta.html](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/views/A%C3%B1adirReceta.html)
+2. [src/views/partials/footer.html](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/views/partials/footer.html)
+3. [src/views/detalleReceta.html](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/views/detalleReceta.html)
+4. [src/views/Index.html](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/src/views/Index.html)
+5. [public/css/Cocina.css](https://github.com/CodeURJC-FW-2025-26/webapp02/blob/main/public/css/Cocina.css)
 
 ---
 
