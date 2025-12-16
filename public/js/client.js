@@ -205,37 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // 1.3 Image Drag & Drop Logic
-        const dropZone = document.getElementById('drop-zone');
-        const imageInput = document.getElementById('recipeImage');
-        const previewContainer = document.getElementById('image-preview-container');
-        const removeImageFlag = document.getElementById('removeImageFlag');
 
-        if (dropZone && imageInput) {
-
-            // Highlight helpers
-            const highlight = () => dropZone.classList.add('bg-light', 'border-primary');
-            const unhighlight = () => dropZone.classList.remove('bg-light', 'border-primary');
-
-            // Event Listeners for Drop Zone
-            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-                dropZone.addEventListener(eventName, (e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                }, false);
-            });
-
-            ['dragenter', 'dragover'].forEach(evt => dropZone.addEventListener(evt, highlight, false));
-            ['dragleave', 'drop'].forEach(evt => dropZone.addEventListener(evt, unhighlight, false));
-
-            // Handle Drop
-            dropZone.addEventListener('drop', (e) => {
-                const files = e.dataTransfer.files;
-                if (files.length > 0) {
-                    imageInput.files = files; // Assign files to the hidden input
-                    handleFiles(files[0]);
-                }
-            });
 
             // Handle Click (opens file explorer)
             dropZone.addEventListener('click', () => imageInput.click());
