@@ -355,7 +355,7 @@ For Practice 3, I focused on adapting the backend architecture to support dynami
 #### Rubén Torres Rivero
 
 **Description of tasks:**
-[Write a brief paragraph describing what you did. Example: I focused on implementing the drag and drop functionality in the forms and adjusting the CSS animations for the steps list...]
+In Practice 3, my main focus was on the User Interface (UI) and DOM structure required for the new client-side features. I implemented the *HTML structure for the Drag & Drop* zone in the recipe form, integrated *Bootstrap's client-side validation* classes (needs-validation) across all forms, and redesigned the footer to include the global *Loading Spinner* and *Feedback Modal*. Additionally, I refactored the recipe step list in the Detail View to support inline editing and AJAX updates
 
 **5 most important commits:**
 
